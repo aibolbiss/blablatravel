@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface ImageModalProps {
   src: string;
@@ -12,13 +13,19 @@ export default function ImageModal({ src, alt }: ImageModalProps) {
 
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        className="max-h-[420px] w-full rounded-2xl border border-line object-cover shadow-card cursor-pointer hover:opacity-90 transition-opacity"
+      <div
+        className="relative h-[420px] w-full cursor-pointer rounded-2xl border border-line shadow-card transition-opacity hover:opacity-90"
         onClick={() => setIsOpen(true)}
-      />
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 768px) 700px, 100vw"
+          className="rounded-2xl object-cover"
+          priority
+        />
+      </div>
 
       {isOpen && (
         <div

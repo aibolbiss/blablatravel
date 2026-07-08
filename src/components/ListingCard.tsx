@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { Listing, GENDER_LABEL } from '@/lib/types';
+import { ListingCardData, GENDER_LABEL } from '@/lib/types';
 
-export default function ListingCard({ listing }: { listing: Listing }) {
+export default function ListingCard({ listing }: { listing: ListingCardData }) {
   const p = listing.profiles;
   return (
     <Link
@@ -10,9 +11,9 @@ export default function ListingCard({ listing }: { listing: Listing }) {
     >
       <div className="relative aspect-[4/3] bg-route-light">
         {listing.photo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={listing.photo_url} alt={listing.title}
-            className="h-full w-full object-cover transition group-hover:scale-[1.02]" />
+          <Image src={listing.photo_url} alt={listing.title} fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition group-hover:scale-[1.02]" />
         ) : (
           <div className="flex h-full items-center justify-center text-4xl">🧭</div>
         )}
@@ -24,10 +25,9 @@ export default function ListingCard({ listing }: { listing: Listing }) {
       </div>
       <div className="p-4">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full bg-route-light">
+          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-route-light">
             {p?.avatar_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={p.avatar_url} alt={p.name} className="h-full w-full object-cover" />
+              <Image src={p.avatar_url} alt={p.name} fill sizes="32px" className="object-cover" />
             ) : (
               <div className="flex h-full items-center justify-center text-sm">🙂</div>
             )}

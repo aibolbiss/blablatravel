@@ -40,7 +40,7 @@ export const tourismTypes: Record<TourismType, string> = {
   'business': '💼 Деловой',
   'romantic': '💕 Романтический',
   'shopping': '🛍️ Шопинг',
-  'pilgrimage': '⛪ Паломничество',
+  'pilgrimage': '🕋 Паломничество',
 };
 
 // Эмодзи для типов туризма (без текста)
@@ -52,7 +52,7 @@ export const tourismEmojis: Record<TourismType, string> = {
   'business': '💼',
   'romantic': '💕',
   'shopping': '🛍️',
-  'pilgrimage': '⛪',
+  'pilgrimage': '🕋',
 };
 
 export const destinationCountries: Record<string, { flag: string; popular: boolean }> = {

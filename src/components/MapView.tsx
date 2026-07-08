@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Listing, GENDER_LABEL } from '@/lib/types';
+import { ListingMapData, GENDER_LABEL } from '@/lib/types';
 
 const icon = L.divIcon({
   className: '',
@@ -32,7 +33,7 @@ export type MapMarker = {
   subtitle?: string;
   photo_url?: string | null;
   avatar_url?: string | null;
-  listing?: Listing;
+  listing?: ListingMapData;
 };
 
 function ClickCatcher({ onPick }: { onPick?: (lat: number, lng: number) => void }) {
@@ -50,7 +51,7 @@ export default function MapView({
   zoom?: number;
   onPick?: (lat: number, lng: number) => void;
 }) {
-  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+  const [selectedListing, setSelectedListing] = useState<ListingMapData | null>(null);
   const p = selectedListing?.profiles;
 
   return (
@@ -86,10 +87,9 @@ export default function MapView({
 
             <div className="p-6">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-route-light">
+                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-route-light">
                   {p?.avatar_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.avatar_url} alt={p.name} className="h-full w-full object-cover" />
+                    <Image src={p.avatar_url} alt={p.name} fill sizes="40px" className="object-cover" />
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm">🙂</div>
                   )}

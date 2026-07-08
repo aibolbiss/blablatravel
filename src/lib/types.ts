@@ -52,6 +52,15 @@ export type Message = {
   read_at?: string | null;
 };
 
+// Урезанные проекции Listing под конкретные select() без лишних колонок
+export type ListingCardData = Pick<Listing, 'id' | 'title' | 'budget' | 'city' | 'to_city' | 'date_from' | 'date_to' | 'photo_url'> & {
+  profiles?: Pick<Profile, 'name' | 'avatar_url' | 'gender'>;
+};
+
+export type ListingMapData = Pick<Listing, 'id' | 'title' | 'description' | 'city' | 'country' | 'to_city' | 'to_country' | 'budget' | 'date_from' | 'date_to' | 'photo_url' | 'lat' | 'lng'> & {
+  profiles?: Pick<Profile, 'name' | 'avatar_url' | 'gender'>;
+};
+
 export const GENDER_LABEL: Record<string, string> = {
   male: 'Мужчина',
   female: 'Женщина',

@@ -1,4 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
+import { getUserId } from '@/lib/auth';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Listing, GENDER_LABEL } from '@/lib/types';
 import FavoriteButton from '@/components/FavoriteButton';
@@ -10,37 +12,25 @@ export const dynamic = 'force-dynamic';
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  console.log('🔍 Fetching listing:', params.id);
-  console.log('👤 Current user:', user?.id);
+  const userId = getUserId();
 
   const { data, error } = await supabase
     .from('listings')
     .select('*, profiles!listings_user_id_fkey(*)')
     .eq('id', params.id)
     .single();
-  
-  console.log('📊 Query result - data:', !!data, 'error:', error);
-  
-  if (error) {
-    console.error('❌ Listing fetch error:', error.message);
+
+  if (error || !data) {
     notFound();
   }
-  
-  if (!data) {
-    console.error('❌ No listing found for id:', params.id);
-    notFound();
-  }
-  
-  console.log('✅ Listing loaded:', data.title);
+
   const listing = data as Listing;
   const p = listing.profiles!;
 
   let isFav = false;
-  if (user) {
+  if (userId) {
     const { data: fav } = await supabase.from('favorites')
-      .select('listing_id').match({ user_id: user.id, listing_id: listing.id }).maybeSingle();
+      .select('listing_id').match({ user_id: userId, listing_id: listing.id }).maybeSingle();
     isFav = !!fav;
   }
 
@@ -86,10 +76,9 @@ export default async function ListingPage({ params }: { params: { id: string } }
         <div className="space-y-3">
           {/* Фото + Имя + Пол */}
           <div className="flex gap-3">
-            <div className="h-20 w-20 overflow-hidden rounded-full bg-route-light shrink-0">
+            <div className="relative h-20 w-20 overflow-hidden rounded-full bg-route-light shrink-0">
               {p.avatar_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.avatar_url} alt={p.name} className="h-full w-full object-cover" />
+                <Image src={p.avatar_url} alt={p.name} fill sizes="80px" className="object-cover" />
               ) : (
                 <div className="flex h-full items-center justify-center text-3xl bg-route-light">🙂</div>
               )}
@@ -119,8 +108,8 @@ export default async function ListingPage({ params }: { params: { id: string } }
           {/* Кнопки */}
           <div className="flex flex-col gap-2 pt-1">
             <StartChatButton otherUserId={p.id} allowed={p.allow_messages}
-              isSelf={user?.id === p.id} isAuthed={!!user} />
-            {user?.id !== p.id && <FavoriteButton listingId={listing.id} userId={user?.id ?? null} initial={isFav} />}
+              isSelf={userId === p.id} isAuthed={!!userId} />
+            {userId !== p.id && <FavoriteButton listingId={listing.id} userId={userId} initial={isFav} />}
           </div>
         </div>
       </aside>

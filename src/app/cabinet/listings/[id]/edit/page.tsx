@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { uploadPhoto } from '@/lib/upload';
 import MapView from '@/components/MapViewDynamic';
@@ -269,8 +270,9 @@ export default function EditListingPage() {
           <label className="label">Фотография *</label>
           <div className="flex items-center gap-4">
             {photoUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={photoUrl} alt="" className="h-20 w-28 rounded-lg object-cover" />
+              <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg">
+                <Image src={photoUrl} alt="" fill sizes="112px" className="object-cover" />
+              </div>
             )}
             <label className="btn-ghost cursor-pointer">
               {uploading ? 'Загружаем…' : photoUrl ? 'Заменить фото' : 'Загрузить фото'}

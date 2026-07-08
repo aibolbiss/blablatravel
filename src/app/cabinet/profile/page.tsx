@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { uploadPhoto } from '@/lib/upload';
 import MapView from '@/components/MapViewDynamic';
@@ -56,10 +57,9 @@ export default function ProfilePage() {
 
       <div className="mt-6 space-y-5 rounded-2xl border border-line bg-white p-6 shadow-card">
         <div className="flex items-center gap-4">
-          <div className="h-20 w-20 overflow-hidden rounded-full bg-route-light">
+          <div className="relative h-20 w-20 overflow-hidden rounded-full bg-route-light">
             {p.avatar_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={p.avatar_url} alt="" className="h-full w-full object-cover" />
+              <Image src={p.avatar_url} alt="" fill sizes="80px" className="object-cover" />
             ) : <div className="flex h-full items-center justify-center text-3xl">🙂</div>}
           </div>
           <label className="btn-ghost cursor-pointer">

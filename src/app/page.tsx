@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import SearchFilters from '@/components/SearchFilters';
 import ListingCard from '@/components/ListingCard';
 import SkeletonCard from '@/components/SkeletonCard';
-import { Listing } from '@/lib/types';
+import { ListingCardData } from '@/lib/types';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -25,7 +25,7 @@ export default async function HomePage({ searchParams }: { searchParams: Search 
 
   let query = supabase
     .from('listings')
-    .select('*, profiles!listings_user_id_fkey(*)')
+    .select('id, title, budget, city, to_city, date_from, date_to, photo_url, profiles!listings_user_id_fkey(name, avatar_url, gender)')
     .eq('is_active', true)
     .order('created_at', { ascending: false })
     .limit(48);
@@ -37,7 +37,7 @@ export default async function HomePage({ searchParams }: { searchParams: Search 
   if (searchParams.budget_max) query = query.lte('budget', Number(searchParams.budget_max));
 
   const { data } = await query;
-  let listings = (data ?? []) as Listing[];
+  let listings = (data ?? []) as unknown as ListingCardData[];
 
   // Client-side filtering for companion and tourism types (to avoid matching in "кто я" vs "кого ищу")
   if (searchParams.companion) {

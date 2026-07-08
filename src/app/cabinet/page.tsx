@@ -1,4 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
+import { getUserId } from '@/lib/auth';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Listing, Profile } from '@/lib/types';
 import DeleteListingButton from '@/components/DeleteListingButton';
@@ -7,16 +9,16 @@ export const dynamic = 'force-dynamic';
 
 export default async function CabinetPage({ searchParams }: { searchParams: { page?: string } }) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const userId = getUserId()!;
 
   const page = Math.max(1, parseInt(searchParams.page || '1'));
   const pageSize = 10;
   const offset = (page - 1) * pageSize;
 
   const [{ data: profile }, { data: listings }, { count }] = await Promise.all([
-    supabase.from('profiles').select('*').eq('id', user!.id).single(),
-    supabase.from('listings').select('*').eq('user_id', user!.id).order('created_at', { ascending: false }).range(offset, offset + pageSize - 1),
-    supabase.from('listings').select('id', { count: 'exact', head: true }).eq('user_id', user!.id),
+    supabase.from('profiles').select('*').eq('id', userId).single(),
+    supabase.from('listings').select('*').eq('user_id', userId).order('created_at', { ascending: false }).range(offset, offset + pageSize - 1),
+    supabase.from('listings').select('id', { count: 'exact', head: true }).eq('user_id', userId),
   ]);
   const p = profile as Profile;
   const totalPages = Math.ceil((count || 0) / pageSize);
@@ -24,10 +26,9 @@ export default async function CabinetPage({ searchParams }: { searchParams: { pa
   return (
     <div className="py-10 md:py-10">
       <div className="flex flex-col gap-4 md:flex-wrap md:items-center">
-        <div className="h-16 w-16 overflow-hidden rounded-full bg-route-light">
+        <div className="relative h-16 w-16 overflow-hidden rounded-full bg-route-light">
           {p.avatar_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.avatar_url} alt={p.name} className="h-full w-full object-cover" />
+            <Image src={p.avatar_url} alt={p.name} fill sizes="64px" className="object-cover" />
           ) : <div className="flex h-full items-center justify-center text-2xl">🙂</div>}
         </div>
         <div>
@@ -54,10 +55,9 @@ export default async function CabinetPage({ searchParams }: { searchParams: { pa
           {(listings as Listing[]).map((l) => (
             <div key={l.id} className="flex flex-col gap-3 rounded-2xl border border-line bg-white p-4 shadow-card md:flex-wrap md:items-center">
               <div className="flex gap-3 min-w-0 flex-1">
-                <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-route-light">
+                <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-route-light">
                   {l.photo_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={l.photo_url} alt="" className="h-full w-full object-cover" />
+                    <Image src={l.photo_url} alt="" fill sizes="80px" className="object-cover" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { uploadPhoto } from '@/lib/upload';
 import MapView from '@/components/MapViewDynamic';
@@ -208,8 +209,9 @@ export default function NewListingPage() {
           <label className="label">Фотография *</label>
           <div className="flex items-center gap-4">
             {photoUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={photoUrl} alt="" className="h-20 w-28 rounded-lg object-cover" />
+              <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg">
+                <Image src={photoUrl} alt="" fill sizes="112px" className="object-cover" />
+              </div>
             )}
             <label className="btn-ghost cursor-pointer">
               {uploading ? 'Загружаем…' : photoUrl ? 'Заменить фото' : 'Загрузить фото'}
@@ -250,10 +252,9 @@ export default function NewListingPage() {
           <div className="rounded-2xl border border-line bg-white p-6 shadow-card h-fit">
             <div className="space-y-4">
               {/* Фото */}
-              <div className="overflow-hidden rounded-xl bg-route-light">
+              <div className="relative h-48 w-full overflow-hidden rounded-xl bg-route-light">
                 {profile.avatar_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={profile.avatar_url} alt={profile.name} className="w-full h-48 object-cover" />
+                  <Image src={profile.avatar_url} alt={profile.name} fill sizes="320px" className="object-cover" />
                 ) : (
                   <div className="flex h-48 items-center justify-center text-5xl bg-route-light">🙂</div>
                 )}

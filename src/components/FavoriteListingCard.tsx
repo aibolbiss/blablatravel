@@ -1,12 +1,12 @@
 'use client';
 
-import { Listing } from '@/lib/types';
+import { ListingCardData } from '@/lib/types';
 import ListingCard from './ListingCard';
 import { Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useState } from 'react';
 
-export default function FavoriteListingCard({ listing }: { listing: Listing }) {
+export default function FavoriteListingCard({ listing }: { listing: ListingCardData }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const supabase = createClient();
 

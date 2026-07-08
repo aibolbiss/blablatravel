@@ -1,15 +1,16 @@
 import { createClient } from '@/lib/supabase/server';
+import { getUserId } from '@/lib/auth';
 import FavoriteListingCard from '@/components/FavoriteListingCard';
-import { Listing } from '@/lib/types';
+import { ListingCardData } from '@/lib/types';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
 export default async function FavoritesPage() {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const userId = getUserId();
 
-  if (!user) {
+  if (!userId) {
     return (
       <div className="py-4 md:py-10">
         <h1 className="font-display text-2xl font-bold">Избранное</h1>
@@ -23,8 +24,8 @@ export default async function FavoritesPage() {
 
   const { data, error } = await supabase
     .from('favorites')
-    .select('listing_id, listings(*, profiles!listings_user_id_fkey(*))')
-    .eq('user_id', user.id)
+    .select('listing_id, listings(id, title, budget, city, to_city, date_from, date_to, photo_url, profiles!listings_user_id_fkey(name, avatar_url, gender))')
+    .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -33,7 +34,7 @@ export default async function FavoritesPage() {
 
   const listings = (data ?? [])
     .map((f: any) => f.listings)
-    .filter(Boolean) as Listing[];
+    .filter(Boolean) as ListingCardData[];
 
   return (
     <div className="py-4 md:py-10">

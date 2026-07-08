@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { getUserId } from '@/lib/auth';
 import { getConversations } from '@/lib/chat';
 import ChatSidebar from '@/components/ChatSidebar';
 import ChatWindow from '@/components/ChatWindow';
@@ -9,18 +10,18 @@ export const dynamic = 'force-dynamic';
 
 export default async function ChatPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const userId = getUserId()!;
 
   const { data: conv } = await supabase
     .from('conversations').select('*').eq('id', params.id).single();
   if (!conv) notFound();
 
-  const otherId = conv.user_a === user!.id ? conv.user_b : conv.user_a;
+  const otherId = conv.user_a === userId ? conv.user_b : conv.user_a;
   const [{ data: other }, { data: msgs }, result] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', otherId).single(),
     supabase.from('messages').select('*').eq('conversation_id', params.id)
       .order('created_at', { ascending: true }).limit(200),
-    getConversations(user!.id, 0, 20),
+    getConversations(userId, 0, 20),
   ]);
   const conversations = result.previews;
   if (!other) notFound();
@@ -38,11 +39,11 @@ export default async function ChatPage({ params }: { params: { id: string } }) {
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4 py-6">
       <div className="hidden sm:block">
-        <ChatSidebar conversations={conversations} activeId={params.id} userId={user!.id} />
+        <ChatSidebar conversations={conversations} activeId={params.id} userId={userId} />
       </div>
       <ChatWindow
         conversationId={params.id}
-        myId={user!.id}
+        myId={userId}
         other={other as Profile}
         initialMessages={(msgs ?? []) as Message[]}
       />

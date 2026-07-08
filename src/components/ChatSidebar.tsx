@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ConvPreview } from '@/lib/chat';
 
@@ -31,10 +32,9 @@ export default function ChatSidebar({
                 c.id === activeId ? 'bg-white/15' : ''
               }`}
             >
-              <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-route">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-route">
                 {c.other.avatar_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.other.avatar_url} alt="" className="h-full w-full object-cover" />
+                  <Image src={c.other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
                 ) : <div className="flex h-full items-center justify-center text-sm">🙂</div>}
               </div>
               <div className="min-w-0 flex-1">

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { getUserId } from '@/lib/auth';
 import { getConversations } from '@/lib/chat';
 import ChatSidebar from '@/components/ChatSidebar';
 import Link from 'next/link';
@@ -6,20 +6,19 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function ChatIndexPage({ searchParams }: { searchParams: { page?: string } }) {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  
+  const userId = getUserId()!;
+
   const page = Math.max(1, parseInt(searchParams.page || '1'));
   const pageSize = 20;
   const offset = (page - 1) * pageSize;
-  
-  const { previews: conversations, count } = await getConversations(user!.id, offset, pageSize);
+
+  const { previews: conversations, count } = await getConversations(userId, offset, pageSize);
   const totalPages = Math.ceil(count / pageSize);
 
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4 py-6 flex-col">
       <div className="flex flex-1 gap-4 overflow-hidden">
-        <ChatSidebar conversations={conversations} userId={user!.id} />
+        <ChatSidebar conversations={conversations} userId={userId} />
         <div className="hidden flex-1 items-center justify-center rounded-2xl border border-dashed border-line bg-white sm:flex">
           <div className="text-center">
             <p className="text-3xl">💬</p>

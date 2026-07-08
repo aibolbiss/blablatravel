@@ -1,21 +1,23 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import MapView from '@/components/MapViewDynamic';
-import { Listing } from '@/lib/types';
+import { ListingMapData } from '@/lib/types';
 
-export const dynamic = 'force-dynamic';
+// Публичные данные, не завязанные на пользователя — кэшируем на 60с вместо
+// полного force-dynamic, чтобы не бить в Supabase на каждый заход.
+export const revalidate = 60;
 
 export default async function MapPage() {
-  const supabase = createClient();
+  const supabase = createPublicClient();
   const { data } = await supabase
     .from('listings')
-    .select('*, profiles!listings_user_id_fkey(*)')
+    .select('id, title, description, city, country, to_city, to_country, budget, date_from, date_to, photo_url, lat, lng, profiles!listings_user_id_fkey(name, avatar_url, gender)')
     .eq('is_active', true)
     .eq('show_on_map', true)
     .not('lat', 'is', null)
     .not('lng', 'is', null)
     .limit(300);
 
-  const listings = (data ?? []) as Listing[];
+  const listings = (data ?? []) as unknown as ListingMapData[];
   const markers = listings.map((l) => ({
     id: l.id,
     lat: l.lat!,

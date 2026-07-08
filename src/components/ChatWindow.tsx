@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
 import LoadingSpinner from './LoadingSpinner';
@@ -73,10 +74,9 @@ export default function ChatWindow({
   return (
     <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card">
       <div className="flex items-center gap-3 border-b border-line px-5 py-3">
-        <div className="h-9 w-9 overflow-hidden rounded-full bg-route-light">
+        <div className="relative h-9 w-9 overflow-hidden rounded-full bg-route-light">
           {other.avatar_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={other.avatar_url} alt="" className="h-full w-full object-cover" />
+            <Image src={other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
           ) : <div className="flex h-full items-center justify-center">🙂</div>}
         </div>
         <div>
