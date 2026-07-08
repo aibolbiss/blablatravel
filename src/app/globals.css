@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-bg text-ink font-body antialiased;
+}
+
+/* Пунктирная линия маршрута — фирменный элемент */
+.route-line {
+  background-image: repeating-linear-gradient(
+    90deg, #1E6E5A 0 6px, transparent 6px 12px
+  );
+  height: 2px;
+}
+
+.input {
+  @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm
+         outline-none transition focus:border-route focus:ring-2 focus:ring-route/15;
+}
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
+         text-sm font-semibold transition disabled:opacity-50;
+}
+.btn-primary { @apply btn bg-route text-white hover:bg-route-dark; }
+.btn-ghost { @apply btn border border-line bg-white hover:border-route hover:text-route; }
+.label { @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-mut; }
+
+.leaflet-container { font: inherit; }
