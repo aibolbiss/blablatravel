@@ -56,7 +56,7 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
       </nav>
 
       {/* Отступ снизу для мобильных */}
-      <div className="h-16 md:hidden" />
+      {/* <div className="h-16 md:hidden" /> */}
     </>
   );
 }

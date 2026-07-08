@@ -90,7 +90,7 @@ export default function SearchFilters() {
           <div className="space-y-3">
             <div>
               <select className="input" value={companion} onChange={(e) => setCompanion(e.target.value)}>
-                <option value="">Любого путешественника</option>
+                <option value="">Любого попутчика</option>
                 {Object.entries(companionTypesSearch).map(([key, label]) => {
                   const emoji = companionEmojis[key as CompanionType] || '';
                   return <option key={key} value={emoji}>{label}</option>;

@@ -2,22 +2,22 @@ export type CompanionType = 'male' | 'female' | 'male_group' | 'female_group' | 
 
 // Для раздела "Кто я" - именительный падеж
 export const companionTypes: Record<CompanionType, string> = {
-  'male': 'Мужчина',
-  'female': 'Женщина',
-  'male_group': 'Мужская компания',
-  'female_group': 'Женская компания',
-  'mixed_group': 'Смешанная компания',
-  'family_couple': 'Семейная пара',
+  'male': '👨 Мужчина',
+  'female': '👩 Женщина',
+  'male_group': '👨👱‍♂️ Мужская компания',
+  'female_group': '👩👱‍♀️ Женская компания',
+  'mixed_group': '👨👩 Смешанная компания',
+  'family_couple': '💑 Семейная пара',
 };
 
 // Для раздела "Кого я ищу" - винительный падеж
 export const companionTypesSearch: Record<CompanionType, string> = {
-  'male': 'Мужчину',
-  'female': 'Женщину',
-  'male_group': 'Мужскую компанию',
-  'female_group': 'Женскую компанию',
-  'mixed_group': 'Смешанную компанию',
-  'family_couple': 'Семейную пару',
+  'male': '👨 Мужчину',
+  'female': '👩 Женщину',
+  'male_group': '👨👱‍♂️ Мужскую компанию',
+  'female_group': '👩👱‍♀️ Женскую компанию',
+  'mixed_group': '👨👩 Смешанную компанию',
+  'family_couple': '💑 Семейную пару',
 };
 
 // Эмодзи для компаньонов - блондин/брюнет

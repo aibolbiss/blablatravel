@@ -9,7 +9,7 @@ import { ListingMapData, GENDER_LABEL } from '@/lib/types';
 const icon = L.divIcon({
   className: '',
   html: `<div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-    background:#1E6E5A;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`,
+    background:#4D6EE3;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`,
   iconSize: [26, 26],
   iconAnchor: [13, 26],
 });

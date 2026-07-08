@@ -69,9 +69,9 @@ export default async function HomePage({ searchParams }: { searchParams: Search 
       <section className="mb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-route">поиск попутчиков</p>
         <h1 className="mt-2 max-w-2xl font-display text-3xl font-bold leading-tight sm:text-4xl">
-          С кем поедешь <span className="text-route">в этот раз?</span>
+          С кем поедешь <span className="text-route">в этот раз? 🛩</span>
         </h1>
-        <div className="route-line mt-5 max-w-md" />
+        {/* <div className="route-line mt-5 max-w-md" /> */}
       </section>
 
       <Suspense>
