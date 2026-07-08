@@ -41,10 +41,12 @@ export default async function HomePage({ searchParams }: { searchParams: Search 
 
   // Client-side filtering for companion and tourism types (to avoid matching in "кто я" vs "кого ищу")
   if (searchParams.companion) {
-    listings = listings.filter(l => l.title.startsWith(searchParams.companion));
+    const companion = searchParams.companion;
+    listings = listings.filter(l => l.title.startsWith(companion));
   }
   if (searchParams.tourism) {
-    listings = listings.filter(l => l.title.includes(`→ ${searchParams.tourism}`));
+    const tourism = searchParams.tourism;
+    listings = listings.filter(l => l.title.includes(`→ ${tourism}`));
   }
 
   // Date range filtering

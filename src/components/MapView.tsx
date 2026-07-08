@@ -13,7 +13,7 @@ const icon = L.divIcon({
   iconAnchor: [13, 26],
 });
 
-const createPhotoIcon = (avatarUrl?: string) => {
+const createPhotoIcon = (avatarUrl?: string | null) => {
   if (!avatarUrl) return icon;
   return L.divIcon({
     className: 'map-photo-icon',
@@ -30,8 +30,8 @@ export type MapMarker = {
   title: string;
   href: string;
   subtitle?: string;
-  photo_url?: string;
-  avatar_url?: string;
+  photo_url?: string | null;
+  avatar_url?: string | null;
   listing?: Listing;
 };
 

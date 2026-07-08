@@ -10,7 +10,8 @@ export default function MessagesReadSignal({ userId, conversationId }: { userId:
       const channel = createClient()
         .channel(`read-status:${userId}`)
         .subscribe(() => {
-          channel.send('broadcast', {
+          channel.send({
+            type: 'broadcast',
             event: 'messages_read',
             payload: { conversation_id: conversationId },
           });

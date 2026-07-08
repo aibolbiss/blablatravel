@@ -36,7 +36,8 @@ export default function ChatWindow({
       .channel(`read-status:${myId}`)
       .subscribe(() => {
         // После подписки отправляем сигнал
-        statusChannel.send('broadcast', {
+        statusChannel.send({
+          type: 'broadcast',
           event: 'messages_read',
           payload: { conversation_id: conversationId },
         });

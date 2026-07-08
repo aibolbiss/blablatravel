@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function MobileNav({ user }: { user?: { id: string } }) {
+export default function MobileNav({ user }: { user?: { id: string } | null }) {
   const [showAuthMenu, setShowAuthMenu] = useState(false);
   const router = useRouter();
 
