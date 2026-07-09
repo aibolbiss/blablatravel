@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ConvPreview } from '@/lib/chat';
+import { Message } from '@/lib/types';
 
 export default function ChatSidebar({
   conversations,
@@ -18,11 +19,14 @@ export default function ChatSidebar({
   const t = useTranslations('chat');
   const router = useRouter();
   const instanceId = useId();
+  // Локальная копия — обновляем её сразу из realtime-события, не дожидаясь
+  // повторного серверного рендера (он может отставать по времени).
+  const [items, setItems] = useState(conversations);
 
-  // Список диалогов — серверные данные без собственной подписки на новые
-  // сообщения. Слушаем realtime сами, чтобы превью последнего сообщения,
-  // сортировка и зелёный бейджик обновлялись, даже если пользователь сидит
-  // на списке или переписывается совсем с другим человеком.
+  useEffect(() => {
+    setItems(conversations);
+  }, [conversations]);
+
   useEffect(() => {
     const supabase = createClient();
     const channel = supabase
@@ -30,7 +34,27 @@ export default function ChatSidebar({
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages' },
-        () => router.refresh()
+        (payload) => {
+          const m = payload.new as Message;
+          setItems((prev) => {
+            const idx = prev.findIndex((c) => c.id === m.conversation_id);
+            // Диалог не входит в уже загруженный список (например, только
+            // что создан) — просто перезапрашиваем список с сервера целиком.
+            if (idx === -1) {
+              router.refresh();
+              return prev;
+            }
+            const next = [...prev];
+            next[idx] = {
+              ...next[idx],
+              lastMessage: m.content,
+              lastAt: m.created_at,
+              hasUnread: m.sender_id !== userId ? true : next[idx].hasUnread,
+            };
+            next.sort((a, b) => (b.lastAt ?? '').localeCompare(a.lastAt ?? ''));
+            return next;
+          });
+        }
       )
       .on(
         'postgres_changes',
@@ -50,12 +74,12 @@ export default function ChatSidebar({
         <p className="font-display text-sm font-semibold">{t('sidebarTitle')}</p>
       </div>
       <div className="flex-1 overflow-y-auto p-2">
-        {conversations.length === 0 && (
+        {items.length === 0 && (
           <p className="p-4 text-sm text-white/50">
             {t('noConversations')}
           </p>
         )}
-        {conversations.map((c) => {
+        {items.map((c) => {
           return (
             <Link
               key={c.id}
