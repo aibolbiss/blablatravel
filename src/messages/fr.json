@@ -82,7 +82,8 @@
     "send": "Envoyer",
     "chooseConversation": "Sélectionnez une conversation",
     "chooseConversationHint": "ou écrivez à quelqu'un depuis la page d'une annonce",
-    "backToList": "Retour aux discussions"
+    "backToList": "Retour aux discussions",
+    "typing": "{name} est en train d'écrire…"
   },
   "cabinet": {
     "profileSettings": "Paramètres du profil",

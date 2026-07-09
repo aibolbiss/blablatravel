@@ -82,7 +82,8 @@
     "send": "Senden",
     "chooseConversation": "Unterhaltung auswählen",
     "chooseConversationHint": "oder schreibe jemandem über die Anzeigenseite",
-    "backToList": "Zurück zu den Unterhaltungen"
+    "backToList": "Zurück zu den Unterhaltungen",
+    "typing": "{name} schreibt…"
   },
   "cabinet": {
     "profileSettings": "Profileinstellungen",

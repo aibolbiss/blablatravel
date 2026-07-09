@@ -82,7 +82,8 @@
     "send": "Enviar",
     "chooseConversation": "Selecciona una conversación",
     "chooseConversationHint": "o escribe a alguien desde la página de un anuncio",
-    "backToList": "Volver a las conversaciones"
+    "backToList": "Volver a las conversaciones",
+    "typing": "{name} está escribiendo…"
   },
   "cabinet": {
     "profileSettings": "Configuración del perfil",

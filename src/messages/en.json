@@ -82,7 +82,8 @@
     "send": "Send",
     "chooseConversation": "Select a conversation",
     "chooseConversationHint": "or message someone from a listing page",
-    "backToList": "Back to conversations"
+    "backToList": "Back to conversations",
+    "typing": "{name} is typing…"
   },
   "cabinet": {
     "profileSettings": "Profile settings",

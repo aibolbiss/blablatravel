@@ -8,6 +8,9 @@ import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
 import LoadingSpinner from './LoadingSpinner';
 
+const TYPING_BROADCAST_THROTTLE_MS = 2000;
+const TYPING_INDICATOR_TIMEOUT_MS = 3000;
+
 export default function ChatWindow({
   conversationId, myId, other, initialMessages,
 }: {
@@ -23,7 +26,11 @@ export default function ChatWindow({
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
+  const [otherTyping, setOtherTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const typingChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const lastTypingSentAtRef = useRef(0);
+  const typingHideTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     const channel = supabase
@@ -40,6 +47,8 @@ export default function ChatWindow({
           // Собеседник прислал сообщение, пока мы уже открыли этот диалог —
           // считаем его прочитанным вскоре после появления (зелёное → серое).
           if (m.sender_id !== myId) {
+            setOtherTyping(false);
+            clearTimeout(typingHideTimeoutRef.current);
             setTimeout(async () => {
               const { error } = await supabase
                 .from('messages')
@@ -53,7 +62,7 @@ export default function ChatWindow({
         }
       )
       .subscribe();
-    
+
     // Отправляем сигнал что вошли в диалог (для обновления баджиков)
     const statusChannel = supabase
       .channel(`read-status:${myId}`)
@@ -66,9 +75,24 @@ export default function ChatWindow({
         });
       });
 
-    return () => { 
+    // "Печатает…" — эфемерный статус, не хранится в базе, просто broadcast
+    // на канал диалога. Оба участника слушают один и тот же канал.
+    const typingChannel = supabase
+      .channel(`typing-${conversationId}`)
+      .on('broadcast', { event: 'typing' }, (payload) => {
+        if (payload.payload?.userId === myId) return;
+        setOtherTyping(true);
+        clearTimeout(typingHideTimeoutRef.current);
+        typingHideTimeoutRef.current = setTimeout(() => setOtherTyping(false), TYPING_INDICATOR_TIMEOUT_MS);
+      })
+      .subscribe();
+    typingChannelRef.current = typingChannel;
+
+    return () => {
       supabase.removeChannel(channel);
       supabase.removeChannel(statusChannel);
+      supabase.removeChannel(typingChannel);
+      clearTimeout(typingHideTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
@@ -76,6 +100,19 @@ export default function ChatWindow({
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages.length]);
+
+  function handleTextChange(value: string) {
+    setText(value);
+    const now = Date.now();
+    if (value.trim() && now - lastTypingSentAtRef.current > TYPING_BROADCAST_THROTTLE_MS) {
+      lastTypingSentAtRef.current = now;
+      typingChannelRef.current?.send({
+        type: 'broadcast',
+        event: 'typing',
+        payload: { userId: myId },
+      });
+    }
+  }
 
   async function send() {
     const content = text.trim();
@@ -127,11 +164,11 @@ export default function ChatWindow({
           const mine = m.sender_id === myId;
           const prev = messages[i - 1];
           const grouped = prev && prev.sender_id === m.sender_id;
-          
+
           const curr = new Date(m.created_at);
           const prevDate = prev ? new Date(prev.created_at) : null;
           const isDifferentDay = !prevDate || curr.toDateString() !== prevDate.toDateString();
-          
+
           return (
             <div key={m.id}>
               {isDifferentDay && (
@@ -163,12 +200,23 @@ export default function ChatWindow({
         <div ref={bottomRef} />
       </div>
 
+      {otherTyping && (
+        <div className="flex items-center gap-2 px-5 pb-1 text-xs text-mut">
+          <span className="flex items-center gap-0.5">
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-mut [animation-delay:-0.3s]" />
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-mut [animation-delay:-0.15s]" />
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-mut" />
+          </span>
+          {t('typing', { name: other.name })}
+        </div>
+      )}
+
       <div className="flex gap-2 border-t border-line p-3">
         <input
           className="input"
           placeholder={t('placeholder', { name: other.name })}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => handleTextChange(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && send()}
         />
         <button className="btn-primary shrink-0" onClick={send} disabled={sending || !text.trim()}>

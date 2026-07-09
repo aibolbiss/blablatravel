@@ -82,7 +82,8 @@
     "send": "Отправить",
     "chooseConversation": "Выберите диалог",
     "chooseConversationHint": "или напишите кому-нибудь со страницы объявления",
-    "backToList": "Назад к диалогам"
+    "backToList": "Назад к диалогам",
+    "typing": "{name} печатает…"
   },
   "cabinet": {
     "profileSettings": "Настройки профиля",
