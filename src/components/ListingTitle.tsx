@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import { parseListingTitle } from '@/lib/parseListingTitle';
-import { companionEmojis } from '@/lib/travel-data';
+import { companionEmojis, tourismEmojis } from '@/lib/travel-data';
 
 // Восстанавливает "кто кого ищет" из хранимого заголовка и рендерит фразу
 // на текущем языке интерфейса, а не на языке, на котором объявление было
@@ -19,7 +19,7 @@ export default function ListingTitle({ title }: { title: string }) {
   return (
     <>
       {t('titleTemplate', { my: myEmoji, whom: whomEmoji })}
-      {tourismType && ` → ${tTypes(`tourism.${tourismType}`)}`}
+      {tourismType && ` → ${tourismEmojis[tourismType]} ${tTypes(`tourism.${tourismType}`)}`}
     </>
   );
 }

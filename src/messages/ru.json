@@ -81,7 +81,8 @@
     "placeholder": "Написать {name}…",
     "send": "Отправить",
     "chooseConversation": "Выберите диалог",
-    "chooseConversationHint": "или напишите кому-нибудь со страницы объявления"
+    "chooseConversationHint": "или напишите кому-нибудь со страницы объявления",
+    "backToList": "Назад к диалогам"
   },
   "cabinet": {
     "profileSettings": "Настройки профиля",

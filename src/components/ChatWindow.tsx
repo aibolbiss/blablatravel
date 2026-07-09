@@ -1,7 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { ArrowLeft } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
 import LoadingSpinner from './LoadingSpinner';
@@ -77,6 +79,14 @@ export default function ChatWindow({
   return (
     <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card">
       <div className="flex items-center gap-3 border-b border-line px-5 py-3">
+        <Link
+          href="/chat"
+          aria-label={t('backToList')}
+          title={t('backToList')}
+          className="-ml-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-mut hover:bg-bg hover:text-ink sm:hidden"
+        >
+          <ArrowLeft size={20} />
+        </Link>
         <div className="relative h-9 w-9 overflow-hidden rounded-full bg-route-light">
           {other.avatar_url ? (
             <Image src={other.avatar_url} alt="" fill sizes="36px" className="object-cover" />

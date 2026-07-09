@@ -16,6 +16,7 @@ create table if not exists public.profiles (
   show_on_map boolean not null default false,
   lat double precision,
   lng double precision,
+  is_admin boolean not null default false,
   created_at timestamptz not null default now()
 );
 
@@ -153,24 +154,39 @@ alter table public.favorites enable row level security;
 alter table public.conversations enable row level security;
 alter table public.messages enable row level security;
 
--- Профили: читать могут все, менять — только свой
+-- Профили: читать могут все, менять — только свой (is_admin через update
+-- изменить нельзя — new.is_admin обязан совпадать со старым значением,
+-- флаг меняется только вручную через SQL Editor)
 drop policy if exists "profiles_select" on public.profiles;
 drop policy if exists "profiles_update" on public.profiles;
 drop policy if exists "profiles_insert" on public.profiles;
 create policy "profiles_select" on public.profiles for select using (true);
-create policy "profiles_update" on public.profiles for update using (auth.uid() = id);
+create policy "profiles_update" on public.profiles for update
+  using (auth.uid() = id)
+  with check (
+    auth.uid() = id
+    and is_admin = (select is_admin from public.profiles where id = auth.uid())
+  );
 create policy "profiles_insert" on public.profiles for insert with check (auth.uid() = id);
 
--- Объявления: активные видят все, свои — всегда; CRUD только своих
+-- Объявления: активные видят все, свои — всегда, админы — вообще всё;
+-- CRUD только своих объявлений, кроме удаления — его могут делать и админы
 drop policy if exists "listings_select" on public.listings;
 drop policy if exists "listings_insert" on public.listings;
 drop policy if exists "listings_update" on public.listings;
 drop policy if exists "listings_delete" on public.listings;
 create policy "listings_select" on public.listings for select
-  using (is_active or auth.uid() = user_id);
+  using (
+    is_active or auth.uid() = user_id
+    or exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin)
+  );
 create policy "listings_insert" on public.listings for insert with check (auth.uid() = user_id);
 create policy "listings_update" on public.listings for update using (auth.uid() = user_id);
-create policy "listings_delete" on public.listings for delete using (auth.uid() = user_id);
+create policy "listings_delete" on public.listings for delete
+  using (
+    auth.uid() = user_id
+    or exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin)
+  );
 
 -- Избранное: только своё
 drop policy if exists "favorites_select" on public.favorites;

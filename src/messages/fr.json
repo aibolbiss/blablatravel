@@ -81,7 +81,8 @@
     "placeholder": "Écrire à {name}…",
     "send": "Envoyer",
     "chooseConversation": "Sélectionnez une conversation",
-    "chooseConversationHint": "ou écrivez à quelqu'un depuis la page d'une annonce"
+    "chooseConversationHint": "ou écrivez à quelqu'un depuis la page d'une annonce",
+    "backToList": "Retour aux discussions"
   },
   "cabinet": {
     "profileSettings": "Paramètres du profil",

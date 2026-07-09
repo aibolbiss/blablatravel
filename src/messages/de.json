@@ -81,7 +81,8 @@
     "placeholder": "Nachricht an {name}…",
     "send": "Senden",
     "chooseConversation": "Unterhaltung auswählen",
-    "chooseConversationHint": "oder schreibe jemandem über die Anzeigenseite"
+    "chooseConversationHint": "oder schreibe jemandem über die Anzeigenseite",
+    "backToList": "Zurück zu den Unterhaltungen"
   },
   "cabinet": {
     "profileSettings": "Profileinstellungen",
