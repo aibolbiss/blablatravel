@@ -187,7 +187,7 @@ export default function ChatWindow({
                       : 'border border-green-300 bg-green-100 text-green-900'
                 }`}>
                   <p className="whitespace-pre-wrap break-words">{m.content}</p>
-                  <p className={`mt-0.5 text-right text-[10px] ${
+                  <p className={`mt-0.5 text-[10px] ${mine ? 'text-right' : 'text-left'} ${
                     mine ? 'text-white/60' : m.read_at ? 'text-mut' : 'text-green-700'
                   }`}>
                     {curr.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
