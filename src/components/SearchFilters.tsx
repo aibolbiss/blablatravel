@@ -22,6 +22,8 @@ export default function SearchFilters() {
   const [tourism, setTourism] = useState(params.get('tourism') ?? '');
   const [dateFrom, setDateFrom] = useState(params.get('date_from') ?? '');
   const [dateTo, setDateTo] = useState(params.get('date_to') ?? '');
+  const [dateFromFocused, setDateFromFocused] = useState(false);
+  const [dateToFocused, setDateToFocused] = useState(false);
 
   const cities = country ? (destinationCities[country] ?? []) : [];
   const toCities = toCountry ? (destinationCities[toCountry] ?? []) : [];
@@ -151,23 +153,41 @@ export default function SearchFilters() {
         {/* Dates Tab */}
         {activeTab === 'dates' && (
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="relative">
-              <input className="input" type="date" placeholder={t('fromDate')}
-                value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-              {/* На мобильных браузерах type="date" игнорирует placeholder —
-                  показываем подпись сами поверх пустого поля */}
-              {!dateFrom && (
-                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut sm:hidden">
+            {/* type="date" не поддерживает placeholder и показывает свой
+                формат (дд.мм.гггг), который на мобильных браузерах вообще не
+                отображается, пока поле пустое — из-за этого расхождения на
+                десктопе и мобильном. Показываем свою подпись везде одинаково:
+                прячем нативный текст (прозрачным цветом), пока поле пустое и
+                не в фокусе, и рисуем поверх переведённую подпись сами. */}
+            <div className="relative w-full">
+              <input
+                className={`input w-full ${!dateFrom && !dateFromFocused ? 'text-transparent' : ''}`}
+                type="date"
+                lang={locale}
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                onFocus={() => setDateFromFocused(true)}
+                onBlur={() => setDateFromFocused(false)}
+              />
+              {!dateFrom && !dateFromFocused && (
+                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut">
                   {t('fromDate')}
                 </span>
               )}
             </div>
-            <div className="relative">
-              <input className="input" type="date" placeholder={t('toDate')}
-                value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                min={dateFrom} />
-              {!dateTo && (
-                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut sm:hidden">
+            <div className="relative w-full">
+              <input
+                className={`input w-full ${!dateTo && !dateToFocused ? 'text-transparent' : ''}`}
+                type="date"
+                lang={locale}
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                onFocus={() => setDateToFocused(true)}
+                onBlur={() => setDateToFocused(false)}
+                min={dateFrom}
+              />
+              {!dateTo && !dateToFocused && (
+                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut">
                   {t('toDate')}
                 </span>
               )}

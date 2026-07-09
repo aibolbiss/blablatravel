@@ -262,11 +262,11 @@ export default function EditListingPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="label">{t('dateFrom')}</label>
-            <input className="input" type="date" required value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+            <input className="input" type="date" lang={locale} required value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
           </div>
           <div>
             <label className="label">{t('dateTo')}</label>
-            <input className="input" type="date" required min={dateFrom} value={dateTo} onChange={(e) => setDateTo(e.target.value)} disabled={!dateFrom} />
+            <input className="input" type="date" lang={locale} required min={dateFrom} value={dateTo} onChange={(e) => setDateTo(e.target.value)} disabled={!dateFrom} />
           </div>
         </div>
 
