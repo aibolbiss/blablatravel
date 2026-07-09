@@ -1,11 +1,14 @@
 'use client';
 import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import ConfirmModal from './ConfirmModal';
 import LoadingSpinner from './LoadingSpinner';
 
 export default function DeleteListingButton({ id }: { id: string }) {
+  const t = useTranslations('cabinet');
+  const tConfirm = useTranslations('confirm');
   const supabase = createClient();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -29,14 +32,14 @@ export default function DeleteListingButton({ id }: { id: string }) {
         disabled={busy}
         onClick={() => setShowModal(true)}
       >
-        Удалить
+        {t('delete')}
       </button>
       <ConfirmModal
         isOpen={showModal}
-        title="Удалить объявление?"
-        message="Вы действительно хотите удалить данное объявление? Это действие нельзя отменить."
-        confirmText="Да, удалить"
-        cancelText="Отмена"
+        title={tConfirm('deleteListingTitle')}
+        message={tConfirm('deleteListingMessage')}
+        confirmText={tConfirm('deleteYes')}
+        cancelText={tConfirm('cancel')}
         onConfirm={handleDelete}
         onCancel={() => setShowModal(false)}
         isLoading={busy}

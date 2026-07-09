@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Poputchik — find a travel companion",
+    "description": "A travel companion matching service: listings, map, chat."
+  },
+  "nav": {
+    "map": "Map",
+    "messages": "Messages",
+    "favorites": "Favorites",
+    "profile": "Profile",
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out",
+    "chats": "Chats",
+    "mobileLogin": "Log in"
+  },
+  "localeSwitcher": {
+    "label": "Language"
+  },
+  "common": {
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "back": "← Back",
+    "forward": "Next →",
+    "pageOf": "Page {page} of {total}",
+    "close": "Close"
+  },
+  "home": {
+    "kicker": "find a travel companion",
+    "titleLine1": "Who's your next",
+    "titleLine2": "trip with? 🛩",
+    "emptyTitle": "Nothing found yet",
+    "emptyText": "Try changing the filters or create the first listing.",
+    "createListing": "Create a listing"
+  },
+  "filters": {
+    "whoTab": "Who are you looking for?",
+    "whereTab": "From - To",
+    "datesTab": "Travel dates",
+    "anyCompanion": "Any companion",
+    "anyTourism": "Any trip type",
+    "fromCountry": "From - Country",
+    "fromCity": "From - City",
+    "toCountry": "To - Country",
+    "toCity": "To - City",
+    "fromDate": "From date",
+    "toDate": "To date",
+    "clear": "Clear",
+    "search": "Find companions"
+  },
+  "listing": {
+    "traveler": "Traveler",
+    "upTo": "up to ${amount}",
+    "budgetUpTo": "Budget: up to ${amount}",
+    "meetLocationHeading": "Meeting spot on the map"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "needLogin": "Please log in to your account",
+    "login": "Log in",
+    "emptyTitle": "Nothing here yet",
+    "emptyText": "Save listings with the “☆ Add to favorites” button.",
+    "browse": "Browse listings",
+    "removeTitle": "Remove from favorites"
+  },
+  "map": {
+    "heading": "Companions on the map",
+    "subtitle": "Only those who allowed sharing their location are shown. Total: {count}",
+    "dates": "Dates:",
+    "budget": "Budget:",
+    "perPerson": "${amount}/person",
+    "description": "Description",
+    "viewListing": "View listing →",
+    "here": "Here"
+  },
+  "chat": {
+    "sidebarTitle": "Messages",
+    "noConversations": "No conversations yet. Open a listing and hit “Send message”.",
+    "noMessages": "No messages",
+    "placeholder": "Message {name}…",
+    "send": "Send",
+    "chooseConversation": "Select a conversation",
+    "chooseConversationHint": "or message someone from a listing page"
+  },
+  "cabinet": {
+    "profileSettings": "Profile settings",
+    "newListing": "+ New listing",
+    "myListings": "My listings",
+    "noListingsTitle": "You don't have any listings yet",
+    "noListingsText": "Tell others where you're headed — and find company.",
+    "createListing": "Create a listing",
+    "active": "Active",
+    "hidden": "Hidden",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "listingForm": {
+    "newTitle": "New listing",
+    "newSubtitle": "Tell us about your trip — and companions will find you.",
+    "editTitle": "Edit listing",
+    "editSubtitle": "Update the details of your trip.",
+    "loadingListing": "Loading listing…",
+    "whoAmI": "Who am I *",
+    "chooseWho": "Choose who you are",
+    "whoSearch": "Who am I looking for *",
+    "chooseWhom": "Choose who you're looking for",
+    "fromCountry": "From — Country *",
+    "chooseCountry": "Choose a country",
+    "fromCity": "From — City *",
+    "chooseCity": "Choose a city",
+    "toCountry": "To — Country *",
+    "toCity": "To — City *",
+    "tourismType": "Trip type *",
+    "chooseTourism": "Choose a trip type",
+    "budgetLabel": "Budget, $ (per person)",
+    "dateFrom": "From date *",
+    "dateTo": "To date *",
+    "description": "Description *",
+    "descriptionPlaceholder": "Route, plans, what you expect from a companion…",
+    "photo": "Photo *",
+    "uploading": "Uploading…",
+    "replacePhoto": "Replace photo",
+    "uploadPhoto": "Upload photo",
+    "markLocation": "Mark a spot where we could meet",
+    "locationSelected": "✓ Location selected: {lat}, {lng}",
+    "publish": "Publish listing",
+    "publishing": "Publishing…",
+    "saveChanges": "Save changes",
+    "saving": "Saving…",
+    "authRequired": "You need to log in",
+    "photoUploadError": "Photo upload error: {error}",
+    "unknownError": "unknown error",
+    "notFound": "Listing not found",
+    "loadError": "Failed to load listing"
+  },
+  "profile": {
+    "loading": "Loading profile…",
+    "title": "My profile",
+    "subtitle": "Tell us about yourself — like on a social media page.",
+    "uploadPhoto": "Upload photo",
+    "name": "Name",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Prefer not to say",
+    "country": "Country",
+    "city": "City",
+    "bio": "About me",
+    "bioPlaceholder": "Interests, travel style, languages…",
+    "save": "Save profile",
+    "saving": "Saving…",
+    "saved": "Saved ✓",
+    "saveError": "Save failed",
+    "cityNotSet": "City not specified",
+    "uploadError": "Failed to upload photo",
+    "countryPlaceholder": "Kazakhstan",
+    "cityPlaceholder": "Almaty"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "loginSubtitle": "Welcome back! Where are we going today?",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Log in",
+    "loggingIn": "Logging in…",
+    "noAccount": "No account?",
+    "registerLink": "Sign up",
+    "wrongCreds": "Wrong email or password",
+    "registerTitle": "Sign up",
+    "registerSubtitle": "Create an account to find travel companions.",
+    "nameLabel": "Name *",
+    "emailLabel": "Email *",
+    "passwordLabel": "Password *",
+    "passwordMin": "At least 6 characters",
+    "confirmPassword": "Confirm password *",
+    "repeatPassword": "Repeat password",
+    "passwordsMismatch": "Passwords don't match",
+    "createAccount": "Create account",
+    "creating": "Creating…",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "namePlaceholder": "Aibol"
+  },
+  "confirm": {
+    "deleteListingTitle": "Delete listing?",
+    "deleteListingMessage": "Are you sure you want to delete this listing? This action cannot be undone.",
+    "deleteYes": "Yes, delete",
+    "cancel": "Cancel"
+  },
+  "notif": {
+    "addedToFavorites": "✓ Added to favorites"
+  },
+  "favoriteButton": {
+    "inFavorites": "⭐ In favorites",
+    "addToFavorites": "⭐ Add to favorites"
+  },
+  "startChat": {
+    "locked": "🔒 This user has closed direct messages",
+    "opening": "Opening chat…",
+    "writeMessage": "💌 Send message"
+  }
+}

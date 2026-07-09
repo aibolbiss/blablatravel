@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Попутчик — найди компаньона для путешествия",
+    "description": "Сервис поиска попутчиков: объявления, карта, чат."
+  },
+  "nav": {
+    "map": "Карта",
+    "messages": "Сообщения",
+    "favorites": "Избранное",
+    "profile": "Профиль",
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "chats": "Чаты",
+    "mobileLogin": "Вход"
+  },
+  "localeSwitcher": {
+    "label": "Язык"
+  },
+  "common": {
+    "loading": "Загружаем...",
+    "cancel": "Отмена",
+    "back": "← Назад",
+    "forward": "Вперед →",
+    "pageOf": "Страница {page} из {total}",
+    "close": "Закрыть"
+  },
+  "home": {
+    "kicker": "поиск попутчиков",
+    "titleLine1": "С кем поедешь",
+    "titleLine2": "в этот раз? 🛩",
+    "emptyTitle": "Пока ничего не нашлось",
+    "emptyText": "Измените фильтры или создайте первое объявление.",
+    "createListing": "Создать объявление"
+  },
+  "filters": {
+    "whoTab": "Кого вы ищете?",
+    "whereTab": "Откуда - Куда",
+    "datesTab": "Даты путешествия",
+    "anyCompanion": "Любого попутчика",
+    "anyTourism": "Любой тип отдыха",
+    "fromCountry": "Откуда - Страна",
+    "fromCity": "Откуда - Город",
+    "toCountry": "Куда - Страна",
+    "toCity": "Куда - Город",
+    "fromDate": "От даты",
+    "toDate": "До даты",
+    "clear": "Очистить",
+    "search": "Найти попутчиков"
+  },
+  "listing": {
+    "traveler": "Путешественник",
+    "upTo": "до ${amount}",
+    "budgetUpTo": "Бюджет: до ${amount}",
+    "meetLocationHeading": "Локация на карте, где можем встретиться"
+  },
+  "favorites": {
+    "title": "Избранное",
+    "needLogin": "Пожалуйста, войдите в аккаунт",
+    "login": "Войти",
+    "emptyTitle": "Здесь пока пусто",
+    "emptyText": "Сохраняйте объявления кнопкой «☆ В избранное».",
+    "browse": "Смотреть объявления",
+    "removeTitle": "Удалить из избранного"
+  },
+  "map": {
+    "heading": "Попутчики на карте",
+    "subtitle": "Показаны только те, кто разрешил отображение своей локации. Всего: {count}",
+    "dates": "Даты:",
+    "budget": "Бюджет:",
+    "perPerson": "${amount}/человек",
+    "description": "Описание",
+    "viewListing": "Посмотреть объявление →",
+    "here": "Здесь"
+  },
+  "chat": {
+    "sidebarTitle": "Сообщения",
+    "noConversations": "Диалогов пока нет. Откройте объявление и нажмите «Написать сообщение».",
+    "noMessages": "Нет сообщений",
+    "placeholder": "Написать {name}…",
+    "send": "Отправить",
+    "chooseConversation": "Выберите диалог",
+    "chooseConversationHint": "или напишите кому-нибудь со страницы объявления"
+  },
+  "cabinet": {
+    "profileSettings": "Настройки профиля",
+    "newListing": "+ Новое объявление",
+    "myListings": "Мои объявления",
+    "noListingsTitle": "У вас пока нет объявлений",
+    "noListingsText": "Расскажите, куда вы собираетесь — и найдите компанию.",
+    "createListing": "Создать объявление",
+    "active": "Активно",
+    "hidden": "Скрыто",
+    "edit": "Редактировать",
+    "delete": "Удалить"
+  },
+  "listingForm": {
+    "newTitle": "Новое объявление",
+    "newSubtitle": "Расскажите о поездке — и попутчики вас найдут.",
+    "editTitle": "Редактировать объявление",
+    "editSubtitle": "Обновите информацию о вашей поездке.",
+    "loadingListing": "Загружаем объявление…",
+    "whoAmI": "Кто я *",
+    "chooseWho": "Выберите кто вы",
+    "whoSearch": "Кого я ищу *",
+    "chooseWhom": "Выберите кого ищете",
+    "fromCountry": "Откуда — страна *",
+    "chooseCountry": "Выберите страну",
+    "fromCity": "Откуда — город *",
+    "chooseCity": "Выберите город",
+    "toCountry": "Куда — страна *",
+    "toCity": "Куда — город *",
+    "tourismType": "Тип отдыха *",
+    "chooseTourism": "Выберите тип отдыха",
+    "budgetLabel": "Бюджет, $ (на человека)",
+    "dateFrom": "С даты *",
+    "dateTo": "По дату *",
+    "description": "Описание *",
+    "descriptionPlaceholder": "Маршрут, планы, что ожидаете от попутчика…",
+    "photo": "Фотография *",
+    "uploading": "Загружаем…",
+    "replacePhoto": "Заменить фото",
+    "uploadPhoto": "Загрузить фото",
+    "markLocation": "Отметить локацию где можем встретиться",
+    "locationSelected": "✓ Локация выбрана: {lat}, {lng}",
+    "publish": "Опубликовать объявление",
+    "publishing": "Публикуем…",
+    "saveChanges": "Сохранить изменения",
+    "saving": "Сохраняем…",
+    "authRequired": "Необходимо авторизоваться",
+    "photoUploadError": "Ошибка загрузки фото: {error}",
+    "unknownError": "неизвестная ошибка",
+    "notFound": "Объявление не найдено",
+    "loadError": "Ошибка загрузки объявления"
+  },
+  "profile": {
+    "loading": "Загрузка профиля…",
+    "title": "Мой профиль",
+    "subtitle": "Расскажите о себе — как на странице в соцсети.",
+    "uploadPhoto": "Загрузить фото",
+    "name": "Имя",
+    "gender": "Пол",
+    "male": "Мужчина",
+    "female": "Женщина",
+    "other": "Не указывать",
+    "country": "Страна",
+    "city": "Город",
+    "bio": "О себе",
+    "bioPlaceholder": "Интересы, стиль путешествий, языки…",
+    "save": "Сохранить профиль",
+    "saving": "Сохраняем…",
+    "saved": "Сохранено ✓",
+    "saveError": "Ошибка сохранения",
+    "cityNotSet": "Город не указан",
+    "uploadError": "Не удалось загрузить фото",
+    "countryPlaceholder": "Казахстан",
+    "cityPlaceholder": "Алматы"
+  },
+  "auth": {
+    "loginTitle": "Вход",
+    "loginSubtitle": "С возвращением! Куда едем сегодня?",
+    "email": "Email",
+    "password": "Пароль",
+    "loginBtn": "Войти",
+    "loggingIn": "Входим…",
+    "noAccount": "Нет аккаунта?",
+    "registerLink": "Регистрация",
+    "wrongCreds": "Неверный email или пароль",
+    "registerTitle": "Регистрация",
+    "registerSubtitle": "Создайте аккаунт, чтобы искать попутчиков.",
+    "nameLabel": "Имя *",
+    "emailLabel": "Email *",
+    "passwordLabel": "Пароль *",
+    "passwordMin": "Минимум 6 символов",
+    "confirmPassword": "Подтвердите пароль *",
+    "repeatPassword": "Повторите пароль",
+    "passwordsMismatch": "Пароли не совпадают",
+    "createAccount": "Создать аккаунт",
+    "creating": "Создаём…",
+    "haveAccount": "Уже есть аккаунт?",
+    "loginLink": "Войти",
+    "namePlaceholder": "Айбол"
+  },
+  "confirm": {
+    "deleteListingTitle": "Удалить объявление?",
+    "deleteListingMessage": "Вы действительно хотите удалить данное объявление? Это действие нельзя отменить.",
+    "deleteYes": "Да, удалить",
+    "cancel": "Отмена"
+  },
+  "notif": {
+    "addedToFavorites": "✓ Добавилось в Избранное"
+  },
+  "favoriteButton": {
+    "inFavorites": "⭐ В избранном",
+    "addToFavorites": "⭐ В избранное"
+  },
+  "startChat": {
+    "locked": "🔒 Пользователь закрыл личные сообщения",
+    "opening": "Открываем чат…",
+    "writeMessage": "💌 Написать сообщение"
+  }
+}

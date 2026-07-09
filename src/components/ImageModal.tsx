@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface ImageModalProps {
   src: string;
@@ -9,6 +10,7 @@ interface ImageModalProps {
 }
 
 export default function ImageModal({ src, alt }: ImageModalProps) {
+  const t = useTranslations('common');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -35,7 +37,7 @@ export default function ImageModal({ src, alt }: ImageModalProps) {
           <button
             onClick={() => setIsOpen(false)}
             className="absolute top-6 right-6 z-[10000] rounded-lg bg-white/20 p-2 hover:bg-white/30 transition-colors"
-            aria-label="Закрыть"
+            aria-label={t('close')}
           >
             <svg
               className="h-6 w-6 text-white"

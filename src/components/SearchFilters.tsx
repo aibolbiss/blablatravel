@@ -1,9 +1,13 @@
 'use client';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useRouter } from '@/i18n/navigation';
 import { companionTypesSearch, companionEmojis, tourismTypes, tourismEmojis, sortedDestinationCountries, destinationCountries, destinationCities, type CompanionType, type TourismType } from '@/lib/travel-data';
+import { startNavLoading } from '@/lib/navLoading';
 
 export default function SearchFilters() {
+  const t = useTranslations('filters');
   const router = useRouter();
   const params = useSearchParams();
   const [activeTab, setActiveTab] = useState('companion');
@@ -13,7 +17,6 @@ export default function SearchFilters() {
   const [toCountry, setToCountry] = useState(params.get('to_country') ?? '');
   const [toCity, setToCity] = useState(params.get('to_city') ?? '');
   const [tourism, setTourism] = useState(params.get('tourism') ?? '');
-  const [budgetMax, setBudgetMax] = useState(params.get('budget_max') ?? '');
   const [dateFrom, setDateFrom] = useState(params.get('date_from') ?? '');
   const [dateTo, setDateTo] = useState(params.get('date_to') ?? '');
 
@@ -28,9 +31,9 @@ export default function SearchFilters() {
     if (toCountry) p.set('to_country', toCountry);
     if (toCity) p.set('to_city', toCity);
     if (tourism) p.set('tourism', tourism);
-    if (budgetMax) p.set('budget_max', budgetMax);
     if (dateFrom) p.set('date_from', dateFrom);
     if (dateTo) p.set('date_to', dateTo);
+    startNavLoading();
     router.push(`/?${p.toString()}`);
   }
 
@@ -41,9 +44,9 @@ export default function SearchFilters() {
     setToCountry('');
     setToCity('');
     setTourism('');
-    setBudgetMax('');
     setDateFrom('');
     setDateTo('');
+    startNavLoading();
     router.push('/');
   }
 
@@ -59,7 +62,7 @@ export default function SearchFilters() {
               : 'text-mut hover:text-ink'
           }`}
         >
-          Кого вы ищете?
+          {t('whoTab')}
         </button>
         <button
           onClick={() => setActiveTab('location')}
@@ -69,7 +72,7 @@ export default function SearchFilters() {
               : 'text-mut hover:text-ink'
           }`}
         >
-          Откуда - Куда
+          {t('whereTab')}
         </button>
         <button
           onClick={() => setActiveTab('dates')}
@@ -79,7 +82,7 @@ export default function SearchFilters() {
               : 'text-mut hover:text-ink'
           }`}
         >
-          Даты путешествия
+          {t('datesTab')}
         </button>
       </div>
 
@@ -87,27 +90,21 @@ export default function SearchFilters() {
       <div className="p-4">
         {/* Companion Tab */}
         {activeTab === 'companion' && (
-          <div className="space-y-3">
-            <div>
-              <select className="input" value={companion} onChange={(e) => setCompanion(e.target.value)}>
-                <option value="">Любого попутчика</option>
-                {Object.entries(companionTypesSearch).map(([key, label]) => {
-                  const emoji = companionEmojis[key as CompanionType] || '';
-                  return <option key={key} value={emoji}>{label}</option>;
-                })}
-              </select>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <select className="input" value={tourism} onChange={(e) => setTourism(e.target.value)}>
-                <option value="">Любой тип отдыха</option>
-                {Object.entries(tourismTypes).map(([key, label]) => {
-                  const emoji = tourismEmojis[key as TourismType] || '';
-                  return <option key={key} value={emoji}>{label}</option>;
-                })}
-              </select>
-              <input className="input" type="number" min={0} placeholder="Бюджет до, $"
-                value={budgetMax} onChange={(e) => setBudgetMax(e.target.value)} />
-            </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <select className="input" value={companion} onChange={(e) => setCompanion(e.target.value)}>
+              <option value="">{t('anyCompanion')}</option>
+              {Object.entries(companionTypesSearch).map(([key, label]) => {
+                const emoji = companionEmojis[key as CompanionType] || '';
+                return <option key={key} value={emoji}>{label}</option>;
+              })}
+            </select>
+            <select className="input" value={tourism} onChange={(e) => setTourism(e.target.value)}>
+              <option value="">{t('anyTourism')}</option>
+              {Object.entries(tourismTypes).map(([key, label]) => {
+                const emoji = tourismEmojis[key as TourismType] || '';
+                return <option key={key} value={emoji}>{label}</option>;
+              })}
+            </select>
           </div>
         )}
 
@@ -118,14 +115,14 @@ export default function SearchFilters() {
               setCountry(e.target.value);
               setCity('');
             }}>
-              <option value="">Откуда - Страна</option>
+              <option value="">{t('fromCountry')}</option>
               {sortedDestinationCountries.map((c) => (
                 <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
               ))}
             </select>
-            
+
             <select className="input" value={city} onChange={(e) => setCity(e.target.value)} disabled={!country}>
-              <option value="">Откуда - Город</option>
+              <option value="">{t('fromCity')}</option>
               {cities.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
@@ -135,14 +132,14 @@ export default function SearchFilters() {
               setToCountry(e.target.value);
               setToCity('');
             }}>
-              <option value="">Куда - Страна</option>
+              <option value="">{t('toCountry')}</option>
               {sortedDestinationCountries.map((c) => (
                 <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
               ))}
             </select>
-            
+
             <select className="input" value={toCity} onChange={(e) => setToCity(e.target.value)} disabled={!toCountry}>
-              <option value="">Куда - Город</option>
+              <option value="">{t('toCity')}</option>
               {toCities.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
@@ -153,10 +150,10 @@ export default function SearchFilters() {
         {/* Dates Tab */}
         {activeTab === 'dates' && (
           <div className="grid gap-3 sm:grid-cols-2">
-            <input className="input" type="date" placeholder="От даты"
+            <input className="input" type="date" placeholder={t('fromDate')}
               value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-            <input className="input" type="date" placeholder="До даты"
-              value={dateTo} onChange={(e) => setDateTo(e.target.value)} 
+            <input className="input" type="date" placeholder={t('toDate')}
+              value={dateTo} onChange={(e) => setDateTo(e.target.value)}
               min={dateFrom} />
           </div>
         )}
@@ -164,14 +161,14 @@ export default function SearchFilters() {
 
       {/* Buttons */}
       <div className="flex gap-3 border-t border-line p-4">
-        <button 
+        <button
           className="flex-1 rounded-lg border border-line bg-white px-4 py-2 font-medium text-ink transition hover:bg-route-light"
           onClick={clearAll}
         >
-          Очистить
+          {t('clear')}
         </button>
         <button className="flex-1 btn-primary" onClick={apply}>
-          Найти попутчиков
+          {t('search')}
         </button>
       </div>
     </div>

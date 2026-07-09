@@ -1,12 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Suspense, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import LogoutButton from './LogoutButton';
 import MobileNav from './MobileNav';
+import LocaleSwitcher from './LocaleSwitcher';
 
 export default function Header() {
+  const t = useTranslations('nav');
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,32 +36,36 @@ export default function Header() {
 
           {/* Десктопная навигация */}
           <div className="hidden md:ml-auto md:flex items-center gap-3">
-            <Link href="/map" className="text-lg hover:opacity-70" title="Карта">🗺️</Link>
+            <Link href="/map" className="text-lg hover:opacity-70" title={t('map')}>🗺️</Link>
             {user && (
               <>
-                <Link href="/chat" className="text-lg hover:opacity-70" title="Сообщения">💬</Link>
-                <Link href="/favorites" className="text-lg hover:opacity-70" title="Избранное">⭐</Link>
+                <Link href="/chat" className="text-lg hover:opacity-70" title={t('messages')}>💬</Link>
+                <Link href="/favorites" className="text-lg hover:opacity-70" title={t('favorites')}>⭐</Link>
               </>
             )}
+            <Suspense fallback={null}>
+              <LocaleSwitcher />
+            </Suspense>
             {user ? (
               <>
-                <Link href="/cabinet" className="btn-ghost">Профиль</Link>
+                <Link href="/cabinet" className="btn-ghost">{t('profile')}</Link>
                 <LogoutButton />
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="btn-ghost">Войти</Link>
-                <Link href="/auth/register" className="btn-primary">Регистрация</Link>
+                <Link href="/auth/login" className="btn-ghost">{t('login')}</Link>
+                <Link href="/auth/register" className="btn-primary">{t('register')}</Link>
               </>
             )}
           </div>
 
-          {/* Кнопка выхода на мобильной версии */}
-          {user && (
-            <div className="md:hidden">
-              <LogoutButton />
-            </div>
-          )}
+          {/* Переключатель языка и выход на мобильной версии */}
+          <div className="flex items-center gap-1 md:hidden">
+            <Suspense fallback={null}>
+              <LocaleSwitcher />
+            </Suspense>
+            {user && <LogoutButton />}
+          </div>
         </div>
       </header>
 

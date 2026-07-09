@@ -1,9 +1,15 @@
+'use client';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ListingCardData, GENDER_LABEL } from '@/lib/types';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import { ListingCardData } from '@/lib/types';
 
 export default function ListingCard({ listing }: { listing: ListingCardData }) {
+  const locale = useLocale();
+  const t = useTranslations('listing');
+  const tProfile = useTranslations('profile');
   const p = listing.profiles;
+  const genderLabel = p ? (p.gender === 'male' ? tProfile('male') : p.gender === 'female' ? tProfile('female') : tProfile('other')) : '';
   return (
     <Link
       href={`/listing/${listing.id}`}
@@ -19,7 +25,7 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
         )}
         {listing.budget != null && (
           <span className="absolute right-3 top-3 rounded-full bg-night/80 px-3 py-1 text-xs font-semibold text-white">
-            до ${listing.budget}
+            {t('upTo', { amount: listing.budget })}
           </span>
         )}
       </div>
@@ -33,8 +39,8 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
             )}
           </div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold">{p?.name ?? 'Путешественник'}</p>
-            <p className="text-xs text-mut">{p ? GENDER_LABEL[p.gender] : ''}</p>
+            <p className="truncate text-sm font-semibold">{p?.name ?? t('traveler')}</p>
+            <p className="text-xs text-mut">{genderLabel}</p>
           </div>
         </div>
         <h3 className="mt-3 line-clamp-2 font-display text-sm font-medium leading-snug">
@@ -51,8 +57,8 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
         </div>
         {listing.date_from && (
           <p className="mt-1.5 text-xs text-mut">
-            📅 {new Date(listing.date_from).toLocaleDateString('ru-RU')}
-            {listing.date_to ? ` — ${new Date(listing.date_to).toLocaleDateString('ru-RU')}` : ''}
+            📅 {new Date(listing.date_from).toLocaleDateString(locale)}
+            {listing.date_to ? ` — ${new Date(listing.date_to).toLocaleDateString(locale)}` : ''}
           </p>
         )}
       </div>

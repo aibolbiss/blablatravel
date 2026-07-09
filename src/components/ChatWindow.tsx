@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
 import LoadingSpinner from './LoadingSpinner';
@@ -13,6 +14,8 @@ export default function ChatWindow({
   other: Profile;
   initialMessages: Message[];
 }) {
+  const t = useTranslations('chat');
+  const locale = useLocale();
   const supabase = createClient();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [text, setText] = useState('');
@@ -100,7 +103,7 @@ export default function ChatWindow({
               {isDifferentDay && (
                 <div className="flex items-center justify-center gap-2 my-4">
                   <div className="flex-1 h-px bg-line" />
-                  <p className="text-xs text-mut">{curr.toLocaleDateString('ru-RU')}</p>
+                  <p className="text-xs text-mut">{curr.toLocaleDateString(locale)}</p>
                   <div className="flex-1 h-px bg-line" />
                 </div>
               )}
@@ -110,7 +113,7 @@ export default function ChatWindow({
                 }`}>
                   <p className="whitespace-pre-wrap break-words">{m.content}</p>
                   <p className={`mt-0.5 text-right text-[10px] ${mine ? 'text-white/60' : 'text-mut'}`}>
-                    {curr.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                    {curr.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
               </div>
@@ -123,13 +126,13 @@ export default function ChatWindow({
       <div className="flex gap-2 border-t border-line p-3">
         <input
           className="input"
-          placeholder={`Написать ${other.name}…`}
+          placeholder={t('placeholder', { name: other.name })}
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && send()}
         />
         <button className="btn-primary shrink-0" onClick={send} disabled={sending || !text.trim()}>
-          Отправить
+          {t('send')}
         </button>
       </div>
       {sending && <LoadingSpinner />}

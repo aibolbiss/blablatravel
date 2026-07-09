@@ -1,10 +1,12 @@
+'use client';
 import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ListingMapData, GENDER_LABEL } from '@/lib/types';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import { ListingMapData } from '@/lib/types';
 
 const icon = L.divIcon({
   className: '',
@@ -51,8 +53,13 @@ export default function MapView({
   zoom?: number;
   onPick?: (lat: number, lng: number) => void;
 }) {
+  const t = useTranslations('map');
+  const tListing = useTranslations('listing');
+  const tProfile = useTranslations('profile');
+  const locale = useLocale();
   const [selectedListing, setSelectedListing] = useState<ListingMapData | null>(null);
   const p = selectedListing?.profiles;
+  const genderLabel = p ? (p.gender === 'male' ? tProfile('male') : p.gender === 'female' ? tProfile('female') : tProfile('other')) : '';
 
   return (
     <>
@@ -95,8 +102,8 @@ export default function MapView({
                   )}
                 </div>
                 <div>
-                  <p className="font-semibold">{p?.name ?? 'Путешественник'}</p>
-                  <p className="text-sm text-mut">{p ? GENDER_LABEL[p.gender] : ''}</p>
+                  <p className="font-semibold">{p?.name ?? tListing('traveler')}</p>
+                  <p className="text-sm text-mut">{genderLabel}</p>
                 </div>
               </div>
 
@@ -110,31 +117,31 @@ export default function MapView({
                 </div>
                 {selectedListing.date_from && (
                   <div className="flex gap-2">
-                    <span className="font-medium">Даты:</span>
+                    <span className="font-medium">{t('dates')}</span>
                     <span>
-                      📅 {new Date(selectedListing.date_from).toLocaleDateString('ru-RU')}
-                      {selectedListing.date_to ? ` — ${new Date(selectedListing.date_to).toLocaleDateString('ru-RU')}` : ''}
+                      📅 {new Date(selectedListing.date_from).toLocaleDateString(locale)}
+                      {selectedListing.date_to ? ` — ${new Date(selectedListing.date_to).toLocaleDateString(locale)}` : ''}
                     </span>
                   </div>
                 )}
                 {selectedListing.budget && (
                   <div className="flex gap-2">
-                    <span className="font-medium">Бюджет:</span>
-                    <span>${selectedListing.budget}/человек</span>
+                    <span className="font-medium">{t('budget')}</span>
+                    <span>{t('perPerson', { amount: selectedListing.budget })}</span>
                   </div>
                 )}
               </div>
 
               {selectedListing.description && (
                 <>
-                  <h3 className="mt-4 font-semibold">Описание</h3>
+                  <h3 className="mt-4 font-semibold">{t('description')}</h3>
                   <p className="mt-2 whitespace-pre-wrap text-sm text-mut">{selectedListing.description}</p>
                 </>
               )}
 
               <div className="mt-6 flex gap-3">
                 <Link href={`/listing/${selectedListing.id}`} className="btn-primary flex-1">
-                  Посмотреть объявление →
+                  {t('viewListing')}
                 </Link>
               </div>
             </div>

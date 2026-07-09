@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Poputchik — encontre um companheiro de viagem",
+    "description": "Serviço de busca de companheiros de viagem: anúncios, mapa, chat."
+  },
+  "nav": {
+    "map": "Mapa",
+    "messages": "Mensagens",
+    "favorites": "Favoritos",
+    "profile": "Perfil",
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "logout": "Sair",
+    "chats": "Conversas",
+    "mobileLogin": "Entrar"
+  },
+  "localeSwitcher": {
+    "label": "Idioma"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "cancel": "Cancelar",
+    "back": "← Voltar",
+    "forward": "Avançar →",
+    "pageOf": "Página {page} de {total}",
+    "close": "Fechar"
+  },
+  "home": {
+    "kicker": "buscar companheiros de viagem",
+    "titleLine1": "Com quem você vai viajar",
+    "titleLine2": "desta vez? 🛩",
+    "emptyTitle": "Nada encontrado ainda",
+    "emptyText": "Altere os filtros ou crie o primeiro anúncio.",
+    "createListing": "Criar anúncio"
+  },
+  "filters": {
+    "whoTab": "Quem você está procurando?",
+    "whereTab": "Origem - Destino",
+    "datesTab": "Datas da viagem",
+    "anyCompanion": "Qualquer companheiro",
+    "anyTourism": "Qualquer tipo de viagem",
+    "fromCountry": "Origem - País",
+    "fromCity": "Origem - Cidade",
+    "toCountry": "Destino - País",
+    "toCity": "Destino - Cidade",
+    "fromDate": "A partir de",
+    "toDate": "Até",
+    "clear": "Limpar",
+    "search": "Buscar companheiros"
+  },
+  "listing": {
+    "traveler": "Viajante",
+    "upTo": "até ${amount}",
+    "budgetUpTo": "Orçamento: até ${amount}",
+    "meetLocationHeading": "Ponto de encontro no mapa"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "needLogin": "Por favor, faça login na sua conta",
+    "login": "Entrar",
+    "emptyTitle": "Ainda não há nada aqui",
+    "emptyText": "Salve anúncios com o botão «☆ Adicionar aos favoritos».",
+    "browse": "Ver anúncios",
+    "removeTitle": "Remover dos favoritos"
+  },
+  "map": {
+    "heading": "Companheiros no mapa",
+    "subtitle": "Só são exibidos os que permitiram mostrar sua localização. Total: {count}",
+    "dates": "Datas:",
+    "budget": "Orçamento:",
+    "perPerson": "${amount}/pessoa",
+    "description": "Descrição",
+    "viewListing": "Ver anúncio →",
+    "here": "Aqui"
+  },
+  "chat": {
+    "sidebarTitle": "Mensagens",
+    "noConversations": "Ainda não há conversas. Abra um anúncio e clique em «Enviar mensagem».",
+    "noMessages": "Sem mensagens",
+    "placeholder": "Escrever para {name}…",
+    "send": "Enviar",
+    "chooseConversation": "Selecione uma conversa",
+    "chooseConversationHint": "ou escreva para alguém a partir da página de um anúncio"
+  },
+  "cabinet": {
+    "profileSettings": "Configurações do perfil",
+    "newListing": "+ Novo anúncio",
+    "myListings": "Meus anúncios",
+    "noListingsTitle": "Você ainda não tem anúncios",
+    "noListingsText": "Conte para onde você vai — e encontre companhia.",
+    "createListing": "Criar anúncio",
+    "active": "Ativo",
+    "hidden": "Oculto",
+    "edit": "Editar",
+    "delete": "Excluir"
+  },
+  "listingForm": {
+    "newTitle": "Novo anúncio",
+    "newSubtitle": "Conte sobre sua viagem — e companheiros vão te encontrar.",
+    "editTitle": "Editar anúncio",
+    "editSubtitle": "Atualize as informações da sua viagem.",
+    "loadingListing": "Carregando anúncio…",
+    "whoAmI": "Quem sou eu *",
+    "chooseWho": "Escolha quem você é",
+    "whoSearch": "Quem estou procurando *",
+    "chooseWhom": "Escolha quem você procura",
+    "fromCountry": "Origem — País *",
+    "chooseCountry": "Escolha um país",
+    "fromCity": "Origem — Cidade *",
+    "chooseCity": "Escolha uma cidade",
+    "toCountry": "Destino — País *",
+    "toCity": "Destino — Cidade *",
+    "tourismType": "Tipo de viagem *",
+    "chooseTourism": "Escolha o tipo de viagem",
+    "budgetLabel": "Orçamento, $ (por pessoa)",
+    "dateFrom": "A partir de *",
+    "dateTo": "Até *",
+    "description": "Descrição *",
+    "descriptionPlaceholder": "Roteiro, planos, o que você espera de um companheiro…",
+    "photo": "Foto *",
+    "uploading": "Enviando…",
+    "replacePhoto": "Trocar foto",
+    "uploadPhoto": "Enviar foto",
+    "markLocation": "Marcar um local para nos encontrarmos",
+    "locationSelected": "✓ Localização selecionada: {lat}, {lng}",
+    "publish": "Publicar anúncio",
+    "publishing": "Publicando…",
+    "saveChanges": "Salvar alterações",
+    "saving": "Salvando…",
+    "authRequired": "É necessário fazer login",
+    "photoUploadError": "Erro ao enviar a foto: {error}",
+    "unknownError": "erro desconhecido",
+    "notFound": "Anúncio não encontrado",
+    "loadError": "Erro ao carregar o anúncio"
+  },
+  "profile": {
+    "loading": "Carregando perfil…",
+    "title": "Meu perfil",
+    "subtitle": "Conte sobre você — como em uma página de rede social.",
+    "uploadPhoto": "Enviar foto",
+    "name": "Nome",
+    "gender": "Gênero",
+    "male": "Masculino",
+    "female": "Feminino",
+    "other": "Prefiro não dizer",
+    "country": "País",
+    "city": "Cidade",
+    "bio": "Sobre mim",
+    "bioPlaceholder": "Interesses, estilo de viagem, idiomas…",
+    "save": "Salvar perfil",
+    "saving": "Salvando…",
+    "saved": "Salvo ✓",
+    "saveError": "Erro ao salvar",
+    "cityNotSet": "Cidade não informada",
+    "uploadError": "Não foi possível enviar a foto",
+    "countryPlaceholder": "Cazaquistão",
+    "cityPlaceholder": "Almaty"
+  },
+  "auth": {
+    "loginTitle": "Entrar",
+    "loginSubtitle": "Bem-vindo de volta! Para onde vamos hoje?",
+    "email": "Email",
+    "password": "Senha",
+    "loginBtn": "Entrar",
+    "loggingIn": "Entrando…",
+    "noAccount": "Não tem uma conta?",
+    "registerLink": "Cadastre-se",
+    "wrongCreds": "Email ou senha incorretos",
+    "registerTitle": "Cadastrar",
+    "registerSubtitle": "Crie uma conta para buscar companheiros de viagem.",
+    "nameLabel": "Nome *",
+    "emailLabel": "Email *",
+    "passwordLabel": "Senha *",
+    "passwordMin": "Mínimo de 6 caracteres",
+    "confirmPassword": "Confirme a senha *",
+    "repeatPassword": "Repita a senha",
+    "passwordsMismatch": "As senhas não coincidem",
+    "createAccount": "Criar conta",
+    "creating": "Criando…",
+    "haveAccount": "Já tem uma conta?",
+    "loginLink": "Entrar",
+    "namePlaceholder": "Aibol"
+  },
+  "confirm": {
+    "deleteListingTitle": "Excluir anúncio?",
+    "deleteListingMessage": "Tem certeza de que deseja excluir este anúncio? Esta ação não pode ser desfeita.",
+    "deleteYes": "Sim, excluir",
+    "cancel": "Cancelar"
+  },
+  "notif": {
+    "addedToFavorites": "✓ Adicionado aos favoritos"
+  },
+  "favoriteButton": {
+    "inFavorites": "⭐ Nos favoritos",
+    "addToFavorites": "⭐ Adicionar aos favoritos"
+  },
+  "startChat": {
+    "locked": "🔒 Este usuário desativou as mensagens diretas",
+    "opening": "Abrindo conversa…",
+    "writeMessage": "💌 Enviar mensagem"
+  }
+}

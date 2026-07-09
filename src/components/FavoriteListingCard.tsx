@@ -5,8 +5,10 @@ import ListingCard from './ListingCard';
 import { Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function FavoriteListingCard({ listing }: { listing: ListingCardData }) {
+  const t = useTranslations('favorites');
   const [isDeleting, setIsDeleting] = useState(false);
   const supabase = createClient();
 
@@ -36,7 +38,7 @@ export default function FavoriteListingCard({ listing }: { listing: ListingCardD
         onClick={handleDelete}
         disabled={isDeleting}
         className="absolute right-2 top-2 rounded-full bg-night/80 p-2 text-white transition hover:bg-night/90 disabled:opacity-50"
-        title="Удалить из избранного"
+        title={t('removeTitle')}
       >
         <Trash2 size={18} />
       </button>

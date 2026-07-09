@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "title": "Poputchik — encuentra un compañero de viaje",
+    "description": "Servicio para encontrar compañeros de viaje: anuncios, mapa, chat."
+  },
+  "nav": {
+    "map": "Mapa",
+    "messages": "Mensajes",
+    "favorites": "Favoritos",
+    "profile": "Perfil",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "chats": "Chats",
+    "mobileLogin": "Entrar"
+  },
+  "localeSwitcher": {
+    "label": "Idioma"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "cancel": "Cancelar",
+    "back": "← Atrás",
+    "forward": "Siguiente →",
+    "pageOf": "Página {page} de {total}",
+    "close": "Cerrar"
+  },
+  "home": {
+    "kicker": "buscar compañeros de viaje",
+    "titleLine1": "¿Con quién viajarás",
+    "titleLine2": "esta vez? 🛩",
+    "emptyTitle": "Todavía no hay resultados",
+    "emptyText": "Cambia los filtros o crea el primer anuncio.",
+    "createListing": "Crear anuncio"
+  },
+  "filters": {
+    "whoTab": "¿A quién buscas?",
+    "whereTab": "Origen - Destino",
+    "datesTab": "Fechas del viaje",
+    "anyCompanion": "Cualquier compañero",
+    "anyTourism": "Cualquier tipo de viaje",
+    "fromCountry": "Origen - País",
+    "fromCity": "Origen - Ciudad",
+    "toCountry": "Destino - País",
+    "toCity": "Destino - Ciudad",
+    "fromDate": "Desde",
+    "toDate": "Hasta",
+    "clear": "Limpiar",
+    "search": "Buscar compañeros"
+  },
+  "listing": {
+    "traveler": "Viajero",
+    "upTo": "hasta ${amount}",
+    "budgetUpTo": "Presupuesto: hasta ${amount}",
+    "meetLocationHeading": "Lugar de encuentro en el mapa"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "needLogin": "Por favor, inicia sesión",
+    "login": "Iniciar sesión",
+    "emptyTitle": "Aquí no hay nada todavía",
+    "emptyText": "Guarda anuncios con el botón «☆ Añadir a favoritos».",
+    "browse": "Ver anuncios",
+    "removeTitle": "Quitar de favoritos"
+  },
+  "map": {
+    "heading": "Compañeros en el mapa",
+    "subtitle": "Solo se muestran quienes permitieron compartir su ubicación. Total: {count}",
+    "dates": "Fechas:",
+    "budget": "Presupuesto:",
+    "perPerson": "${amount}/persona",
+    "description": "Descripción",
+    "viewListing": "Ver anuncio →",
+    "here": "Aquí"
+  },
+  "chat": {
+    "sidebarTitle": "Mensajes",
+    "noConversations": "Aún no hay conversaciones. Abre un anuncio y pulsa «Enviar mensaje».",
+    "noMessages": "Sin mensajes",
+    "placeholder": "Escribir a {name}…",
+    "send": "Enviar",
+    "chooseConversation": "Selecciona una conversación",
+    "chooseConversationHint": "o escribe a alguien desde la página de un anuncio"
+  },
+  "cabinet": {
+    "profileSettings": "Configuración del perfil",
+    "newListing": "+ Nuevo anuncio",
+    "myListings": "Mis anuncios",
+    "noListingsTitle": "Todavía no tienes anuncios",
+    "noListingsText": "Cuenta adónde vas — y encuentra compañía.",
+    "createListing": "Crear anuncio",
+    "active": "Activo",
+    "hidden": "Oculto",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "listingForm": {
+    "newTitle": "Nuevo anuncio",
+    "newSubtitle": "Cuéntanos sobre tu viaje — y los compañeros te encontrarán.",
+    "editTitle": "Editar anuncio",
+    "editSubtitle": "Actualiza la información de tu viaje.",
+    "loadingListing": "Cargando anuncio…",
+    "whoAmI": "Quién soy *",
+    "chooseWho": "Elige quién eres",
+    "whoSearch": "A quién busco *",
+    "chooseWhom": "Elige a quién buscas",
+    "fromCountry": "Origen — País *",
+    "chooseCountry": "Elige un país",
+    "fromCity": "Origen — Ciudad *",
+    "chooseCity": "Elige una ciudad",
+    "toCountry": "Destino — País *",
+    "toCity": "Destino — Ciudad *",
+    "tourismType": "Tipo de viaje *",
+    "chooseTourism": "Elige el tipo de viaje",
+    "budgetLabel": "Presupuesto, $ (por persona)",
+    "dateFrom": "Desde *",
+    "dateTo": "Hasta *",
+    "description": "Descripción *",
+    "descriptionPlaceholder": "Ruta, planes, qué esperas de un compañero…",
+    "photo": "Foto *",
+    "uploading": "Subiendo…",
+    "replacePhoto": "Cambiar foto",
+    "uploadPhoto": "Subir foto",
+    "markLocation": "Marca un lugar donde podamos encontrarnos",
+    "locationSelected": "✓ Ubicación seleccionada: {lat}, {lng}",
+    "publish": "Publicar anuncio",
+    "publishing": "Publicando…",
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando…",
+    "authRequired": "Debes iniciar sesión",
+    "photoUploadError": "Error al subir la foto: {error}",
+    "unknownError": "error desconocido",
+    "notFound": "Anuncio no encontrado",
+    "loadError": "Error al cargar el anuncio"
+  },
+  "profile": {
+    "loading": "Cargando perfil…",
+    "title": "Mi perfil",
+    "subtitle": "Cuéntanos sobre ti — como en una red social.",
+    "uploadPhoto": "Subir foto",
+    "name": "Nombre",
+    "gender": "Género",
+    "male": "Hombre",
+    "female": "Mujer",
+    "other": "Prefiero no decirlo",
+    "country": "País",
+    "city": "Ciudad",
+    "bio": "Sobre mí",
+    "bioPlaceholder": "Intereses, estilo de viaje, idiomas…",
+    "save": "Guardar perfil",
+    "saving": "Guardando…",
+    "saved": "Guardado ✓",
+    "saveError": "Error al guardar",
+    "cityNotSet": "Ciudad no especificada",
+    "uploadError": "No se pudo subir la foto",
+    "countryPlaceholder": "Kazajistán",
+    "cityPlaceholder": "Almaty"
+  },
+  "auth": {
+    "loginTitle": "Iniciar sesión",
+    "loginSubtitle": "¡Bienvenido de nuevo! ¿Adónde vamos hoy?",
+    "email": "Email",
+    "password": "Contraseña",
+    "loginBtn": "Iniciar sesión",
+    "loggingIn": "Entrando…",
+    "noAccount": "¿No tienes cuenta?",
+    "registerLink": "Regístrate",
+    "wrongCreds": "Email o contraseña incorrectos",
+    "registerTitle": "Registrarse",
+    "registerSubtitle": "Crea una cuenta para buscar compañeros de viaje.",
+    "nameLabel": "Nombre *",
+    "emailLabel": "Email *",
+    "passwordLabel": "Contraseña *",
+    "passwordMin": "Mínimo 6 caracteres",
+    "confirmPassword": "Confirma la contraseña *",
+    "repeatPassword": "Repite la contraseña",
+    "passwordsMismatch": "Las contraseñas no coinciden",
+    "createAccount": "Crear cuenta",
+    "creating": "Creando…",
+    "haveAccount": "¿Ya tienes cuenta?",
+    "loginLink": "Iniciar sesión",
+    "namePlaceholder": "Aibol"
+  },
+  "confirm": {
+    "deleteListingTitle": "¿Eliminar el anuncio?",
+    "deleteListingMessage": "¿Seguro que quieres eliminar este anuncio? Esta acción no se puede deshacer.",
+    "deleteYes": "Sí, eliminar",
+    "cancel": "Cancelar"
+  },
+  "notif": {
+    "addedToFavorites": "✓ Añadido a favoritos"
+  },
+  "favoriteButton": {
+    "inFavorites": "⭐ En favoritos",
+    "addToFavorites": "⭐ Añadir a favoritos"
+  },
+  "startChat": {
+    "locked": "🔒 Este usuario ha desactivado los mensajes directos",
+    "opening": "Abriendo chat…",
+    "writeMessage": "💌 Enviar mensaje"
+  }
+}
