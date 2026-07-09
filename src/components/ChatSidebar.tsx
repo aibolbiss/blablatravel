@@ -84,6 +84,12 @@ export default function ChatSidebar({
             <Link
               key={c.id}
               href={`/chat/${c.id}`}
+              onClick={() => {
+                // Диалог мог уже открываться раньше в этой сессии — без
+                // явного refresh переход отдаёт закэшированную страницу без
+                // самого нового сообщения, пока не обновишь вручную.
+                router.refresh();
+              }}
               className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-white/10 relative ${
                 c.id === activeId ? 'bg-white/15' : ''
               }`}
