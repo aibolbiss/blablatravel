@@ -177,7 +177,7 @@ export default function EditListingPage() {
       <h1 className="font-display text-2xl font-bold">{t('editTitle')}</h1>
       <p className="mt-1 text-sm text-mut">{t('editSubtitle')}</p>
 
-      <div className="mt-6 space-y-5 rounded-2xl border border-line bg-white p-6 shadow-card">
+      <div className="mt-6 space-y-5 rounded-2xl border border-line bg-surface p-6 shadow-card">
         <div>
           <label className="label">{t('whoAmI')}</label>
           <select className="input" required value={myCompanionType} onChange={(e) => setMyCompanionType(e.target.value)}>

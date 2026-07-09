@@ -40,7 +40,7 @@ export default function LocaleSwitcher() {
         <Globe size={20} className="text-route" />
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-[1001] mt-2 w-44 overflow-hidden rounded-xl border border-line bg-white py-1 shadow-lg">
+        <div className="absolute right-0 top-full z-[1001] mt-2 w-44 overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-lg">
           {routing.locales.map((l) => (
             <button
               key={l}

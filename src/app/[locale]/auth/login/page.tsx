@@ -31,7 +31,7 @@ export default function LoginPage() {
     <div className="mx-auto max-w-md py-4 md:py-16">
       <h1 className="font-display text-2xl font-bold">{t('loginTitle')}</h1>
       <p className="mt-1 text-sm text-mut">{t('loginSubtitle')}</p>
-      <div className="mt-6 space-y-4 rounded-2xl border border-line bg-white p-6 shadow-card">
+      <div className="mt-6 space-y-4 rounded-2xl border border-line bg-surface p-6 shadow-card">
         <div>
           <label className="label">{t('email')}</label>
           <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('emailPlaceholder')} />

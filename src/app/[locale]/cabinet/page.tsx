@@ -59,7 +59,7 @@ export default async function CabinetPage({
 
       <h2 className="mt-8 font-display text-lg font-semibold">{t('myListings')}</h2>
       {(listings ?? []).length === 0 ? (
-        <div className="mt-4 rounded-2xl border border-dashed border-line bg-white p-10 text-center">
+        <div className="mt-4 rounded-2xl border border-dashed border-line bg-surface p-10 text-center">
           <p className="font-semibold">{t('noListingsTitle')}</p>
           <p className="mt-1 text-sm text-mut">{t('noListingsText')}</p>
           <Link href="/cabinet/listings/new" className="btn-primary mt-5">{t('createListing')}</Link>
@@ -67,7 +67,7 @@ export default async function CabinetPage({
       ) : (
         <div className="mt-4 space-y-3">
           {(listings as Listing[]).map((l) => (
-            <div key={l.id} className="flex flex-col gap-3 rounded-2xl border border-line bg-white p-4 shadow-card md:flex-row md:items-center md:justify-between">
+            <div key={l.id} className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-4 shadow-card md:flex-row md:items-center md:justify-between">
               <div className="flex gap-3 min-w-0 flex-1">
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-route-light">
                   {l.photo_url && (

@@ -88,7 +88,7 @@ export default async function HomePage({
       </Suspense>
 
       {listings.length === 0 ? (
-        <div className="mt-12 rounded-2xl border border-dashed border-line bg-white p-12 text-center">
+        <div className="mt-12 rounded-2xl border border-dashed border-line bg-surface p-12 text-center">
           <p className="text-lg font-semibold">{t('emptyTitle')}</p>
           <p className="mt-1 text-sm text-mut">{t('emptyText')}</p>
           <Link href="/cabinet/listings/new" className="btn-primary mt-5">{t('createListing')}</Link>

@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Unbounded, Onest } from 'next/font/google';
 import { routing } from '@/i18n/routing';
+import { themeInitScript } from '@/lib/theme';
 import Header from '@/components/Header';
 import RouteLoadingOverlay from '@/components/RouteLoadingOverlay';
 import '../globals.css';
@@ -38,8 +40,9 @@ export default async function RootLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${display.variable} ${body.variable}`}>
+    <html lang={locale} className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <body>
+        <Script id="theme-init" strategy="beforeInteractive">{themeInitScript}</Script>
         <NextIntlClientProvider>
           <Suspense>
             <RouteLoadingOverlay />

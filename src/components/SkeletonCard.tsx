@@ -1,6 +1,6 @@
 export default function SkeletonCard() {
   return (
-    <div className="group overflow-hidden rounded-2xl border border-line bg-white shadow-card animate-pulse">
+    <div className="group overflow-hidden rounded-2xl border border-line bg-surface shadow-card animate-pulse">
       {/* Image placeholder */}
       <div className="relative aspect-[4/3] bg-route-light/30" />
       

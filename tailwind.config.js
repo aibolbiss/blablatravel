@@ -1,16 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        bg: '#F3F6F4',
-        ink: '#14231F',
-        mut: '#5C6E67',
-        line: '#DCE5E0',
-        route: { DEFAULT: '#4D6EE3', dark: '#6a86ea', light: '#E3F0EB' },
+        bg: 'rgb(var(--color-bg) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        mut: 'rgb(var(--color-mut) / <alpha-value>)',
+        line: 'rgb(var(--color-line) / <alpha-value>)',
+        night: 'rgb(var(--color-night) / <alpha-value>)',
+        route: {
+          DEFAULT: 'rgb(var(--color-route) / <alpha-value>)',
+          dark: 'rgb(var(--color-route-dark) / <alpha-value>)',
+          light: 'rgb(var(--color-route-light) / <alpha-value>)',
+        },
         amber: { way: '#F5A524' },
-        night: '#101B18',
       },
       fontFamily: {
         display: ['var(--font-display)'],

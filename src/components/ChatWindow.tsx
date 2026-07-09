@@ -133,7 +133,7 @@ export default function ChatWindow({
   }
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card">
+    <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
       <div className="flex items-center gap-3 border-b border-line px-5 py-3">
         <button
           onClick={() => {

@@ -116,7 +116,7 @@ export default function NewListingPage() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         {/* Левая колонка - форма */}
-        <div className="lg:col-span-2 space-y-5 rounded-2xl border border-line bg-white p-6 shadow-card">
+        <div className="lg:col-span-2 space-y-5 rounded-2xl border border-line bg-surface p-6 shadow-card">
           <div>
             <label className="label">{t('whoAmI')}</label>
             <select className="input" required value={myCompanionType} onChange={(e) => setMyCompanionType(e.target.value)}>
@@ -260,7 +260,7 @@ export default function NewListingPage() {
 
         {/* Правая колонка - информация профиля */}
         {profile && (
-          <div className="rounded-2xl border border-line bg-white p-6 shadow-card h-fit">
+          <div className="rounded-2xl border border-line bg-surface p-6 shadow-card h-fit">
             <div className="space-y-4">
               {/* Фото */}
               <div className="relative h-48 w-full overflow-hidden rounded-xl bg-route-light">

@@ -40,14 +40,14 @@ export default function ConfirmModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-lg">
+      <div className="w-full max-w-sm rounded-2xl bg-surface p-6 shadow-lg">
         <h2 className="font-display text-lg font-bold">{title}</h2>
         <p className="mt-3 text-sm text-mut">{message}</p>
         <div className="mt-6 flex gap-3">
           <button
             onClick={onCancel}
             disabled={isLoading}
-            className="flex-1 rounded-lg border border-line bg-white px-4 py-2 font-medium text-ink transition hover:bg-route-light disabled:opacity-50"
+            className="flex-1 rounded-lg border border-line bg-surface px-4 py-2 font-medium text-ink transition hover:bg-route-light disabled:opacity-50"
           >
             {cancelText}
           </button>

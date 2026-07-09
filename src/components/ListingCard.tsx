@@ -15,7 +15,7 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
   return (
     <Link
       href={`/listing/${listing.id}`}
-      className="group overflow-hidden rounded-2xl border border-line bg-white shadow-card transition hover:-translate-y-0.5 hover:border-route/40"
+      className="group overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition hover:-translate-y-0.5 hover:border-route/40"
     >
       <div className="relative aspect-[4/3] bg-route-light">
         {listing.photo_url ? (

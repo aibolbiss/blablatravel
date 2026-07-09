@@ -94,8 +94,8 @@ export default function MapView({
 
       {selectedListing && (
         <div className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setSelectedListing(null)}>
-          <div className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setSelectedListing(null)} className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 hover:bg-white">
+          <div className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl bg-surface shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setSelectedListing(null)} className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 hover:bg-surface">
               ✕
             </button>
 

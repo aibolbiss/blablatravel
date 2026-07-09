@@ -8,6 +8,7 @@ import LogoutButton from './LogoutButton';
 import MobileNav from './MobileNav';
 import LocaleSwitcher from './LocaleSwitcher';
 import UnreadChatBadge from './UnreadChatBadge';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const t = useTranslations('nav');
@@ -31,7 +32,7 @@ export default function Header() {
       <header className="sticky top-0 z-[1000] border-b border-line bg-bg/85 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
           {/* Логотип */}
-          <Link href="/" className="font-display text-xl font-bold text-black">
+          <Link href="/" className="font-display text-xl font-bold text-ink">
             BlaBlaTravel
           </Link>
 
@@ -50,6 +51,7 @@ export default function Header() {
             <Suspense fallback={null}>
               <LocaleSwitcher />
             </Suspense>
+            <ThemeToggle />
             {user ? (
               <>
                 <Link href="/cabinet" className="btn-ghost">{t('profile')}</Link>
@@ -63,11 +65,12 @@ export default function Header() {
             )}
           </div>
 
-          {/* Переключатель языка и выход на мобильной версии */}
+          {/* Переключатель языка, темы и выход на мобильной версии */}
           <div className="flex items-center gap-1 md:hidden">
             <Suspense fallback={null}>
               <LocaleSwitcher />
             </Suspense>
+            <ThemeToggle />
             {user && <LogoutButton />}
           </div>
         </div>

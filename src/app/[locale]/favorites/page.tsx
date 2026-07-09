@@ -17,7 +17,7 @@ export default async function FavoritesPage({ params }: { params: { locale: stri
     return (
       <div className="py-4 md:py-10">
         <h1 className="font-display text-2xl font-bold">{t('title')}</h1>
-        <div className="mt-6 rounded-2xl border border-dashed border-line bg-white p-12 text-center">
+        <div className="mt-6 rounded-2xl border border-dashed border-line bg-surface p-12 text-center">
           <p className="font-semibold">{t('needLogin')}</p>
           <Link href="/auth/login" className="btn-primary mt-5">{t('login')}</Link>
         </div>
@@ -43,7 +43,7 @@ export default async function FavoritesPage({ params }: { params: { locale: stri
     <div className="py-4 md:py-10">
       <h1 className="font-display text-2xl font-bold">{t('title')}</h1>
       {listings.length === 0 ? (
-        <div className="mt-6 rounded-2xl border border-dashed border-line bg-white p-12 text-center">
+        <div className="mt-6 rounded-2xl border border-dashed border-line bg-surface p-12 text-center">
           <p className="font-semibold">{t('emptyTitle')}</p>
           <p className="mt-1 text-sm text-mut">{t('emptyText')}</p>
           <Link href="/" className="btn-primary mt-5">{t('browse')}</Link>

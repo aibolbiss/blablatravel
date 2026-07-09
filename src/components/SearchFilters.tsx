@@ -56,7 +56,7 @@ export default function SearchFilters() {
   }
 
   return (
-    <div className="rounded-2xl border border-line bg-white shadow-card">
+    <div className="rounded-2xl border border-line bg-surface shadow-card">
       {/* Tabs */}
       <div className="flex border-b border-line">
         <button
@@ -218,7 +218,7 @@ export default function SearchFilters() {
       {/* Buttons */}
       <div className="flex gap-3 border-t border-line p-4">
         <button
-          className="flex-1 rounded-lg border border-line bg-white px-4 py-2 font-medium text-ink transition hover:bg-route-light"
+          className="flex-1 rounded-lg border border-line bg-surface px-4 py-2 font-medium text-ink transition hover:bg-route-light"
           onClick={clearAll}
         >
           {t('clear')}

@@ -85,7 +85,7 @@ export default async function ListingPage({ params }: { params: { locale: string
         )}
       </article>
 
-      <aside className="h-fit rounded-2xl border border-line bg-white p-5 shadow-card md:sticky md:top-24">
+      <aside className="h-fit rounded-2xl border border-line bg-surface p-5 shadow-card md:sticky md:top-24">
         <div className="space-y-3">
           {/* Фото + Имя + Пол */}
           <div className="flex gap-3">

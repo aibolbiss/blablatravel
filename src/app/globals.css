@@ -4,22 +4,44 @@
 
 :root {
   color-scheme: light;
+  --color-bg: 243 246 244;
+  --color-surface: 255 255 255;
+  --color-ink: 20 35 31;
+  --color-mut: 92 110 103;
+  --color-line: 220 229 224;
+  --color-night: 16 27 24;
+  --color-route: 77 110 227;
+  --color-route-dark: 106 134 234;
+  --color-route-light: 227 240 235;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-bg: 15 21 19;
+  --color-surface: 26 33 31;
+  --color-ink: 231 238 234;
+  --color-mut: 147 166 157;
+  --color-line: 43 53 50;
+  --color-night: 35 46 43;
+  --color-route: 106 134 234;
+  --color-route-dark: 77 110 227;
+  --color-route-light: 30 42 69;
 }
 
 body {
-  @apply bg-bg text-ink font-body antialiased;
+  @apply bg-bg text-ink font-body antialiased transition-colors duration-200;
 }
 
 /* Пунктирная линия маршрута — фирменный элемент */
 .route-line {
   background-image: repeating-linear-gradient(
-    90deg, #4D6EE3 0 6px, transparent 6px 12px
+    90deg, rgb(var(--color-route)) 0 6px, transparent 6px 12px
   );
   height: 2px;
 }
 
 .input {
-  @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm
+  @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm
          outline-none transition focus:border-route focus:ring-2 focus:ring-route/15;
 }
 
@@ -35,7 +57,7 @@ body {
          text-sm font-semibold transition disabled:opacity-50;
 }
 .btn-primary { @apply btn bg-route text-white hover:bg-route-dark; }
-.btn-ghost { @apply btn border border-line bg-white hover:border-route hover:text-route; }
+.btn-ghost { @apply btn border border-line bg-surface hover:border-route hover:text-route; }
 .label { @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-mut; }
 
 .leaflet-container { font: inherit; }

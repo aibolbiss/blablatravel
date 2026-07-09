@@ -45,7 +45,7 @@ export default function RegisterPage() {
     <div className="mx-auto max-w-md py-4 md:py-16">
       <h1 className="font-display text-2xl font-bold">{t('registerTitle')}</h1>
       <p className="mt-1 text-sm text-mut">{t('registerSubtitle')}</p>
-      <div className="mt-6 space-y-4 rounded-2xl border border-line bg-white p-6 shadow-card">
+      <div className="mt-6 space-y-4 rounded-2xl border border-line bg-surface p-6 shadow-card">
         <div>
           <label className="label">{t('nameLabel')}</label>
           <input className="input" required value={name} onChange={(e) => setName(e.target.value)} placeholder={t('namePlaceholder')} />

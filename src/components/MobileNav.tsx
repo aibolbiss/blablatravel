@@ -11,7 +11,7 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
   return (
     <>
       {/* Мобильная навигация внизу */}
-      <nav className="fixed bottom-0 left-0 right-0 z-[999] flex items-center justify-between gap-2 border-t border-line bg-white px-4 py-3 md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-[999] flex items-center justify-between gap-2 border-t border-line bg-surface px-4 py-3 md:hidden">
         <Link href="/map" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('map')}>
           🗺️
           <span className="text-xs text-mut">{t('map')}</span>
@@ -46,7 +46,7 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
             </button>
 
             {showAuthMenu && (
-              <div className="absolute bottom-full right-0 mb-2 flex flex-col gap-2 rounded-lg border border-line bg-white p-2 shadow-lg">
+              <div className="absolute bottom-full right-0 mb-2 flex flex-col gap-2 rounded-lg border border-line bg-surface p-2 shadow-lg">
                 <Link href="/auth/login" className="whitespace-nowrap px-3 py-2 text-sm hover:bg-route-light rounded" onClick={() => setShowAuthMenu(false)}>
                   {t('login')}
                 </Link>

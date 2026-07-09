@@ -29,7 +29,7 @@ export default async function ChatIndexPage({
     <div className="flex h-[calc(100vh-8rem)] gap-4 py-6 flex-col">
       <div className="flex flex-1 gap-4 overflow-hidden">
         <ChatSidebar conversations={conversations} userId={userId} />
-        <div className="hidden flex-1 items-center justify-center rounded-2xl border border-dashed border-line bg-white sm:flex">
+        <div className="hidden flex-1 items-center justify-center rounded-2xl border border-dashed border-line bg-surface sm:flex">
           <div className="text-center">
             <p className="text-3xl">💬</p>
             <p className="mt-2 font-semibold">{t('chooseConversation')}</p>

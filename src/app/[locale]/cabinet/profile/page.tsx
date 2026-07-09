@@ -56,7 +56,7 @@ export default function ProfilePage() {
       <h1 className="font-display text-2xl font-bold">{t('title')}</h1>
       <p className="mt-1 text-sm text-mut">{t('subtitle')}</p>
 
-      <div className="mt-6 space-y-5 rounded-2xl border border-line bg-white p-6 shadow-card">
+      <div className="mt-6 space-y-5 rounded-2xl border border-line bg-surface p-6 shadow-card">
         <div className="flex items-center gap-4">
           <div className="relative h-20 w-20 overflow-hidden rounded-full bg-route-light">
             {p.avatar_url ? (
