@@ -22,6 +22,14 @@ body {
   @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm
          outline-none transition focus:border-route focus:ring-2 focus:ring-route/15;
 }
+
+/* iOS Safari зумит страницу при фокусе на поле с font-size < 16px — держим
+   16px именно на мобильных, чтобы экран не увеличивался при наборе текста. */
+@media (max-width: 639px) {
+  .input {
+    font-size: 16px;
+  }
+}
 .btn {
   @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
          text-sm font-semibold transition disabled:opacity-50;
