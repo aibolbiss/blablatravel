@@ -1,14 +1,24 @@
 import { createClient } from '@/lib/supabase/server';
+import { getUserEmailMap } from '@/lib/supabase/admin';
 import { GENDER_LABEL } from '@/lib/types';
+import AdminDeleteUserButton from './AdminDeleteUserButton';
 
 export const dynamic = 'force-dynamic';
+
+function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleString('ru-RU', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+  });
+}
 
 export default async function AdminDashboard() {
   const supabase = createClient();
 
-  const [{ data: profiles }, { data: listings }] = await Promise.all([
+  const [{ data: profiles }, { data: listings }, emailByUser] = await Promise.all([
     supabase.from('profiles').select('id, name, gender, city, country, avatar_url, created_at'),
     supabase.from('listings').select('id, user_id, is_active'),
+    getUserEmailMap(),
   ]);
 
   const counts = new Map<string, { total: number; active: number }>();
@@ -49,6 +59,7 @@ export default async function AdminDashboard() {
               <th className="px-4 py-3 font-medium">Город</th>
               <th className="px-4 py-3 font-medium">Регистрация</th>
               <th className="px-4 py-3 text-right font-medium">Объявлений</th>
+              <th className="px-4 py-3 font-medium"></th>
             </tr>
           </thead>
           <tbody>
@@ -62,17 +73,23 @@ export default async function AdminDashboard() {
                         <img src={p.avatar_url} alt="" className="h-full w-full object-cover" />
                       )}
                     </div>
-                    <span className="font-medium">{p.name}</span>
+                    <div className="min-w-0">
+                      <p className="font-medium">{p.name}</p>
+                      <p className="truncate text-xs text-mut">{emailByUser.get(p.id) ?? '—'}</p>
+                    </div>
                   </div>
                 </td>
                 <td className="px-4 py-3 text-mut">{GENDER_LABEL[p.gender] ?? '—'}</td>
                 <td className="px-4 py-3 text-mut">{p.city ? `${p.city}, ${p.country}` : '—'}</td>
-                <td className="px-4 py-3 text-mut">{new Date(p.created_at).toLocaleDateString('ru-RU')}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-mut">{formatDateTime(p.created_at)}</td>
                 <td className="px-4 py-3 text-right">
                   <span className="font-semibold">{p.count.total}</span>
                   {p.count.total > 0 && p.count.active !== p.count.total && (
                     <span className="ml-1 text-xs text-mut">({p.count.active} активно)</span>
                   )}
+                </td>
+                <td className="px-4 py-3 text-right">
+                  <AdminDeleteUserButton id={p.id} name={p.name} />
                 </td>
               </tr>
             ))}

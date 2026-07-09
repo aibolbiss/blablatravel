@@ -84,10 +84,15 @@ export default function ChatSidebar({
             <Link
               key={c.id}
               href={`/chat/${c.id}`}
-              onClick={() => {
-                // Диалог мог уже открываться раньше в этой сессии — без
-                // явного refresh переход отдаёт закэшированную страницу без
-                // самого нового сообщения, пока не обновишь вручную.
+              onClick={(e) => {
+                // Обычный клик — сами делаем push+refresh (как для кнопки
+                // «назад»): собственная навигация Link может выиграть гонку
+                // у router.refresh() и открыть диалог с закэшированной,
+                // ещё не самой свежей перепиской. Модифицированные клики
+                // (новая вкладка, средняя кнопка) не трогаем.
+                if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                e.preventDefault();
+                router.push(`/chat/${c.id}`);
                 router.refresh();
               }}
               className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-white/10 relative ${

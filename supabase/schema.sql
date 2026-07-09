@@ -196,16 +196,24 @@ create policy "favorites_select" on public.favorites for select using (auth.uid(
 create policy "favorites_insert" on public.favorites for insert with check (auth.uid() = user_id);
 create policy "favorites_delete" on public.favorites for delete using (auth.uid() = user_id);
 
--- Диалоги/сообщения: только участники
+-- Диалоги/сообщения: участники + админы (для модерации переписок)
 drop policy if exists "conversations_select" on public.conversations;
 drop policy if exists "messages_select" on public.messages;
 drop policy if exists "messages_insert" on public.messages;
 drop policy if exists "messages_update_read" on public.messages;
+drop policy if exists "messages_delete_admin" on public.messages;
+drop policy if exists "conversations_delete_admin" on public.conversations;
 create policy "conversations_select" on public.conversations for select
-  using (auth.uid() in (user_a, user_b));
+  using (
+    auth.uid() in (user_a, user_b)
+    or exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin)
+  );
 create policy "messages_select" on public.messages for select
-  using (exists (select 1 from public.conversations c
-                 where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b)));
+  using (
+    exists (select 1 from public.conversations c
+            where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b))
+    or exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin)
+  );
 create policy "messages_insert" on public.messages for insert
   with check (
     sender_id = auth.uid()
@@ -218,6 +226,11 @@ create policy "messages_update_read" on public.messages for update
                  where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b)))
   with check (exists (select 1 from public.conversations c
                        where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b)));
+-- Админы модерируют переписку: удаление сообщений и диалогов целиком
+create policy "messages_delete_admin" on public.messages for delete
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin));
+create policy "conversations_delete_admin" on public.conversations for delete
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin));
 
 -- ---------- REALTIME для чата ----------
 do $$
