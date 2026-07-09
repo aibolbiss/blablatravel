@@ -17,24 +17,37 @@ export default async function ChatPage({ params }: { params: { id: string } }) {
   if (!conv) notFound();
 
   const otherId = conv.user_a === userId ? conv.user_b : conv.user_a;
-  const [{ data: other }, { data: msgs }, result] = await Promise.all([
+  const [{ data: other }, { data: msgs }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', otherId).single(),
     supabase.from('messages').select('*').eq('conversation_id', params.id)
       .order('created_at', { ascending: true }).limit(200),
-    getConversations(userId, 0, 20),
   ]);
-  const conversations = result.previews;
   if (!other) notFound();
 
-  // Пометить все сообщения от другого пользователя как прочитанные
+  // Пометить все сообщения от другого пользователя как прочитанные. msgs уже
+  // получен выше — отражаем read_at и в нём, иначе ChatWindow при открытии
+  // отрисует их как непрочитанные (зелёным) со старыми данными.
   if (msgs && msgs.length > 0) {
-    await supabase
+    const nowIso = new Date().toISOString();
+    const { error: markReadError } = await supabase
       .from('messages')
-      .update({ read_at: new Date().toISOString() })
+      .update({ read_at: nowIso })
       .eq('conversation_id', params.id)
       .eq('sender_id', otherId)
       .is('read_at', null);
+
+    if (markReadError) {
+      console.error('[chat] Не удалось пометить сообщения прочитанными:', markReadError.message);
+    } else {
+      for (const m of msgs) {
+        if (m.sender_id === otherId && !m.read_at) m.read_at = nowIso;
+      }
+    }
   }
+
+  // Список диалогов для боковой панели запрашиваем ПОСЛЕ пометки
+  // прочитанным — иначе текущий открытый диалог ещё покажется непрочитанным.
+  const { previews: conversations } = await getConversations(userId, 0, 20);
 
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4 py-6">

@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client';
 import LogoutButton from './LogoutButton';
 import MobileNav from './MobileNav';
 import LocaleSwitcher from './LocaleSwitcher';
+import UnreadChatBadge from './UnreadChatBadge';
 
 export default function Header() {
   const t = useTranslations('nav');
@@ -39,7 +40,10 @@ export default function Header() {
             <Link href="/map" className="text-lg hover:opacity-70" title={t('map')}>🗺️</Link>
             {user && (
               <>
-                <Link href="/chat" className="text-lg hover:opacity-70" title={t('messages')}>💬</Link>
+                <Link href="/chat" className="relative text-lg hover:opacity-70" title={t('messages')}>
+                  💬
+                  <UnreadChatBadge userId={user.id} />
+                </Link>
                 <Link href="/favorites" className="text-lg hover:opacity-70" title={t('favorites')}>⭐</Link>
               </>
             )}

@@ -6,6 +6,7 @@ export type ConvPreview = {
   other: Profile;
   lastMessage: string | null;
   lastAt: string | null;
+  hasUnread: boolean;
 };
 
 export async function getConversations(userId: string, offset = 0, limit = 20): Promise<{ previews: ConvPreview[], count: number }> {
@@ -21,6 +22,15 @@ export async function getConversations(userId: string, offset = 0, limit = 20): 
   const otherIds = convs.map((c) => (c.user_a === userId ? c.user_b : c.user_a));
   const { data: profiles } = await supabase.from('profiles').select('*').in('id', otherIds);
   const byId = new Map((profiles ?? []).map((p) => [p.id, p as Profile]));
+
+  const convIds = convs.map((c) => c.id);
+  const { data: unreadRows } = await supabase
+    .from('messages')
+    .select('conversation_id')
+    .in('conversation_id', convIds)
+    .neq('sender_id', userId)
+    .is('read_at', null);
+  const unreadSet = new Set((unreadRows ?? []).map((r) => r.conversation_id));
 
   const previews: ConvPreview[] = [];
   for (const c of convs) {
@@ -39,6 +49,7 @@ export async function getConversations(userId: string, offset = 0, limit = 20): 
       other,
       lastMessage: last?.content ?? null,
       lastAt: last?.created_at ?? null,
+      hasUnread: unreadSet.has(c.id),
     });
   }
   previews.sort((a, b) => (b.lastAt ?? '').localeCompare(a.lastAt ?? ''));

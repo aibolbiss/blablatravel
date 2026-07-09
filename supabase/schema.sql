@@ -200,6 +200,7 @@ create policy "favorites_delete" on public.favorites for delete using (auth.uid(
 drop policy if exists "conversations_select" on public.conversations;
 drop policy if exists "messages_select" on public.messages;
 drop policy if exists "messages_insert" on public.messages;
+drop policy if exists "messages_update_read" on public.messages;
 create policy "conversations_select" on public.conversations for select
   using (auth.uid() in (user_a, user_b));
 create policy "messages_select" on public.messages for select
@@ -211,6 +212,12 @@ create policy "messages_insert" on public.messages for insert
     and exists (select 1 from public.conversations c
                 where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b))
   );
+-- Участник диалога может проставить read_at (прочитано) сообщениям
+create policy "messages_update_read" on public.messages for update
+  using (exists (select 1 from public.conversations c
+                 where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b)))
+  with check (exists (select 1 from public.conversations c
+                       where c.id = conversation_id and auth.uid() in (c.user_a, c.user_b)));
 
 -- ---------- REALTIME для чата ----------
 do $$

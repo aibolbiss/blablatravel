@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
 import LoadingSpinner from './LoadingSpinner';
@@ -18,6 +18,7 @@ export default function ChatWindow({
 }) {
   const t = useTranslations('chat');
   const locale = useLocale();
+  const router = useRouter();
   const supabase = createClient();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [text, setText] = useState('');
@@ -33,6 +34,22 @@ export default function ChatWindow({
         (payload) => {
           const m = payload.new as Message;
           setMessages((prev) => (prev.some((x) => x.id === m.id) ? prev : [...prev, m]));
+          // Обновляем превью последнего сообщения и порядок в списке диалогов
+          router.refresh();
+
+          // Собеседник прислал сообщение, пока мы уже открыли этот диалог —
+          // считаем его прочитанным вскоре после появления (зелёное → серое).
+          if (m.sender_id !== myId) {
+            setTimeout(async () => {
+              const { error } = await supabase
+                .from('messages')
+                .update({ read_at: new Date().toISOString() })
+                .eq('id', m.id);
+              if (!error) {
+                setMessages((prev) => prev.map((x) => (x.id === m.id ? { ...x, read_at: new Date().toISOString() } : x)));
+              }
+            }, 1200);
+          }
         }
       )
       .subscribe();
@@ -72,6 +89,8 @@ export default function ChatWindow({
       .single();
     if (!error && data) {
       setMessages((prev) => (prev.some((x) => x.id === data.id) ? prev : [...prev, data as Message]));
+      // Обновляем превью последнего сообщения и порядок в списке диалогов
+      router.refresh();
     }
     setSending(false);
   }
@@ -79,14 +98,19 @@ export default function ChatWindow({
   return (
     <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card">
       <div className="flex items-center gap-3 border-b border-line px-5 py-3">
-        <Link
-          href="/chat"
+        <button
+          onClick={() => {
+            router.push('/chat');
+            // Список диалогов кэшируется — форсируем свежие данные, иначе
+            // этот диалог может ещё раз мелькнуть непрочитанным в списке.
+            router.refresh();
+          }}
           aria-label={t('backToList')}
           title={t('backToList')}
           className="-ml-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-mut hover:bg-bg hover:text-ink sm:hidden"
         >
           <ArrowLeft size={20} />
-        </Link>
+        </button>
         <div className="relative h-9 w-9 overflow-hidden rounded-full bg-route-light">
           {other.avatar_url ? (
             <Image src={other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
@@ -118,11 +142,17 @@ export default function ChatWindow({
                 </div>
               )}
               <div className={`flex ${mine ? 'justify-end' : 'justify-start'} ${grouped ? '' : 'mt-3'}`}>
-                <div className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${
-                  mine ? 'bg-route text-white' : 'bg-bg text-ink'
+                <div className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed transition-colors duration-500 ${
+                  mine
+                    ? 'bg-route text-white'
+                    : m.read_at
+                      ? 'bg-bg text-ink'
+                      : 'border border-green-300 bg-green-100 text-green-900'
                 }`}>
                   <p className="whitespace-pre-wrap break-words">{m.content}</p>
-                  <p className={`mt-0.5 text-right text-[10px] ${mine ? 'text-white/60' : 'text-mut'}`}>
+                  <p className={`mt-0.5 text-right text-[10px] ${
+                    mine ? 'text-white/60' : m.read_at ? 'text-mut' : 'text-green-700'
+                  }`}>
                     {curr.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>

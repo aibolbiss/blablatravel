@@ -38,10 +38,15 @@ export default function ChatSidebar({
                 {c.other.avatar_url ? (
                   <Image src={c.other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
                 ) : <div className="flex h-full items-center justify-center text-sm">🙂</div>}
+                {c.hasUnread && (
+                  <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-green-400 ring-2 ring-night" />
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold">{c.other.name}</p>
-                <p className="truncate text-xs text-white/50">{c.lastMessage ?? t('noMessages')}</p>
+                <p className={`truncate text-xs ${c.hasUnread ? 'font-semibold text-green-400' : 'text-white/50'}`}>
+                  {c.lastMessage ?? t('noMessages')}
+                </p>
               </div>
             </Link>
           );

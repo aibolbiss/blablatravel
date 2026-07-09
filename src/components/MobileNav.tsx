@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import UnreadChatBadge from './UnreadChatBadge';
 
 export default function MobileNav({ user }: { user?: { id: string } | null }) {
   const t = useTranslations('nav');
@@ -19,7 +20,10 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
         {user ? (
           <>
             <Link href="/chat" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('messages')}>
-              💬
+              <span className="relative">
+                💬
+                <UnreadChatBadge userId={user.id} />
+              </span>
               <span className="text-xs text-mut">{t('chats')}</span>
             </Link>
             <Link href="/favorites" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('favorites')}>
