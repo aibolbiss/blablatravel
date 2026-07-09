@@ -151,11 +151,27 @@ export default function SearchFilters() {
         {/* Dates Tab */}
         {activeTab === 'dates' && (
           <div className="grid gap-3 sm:grid-cols-2">
-            <input className="input" type="date" placeholder={t('fromDate')}
-              value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-            <input className="input" type="date" placeholder={t('toDate')}
-              value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-              min={dateFrom} />
+            <div className="relative">
+              <input className="input" type="date" placeholder={t('fromDate')}
+                value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+              {/* На мобильных браузерах type="date" игнорирует placeholder —
+                  показываем подпись сами поверх пустого поля */}
+              {!dateFrom && (
+                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut sm:hidden">
+                  {t('fromDate')}
+                </span>
+              )}
+            </div>
+            <div className="relative">
+              <input className="input" type="date" placeholder={t('toDate')}
+                value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+                min={dateFrom} />
+              {!dateTo && (
+                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut sm:hidden">
+                  {t('toDate')}
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>

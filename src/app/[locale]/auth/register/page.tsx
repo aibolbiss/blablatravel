@@ -52,7 +52,7 @@ export default function RegisterPage() {
         </div>
         <div>
           <label className="label">{t('emailLabel')}</label>
-          <input className="input" required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@mail.com" />
+          <input className="input" required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('emailPlaceholder')} />
         </div>
         <div>
           <label className="label">{t('passwordLabel')}</label>

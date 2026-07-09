@@ -181,7 +181,9 @@
     "creating": "Wird erstellt…",
     "haveAccount": "Schon ein Konto?",
     "loginLink": "Anmelden",
-    "namePlaceholder": "Aibol"
+    "namePlaceholder": "Aibol",
+    "emailPlaceholder": "you@mail.com",
+    "enterPassword": "Passwort eingeben"
   },
   "confirm": {
     "deleteListingTitle": "Anzeige löschen?",

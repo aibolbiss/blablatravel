@@ -181,7 +181,9 @@
     "creating": "Creating…",
     "haveAccount": "Already have an account?",
     "loginLink": "Log in",
-    "namePlaceholder": "Aibol"
+    "namePlaceholder": "Aibol",
+    "emailPlaceholder": "you@mail.com",
+    "enterPassword": "Enter password"
   },
   "confirm": {
     "deleteListingTitle": "Delete listing?",

@@ -181,7 +181,9 @@
     "creating": "Création…",
     "haveAccount": "Vous avez déjà un compte ?",
     "loginLink": "Connexion",
-    "namePlaceholder": "Aibol"
+    "namePlaceholder": "Aibol",
+    "emailPlaceholder": "you@mail.com",
+    "enterPassword": "Entrez votre mot de passe"
   },
   "confirm": {
     "deleteListingTitle": "Supprimer l'annonce ?",

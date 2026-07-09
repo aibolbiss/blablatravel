@@ -181,7 +181,9 @@
     "creating": "Создаём…",
     "haveAccount": "Уже есть аккаунт?",
     "loginLink": "Войти",
-    "namePlaceholder": "Айбол"
+    "namePlaceholder": "Айбол",
+    "emailPlaceholder": "you@mail.com",
+    "enterPassword": "Введите пароль"
   },
   "confirm": {
     "deleteListingTitle": "Удалить объявление?",

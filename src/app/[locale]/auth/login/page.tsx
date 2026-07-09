@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="mt-6 space-y-4 rounded-2xl border border-line bg-white p-6 shadow-card">
         <div>
           <label className="label">{t('email')}</label>
-          <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('emailPlaceholder')} />
         </div>
         <div>
           <label className="label">{t('password')}</label>
@@ -45,6 +45,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && submit()}
+              placeholder={t('enterPassword')}
             />
             <button
               type="button"
