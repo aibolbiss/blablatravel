@@ -152,20 +152,29 @@ export default function SearchFilters() {
 
         {/* Dates Tab */}
         {activeTab === 'dates' && (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             {/* type="date" не поддерживает placeholder и показывает свой
                 формат (дд.мм.гггг), который на мобильных браузерах вообще не
                 отображается, пока поле пустое — из-за этого расхождения на
                 десктопе и мобильном. Показываем свою подпись везде одинаково:
                 прячем нативный текст (прозрачным цветом), пока поле пустое и
-                не в фокусе, и рисуем поверх переведённую подпись сами. */}
-            <div className="relative w-full">
+                не в фокусе, и рисуем поверх переведённую подпись сами.
+                min-w-0 на ячейках сетки и полях — нативный виджет даты в
+                реальном iOS Safari шире, чем в эмуляции десктопа, и без
+                этого может распирать сетку и вылезать за край. */}
+            <div className="relative min-w-0 w-full">
               <input
-                className={`input w-full ${!dateFrom && !dateFromFocused ? 'text-transparent' : ''}`}
+                className={`input w-full min-w-0 ${!dateFrom && !dateFromFocused ? 'text-transparent' : ''}`}
                 type="date"
                 lang={locale}
                 value={dateFrom}
-                onChange={(e) => setDateFrom(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setDateFrom(value);
+                  // "До" стало раньше нового "От" — сбрасываем, чтобы не
+                  // оставался невалидный диапазон
+                  if (dateTo && value && dateTo < value) setDateTo('');
+                }}
                 onFocus={() => setDateFromFocused(true)}
                 onBlur={() => setDateFromFocused(false)}
               />
@@ -175,13 +184,23 @@ export default function SearchFilters() {
                 </span>
               )}
             </div>
-            <div className="relative w-full">
+            <div className="relative min-w-0 w-full">
               <input
-                className={`input w-full ${!dateTo && !dateToFocused ? 'text-transparent' : ''}`}
+                className={`input w-full min-w-0 ${!dateTo && !dateToFocused ? 'text-transparent' : ''}`}
                 type="date"
                 lang={locale}
                 value={dateTo}
-                onChange={(e) => setDateTo(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Некоторые мобильные браузеры не всегда надёжно блокируют
+                  // выбор даты раньше min в самом пикере — подстраховываемся
+                  // и не даём сохранить невалидное значение.
+                  if (dateFrom && value && value < dateFrom) {
+                    setDateTo(dateFrom);
+                  } else {
+                    setDateTo(value);
+                  }
+                }}
                 onFocus={() => setDateToFocused(true)}
                 onBlur={() => setDateToFocused(false)}
                 min={dateFrom}

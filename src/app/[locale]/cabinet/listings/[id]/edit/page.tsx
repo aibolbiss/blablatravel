@@ -259,14 +259,21 @@ export default function EditListingPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
+        <div className="grid min-w-0 grid-cols-2 gap-4">
+          <div className="min-w-0">
             <label className="label">{t('dateFrom')}</label>
-            <input className="input" type="date" lang={locale} required value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+            <input className="input min-w-0 w-full" type="date" lang={locale} required value={dateFrom} onChange={(e) => {
+              const value = e.target.value;
+              setDateFrom(value);
+              if (dateTo && value && dateTo < value) setDateTo('');
+            }} />
           </div>
-          <div>
+          <div className="min-w-0">
             <label className="label">{t('dateTo')}</label>
-            <input className="input" type="date" lang={locale} required min={dateFrom} value={dateTo} onChange={(e) => setDateTo(e.target.value)} disabled={!dateFrom} />
+            <input className="input min-w-0 w-full" type="date" lang={locale} required min={dateFrom} value={dateTo} onChange={(e) => {
+              const value = e.target.value;
+              setDateTo(dateFrom && value && value < dateFrom ? dateFrom : value);
+            }} disabled={!dateFrom} />
           </div>
         </div>
 
