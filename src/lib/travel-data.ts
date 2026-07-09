@@ -1,25 +1,5 @@
 export type CompanionType = 'male' | 'female' | 'male_group' | 'female_group' | 'mixed_group' | 'family_couple';
 
-// Для раздела "Кто я" - именительный падеж
-export const companionTypes: Record<CompanionType, string> = {
-  'male': '👨 Мужчина',
-  'female': '👩 Женщина',
-  'male_group': '👨👱‍♂️ Мужская компания',
-  'female_group': '👩👱‍♀️ Женская компания',
-  'mixed_group': '👨👩 Смешанная компания',
-  'family_couple': '💑 Семейная пара',
-};
-
-// Для раздела "Кого я ищу" - винительный падеж
-export const companionTypesSearch: Record<CompanionType, string> = {
-  'male': '👨 Мужчину',
-  'female': '👩 Женщину',
-  'male_group': '👨👱‍♂️ Мужскую компанию',
-  'female_group': '👩👱‍♀️ Женскую компанию',
-  'mixed_group': '👨👩 Смешанную компанию',
-  'family_couple': '💑 Семейную пару',
-};
-
 // Эмодзи для компаньонов - блондин/брюнет
 export const companionEmojis: Record<CompanionType, string> = {
   'male': '👨',
@@ -30,18 +10,9 @@ export const companionEmojis: Record<CompanionType, string> = {
   'family_couple': '💑',
 };
 
-export type TourismType = 'exotic' | 'resort' | 'historical' | 'extreme' | 'business' | 'romantic' | 'shopping' | 'pilgrimage';
+export const companionTypeKeys = Object.keys(companionEmojis) as CompanionType[];
 
-export const tourismTypes: Record<TourismType, string> = {
-  'exotic': '🌴 Экзотический',
-  'resort': '🏖️ Курортный',
-  'historical': '🏛️ Исторический',
-  'extreme': '🪂 Экстремальный',
-  'business': '💼 Деловой',
-  'romantic': '💕 Романтический',
-  'shopping': '🛍️ Шопинг',
-  'pilgrimage': '🕋 Паломничество',
-};
+export type TourismType = 'exotic' | 'resort' | 'historical' | 'extreme' | 'business' | 'romantic' | 'shopping' | 'pilgrimage';
 
 // Эмодзи для типов туризма (без текста)
 export const tourismEmojis: Record<TourismType, string> = {
@@ -54,6 +25,8 @@ export const tourismEmojis: Record<TourismType, string> = {
   'shopping': '🛍️',
   'pilgrimage': '🕋',
 };
+
+export const tourismTypeKeys = Object.keys(tourismEmojis) as TourismType[];
 
 export const destinationCountries: Record<string, { flag: string; popular: boolean }> = {
   'Казахстан': { flag: '🇰🇿', popular: false },

@@ -52,7 +52,8 @@
     "traveler": "Путешественник",
     "upTo": "до ${amount}",
     "budgetUpTo": "Бюджет: до ${amount}",
-    "meetLocationHeading": "Локация на карте, где можем встретиться"
+    "meetLocationHeading": "Локация на карте, где можем встретиться",
+    "titleTemplate": "Я {my} ищу {whom}"
   },
   "favorites": {
     "title": "Избранное",
@@ -89,7 +90,7 @@
     "noListingsTitle": "У вас пока нет объявлений",
     "noListingsText": "Расскажите, куда вы собираетесь — и найдите компанию.",
     "createListing": "Создать объявление",
-    "active": "Активно",
+    "active": "Активен",
     "hidden": "Скрыто",
     "edit": "Редактировать",
     "delete": "Удалить"
@@ -198,5 +199,33 @@
     "locked": "🔒 Пользователь закрыл личные сообщения",
     "opening": "Открываем чат…",
     "writeMessage": "💌 Написать сообщение"
+  },
+  "travelTypes": {
+    "companion": {
+      "male": "Мужчина",
+      "female": "Женщина",
+      "male_group": "Мужская компания",
+      "female_group": "Женская компания",
+      "mixed_group": "Смешанная компания",
+      "family_couple": "Семейная пара"
+    },
+    "companionSearch": {
+      "male": "Мужчину",
+      "female": "Женщину",
+      "male_group": "Мужскую компанию",
+      "female_group": "Женскую компанию",
+      "mixed_group": "Смешанную компанию",
+      "family_couple": "Семейную пару"
+    },
+    "tourism": {
+      "exotic": "Экзотический",
+      "resort": "Курортный",
+      "historical": "Исторический",
+      "extreme": "Экстремальный",
+      "business": "Деловой",
+      "romantic": "Романтический",
+      "shopping": "Шопинг",
+      "pilgrimage": "Паломничество"
+    }
   }
 }

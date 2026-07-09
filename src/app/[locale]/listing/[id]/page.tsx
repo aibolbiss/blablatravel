@@ -5,10 +5,12 @@ import { getLocale, getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Listing } from '@/lib/types';
+import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
 import FavoriteButton from '@/components/FavoriteButton';
 import StartChatButton from '@/components/StartChatButton';
 import MapView from '@/components/MapViewDynamic';
 import ImageModal from '@/components/ImageModal';
+import ListingTitle from '@/components/ListingTitle';
 
 // Само объявление — публичные данные, кэшируем на 30с (lib/supabase/public.ts).
 // Проверка избранного остаётся на авторизованном клиенте и не кэшируется,
@@ -49,11 +51,13 @@ export default async function ListingPage({ params }: { params: { locale: string
         {listing.photo_url && (
           <ImageModal src={listing.photo_url} alt={listing.title} />
         )}
-        <h1 className="mt-6 font-display text-2xl font-bold leading-snug sm:text-3xl">Я {listing.title}</h1>
+        <h1 className="mt-6 font-display text-2xl font-bold leading-snug sm:text-3xl">
+          <ListingTitle title={listing.title} />
+        </h1>
 
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm font-medium text-route">
-          <span>🛫 {listing.city}, {listing.country}</span>
-          {listing.to_city && (<><span>→</span><span>{listing.to_city}{listing.to_country ? `, ${listing.to_country}` : ''} 🛬</span></>)}
+          <span>🛫 {getCityLabel(listing.city, locale)}, {getCountryLabel(listing.country, locale)}</span>
+          {listing.to_city && (<><span>→</span><span>{getCityLabel(listing.to_city, locale)}{listing.to_country ? `, ${getCountryLabel(listing.to_country, locale)}` : ''} 🛬</span></>)}
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">

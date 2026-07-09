@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ListingMapData } from '@/lib/types';
+import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
+import ListingTitle from './ListingTitle';
 
 const icon = L.divIcon({
   className: '',
@@ -62,7 +64,12 @@ export default function MapView({
   const genderLabel = p ? (p.gender === 'male' ? tProfile('male') : p.gender === 'female' ? tProfile('female') : tProfile('other')) : '';
 
   return (
-    <>
+    // isolate — Leaflet рисует свои внутренние слои (тайлы, маркеры, контролы)
+    // с z-index до 1000, из-за чего они могли перекрывать глобальный оверлей
+    // загрузки при переходе с этой страницы. Изоляция ограничивает эти
+    // z-index значения только внутри карты, не давая им конкурировать с
+    // элементами вне неё (см. LoadingSpinner.tsx).
+    <div className="relative isolate h-full w-full">
       <MapContainer center={center} zoom={zoom} className="h-full w-full" scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -108,12 +115,12 @@ export default function MapView({
               </div>
 
               <h2 className="mt-4 font-display text-lg font-bold">
-                Я {selectedListing.title}
+                <ListingTitle title={selectedListing.title} />
               </h2>
 
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex gap-2">
-                  <span>🛫 {selectedListing.city}, {selectedListing.country} → {selectedListing.to_city}, {selectedListing.to_country} 🛬</span>
+                  <span>🛫 {getCityLabel(selectedListing.city, locale)}, {getCountryLabel(selectedListing.country, locale)} → {getCityLabel(selectedListing.to_city, locale)}, {getCountryLabel(selectedListing.to_country, locale)} 🛬</span>
                 </div>
                 {selectedListing.date_from && (
                   <div className="flex gap-2">
@@ -148,6 +155,6 @@ export default function MapView({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

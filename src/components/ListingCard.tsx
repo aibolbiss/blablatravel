@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ListingCardData } from '@/lib/types';
+import { getCityLabel } from '@/lib/geo-labels';
+import ListingTitle from './ListingTitle';
 
 export default function ListingCard({ listing }: { listing: ListingCardData }) {
   const locale = useLocale();
@@ -44,14 +46,14 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
           </div>
         </div>
         <h3 className="mt-3 line-clamp-2 font-display text-sm font-medium leading-snug">
-          Я {listing.title}
+          <ListingTitle title={listing.title} />
         </h3>
         <div className="mt-3 flex items-center gap-2 text-xs font-medium text-route">
-          <span className="truncate">🛫 {listing.city}</span>
+          <span className="truncate">🛫 {getCityLabel(listing.city, locale)}</span>
           {listing.to_city && (
             <>
               <span>→</span>
-              <span className="truncate">{listing.to_city} 🛬</span>
+              <span className="truncate">{getCityLabel(listing.to_city, locale)} 🛬</span>
             </>
           )}
         </div>

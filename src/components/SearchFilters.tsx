@@ -1,13 +1,16 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useRouter } from '@/i18n/navigation';
-import { companionTypesSearch, companionEmojis, tourismTypes, tourismEmojis, sortedDestinationCountries, destinationCountries, destinationCities, type CompanionType, type TourismType } from '@/lib/travel-data';
+import { companionTypeKeys, companionEmojis, tourismTypeKeys, tourismEmojis, sortedDestinationCountries, destinationCountries, destinationCities } from '@/lib/travel-data';
+import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
 import { startNavLoading } from '@/lib/navLoading';
 
 export default function SearchFilters() {
   const t = useTranslations('filters');
+  const tTypes = useTranslations('travelTypes');
+  const locale = useLocale();
   const router = useRouter();
   const params = useSearchParams();
   const [activeTab, setActiveTab] = useState('companion');
@@ -93,17 +96,15 @@ export default function SearchFilters() {
           <div className="grid gap-3 sm:grid-cols-2">
             <select className="input" value={companion} onChange={(e) => setCompanion(e.target.value)}>
               <option value="">{t('anyCompanion')}</option>
-              {Object.entries(companionTypesSearch).map(([key, label]) => {
-                const emoji = companionEmojis[key as CompanionType] || '';
-                return <option key={key} value={emoji}>{label}</option>;
-              })}
+              {companionTypeKeys.map((key) => (
+                <option key={key} value={companionEmojis[key]}>{companionEmojis[key]} {tTypes(`companionSearch.${key}`)}</option>
+              ))}
             </select>
             <select className="input" value={tourism} onChange={(e) => setTourism(e.target.value)}>
               <option value="">{t('anyTourism')}</option>
-              {Object.entries(tourismTypes).map(([key, label]) => {
-                const emoji = tourismEmojis[key as TourismType] || '';
-                return <option key={key} value={emoji}>{label}</option>;
-              })}
+              {tourismTypeKeys.map((key) => (
+                <option key={key} value={tourismEmojis[key]}>{tourismEmojis[key]} {tTypes(`tourism.${key}`)}</option>
+              ))}
             </select>
           </div>
         )}
@@ -117,14 +118,14 @@ export default function SearchFilters() {
             }}>
               <option value="">{t('fromCountry')}</option>
               {sortedDestinationCountries.map((c) => (
-                <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
+                <option key={c} value={c}>{destinationCountries[c].flag} {getCountryLabel(c, locale)}</option>
               ))}
             </select>
 
             <select className="input" value={city} onChange={(e) => setCity(e.target.value)} disabled={!country}>
               <option value="">{t('fromCity')}</option>
               {cities.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{getCityLabel(c, locale)}</option>
               ))}
             </select>
 
@@ -134,14 +135,14 @@ export default function SearchFilters() {
             }}>
               <option value="">{t('toCountry')}</option>
               {sortedDestinationCountries.map((c) => (
-                <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
+                <option key={c} value={c}>{destinationCountries[c].flag} {getCountryLabel(c, locale)}</option>
               ))}
             </select>
 
             <select className="input" value={toCity} onChange={(e) => setToCity(e.target.value)} disabled={!toCountry}>
               <option value="">{t('toCity')}</option>
               {toCities.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{getCityLabel(c, locale)}</option>
               ))}
             </select>
           </div>

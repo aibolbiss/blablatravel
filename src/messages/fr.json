@@ -52,7 +52,8 @@
     "traveler": "Voyageur",
     "upTo": "jusqu'à ${amount}",
     "budgetUpTo": "Budget : jusqu'à ${amount}",
-    "meetLocationHeading": "Lieu de rendez-vous sur la carte"
+    "meetLocationHeading": "Lieu de rendez-vous sur la carte",
+    "titleTemplate": "Je suis {my}, je cherche {whom}"
   },
   "favorites": {
     "title": "Favoris",
@@ -198,5 +199,33 @@
     "locked": "🔒 Cet utilisateur a désactivé les messages privés",
     "opening": "Ouverture de la discussion…",
     "writeMessage": "💌 Envoyer un message"
+  },
+  "travelTypes": {
+    "companion": {
+      "male": "Homme",
+      "female": "Femme",
+      "male_group": "Groupe d'hommes",
+      "female_group": "Groupe de femmes",
+      "mixed_group": "Groupe mixte",
+      "family_couple": "Couple en famille"
+    },
+    "companionSearch": {
+      "male": "un homme",
+      "female": "une femme",
+      "male_group": "un groupe d'hommes",
+      "female_group": "un groupe de femmes",
+      "mixed_group": "un groupe mixte",
+      "family_couple": "un couple en famille"
+    },
+    "tourism": {
+      "exotic": "Exotique",
+      "resort": "Balnéaire",
+      "historical": "Historique",
+      "extreme": "Extrême",
+      "business": "Affaires",
+      "romantic": "Romantique",
+      "shopping": "Shopping",
+      "pilgrimage": "Pèlerinage"
+    }
   }
 }

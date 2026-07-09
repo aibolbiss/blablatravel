@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import { uploadPhoto } from '@/lib/upload';
 import MapView from '@/components/MapViewDynamic';
@@ -9,11 +9,14 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { startNavLoading } from '@/lib/navLoading';
 import { useRouter } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
-import { companionTypes, companionTypesSearch, companionEmojis, tourismTypes, sortedDestinationCountries, destinationCountries, destinationCities, type CompanionType, type TourismType } from '@/lib/travel-data';
+import { companionTypeKeys, companionEmojis, tourismTypeKeys, tourismEmojis, sortedDestinationCountries, destinationCountries, destinationCities, type CompanionType, type TourismType } from '@/lib/travel-data';
+import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
 
 export default function EditListingPage() {
   const t = useTranslations('listingForm');
   const tMap = useTranslations('map');
+  const tTypes = useTranslations('travelTypes');
+  const locale = useLocale();
   const supabase = createClient();
   const router = useRouter();
   const params = useParams();
@@ -137,7 +140,7 @@ export default function EditListingPage() {
     // Создаем заголовок автоматически
     const myEmoji = myCompanionType ? companionEmojis[myCompanionType as CompanionType] : '';
     const searchEmoji = companionType ? companionEmojis[companionType as CompanionType] : '';
-    const tourismLabel = tourismType ? ' → ' + tourismTypes[tourismType as TourismType] : '';
+    const tourismLabel = tourismType ? ' → ' + tourismEmojis[tourismType as TourismType] : '';
     const title = `${myEmoji} ищу ${searchEmoji}${tourismLabel}`.trim();
 
     const { error } = await supabase.from('listings')
@@ -179,8 +182,8 @@ export default function EditListingPage() {
           <label className="label">{t('whoAmI')}</label>
           <select className="input" required value={myCompanionType} onChange={(e) => setMyCompanionType(e.target.value)}>
             <option value="">{t('chooseWho')}</option>
-            {Object.entries(companionTypes).map(([key, label]) => (
-              <option key={key} value={key}>{label}</option>
+            {companionTypeKeys.map((key) => (
+              <option key={key} value={key}>{companionEmojis[key]} {tTypes(`companion.${key}`)}</option>
             ))}
           </select>
         </div>
@@ -189,8 +192,8 @@ export default function EditListingPage() {
           <label className="label">{t('whoSearch')}</label>
           <select className="input" required value={companionType} onChange={(e) => setCompanionType(e.target.value)}>
             <option value="">{t('chooseWhom')}</option>
-            {Object.entries(companionTypesSearch).map(([key, label]) => (
-              <option key={key} value={key}>{label}</option>
+            {companionTypeKeys.map((key) => (
+              <option key={key} value={key}>{companionEmojis[key]} {tTypes(`companionSearch.${key}`)}</option>
             ))}
           </select>
         </div>
@@ -204,7 +207,7 @@ export default function EditListingPage() {
             }}>
               <option value="">{t('chooseCountry')}</option>
               {sortedDestinationCountries.map((c) => (
-                <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
+                <option key={c} value={c}>{destinationCountries[c].flag} {getCountryLabel(c, locale)}</option>
               ))}
             </select>
           </div>
@@ -213,7 +216,7 @@ export default function EditListingPage() {
             <select className="input" required value={city} onChange={(e) => setCity(e.target.value)} disabled={!country}>
               <option value="">{t('chooseCity')}</option>
               {cities.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{getCityLabel(c, locale)}</option>
               ))}
             </select>
           </div>
@@ -225,7 +228,7 @@ export default function EditListingPage() {
             }}>
               <option value="">{t('chooseCountry')}</option>
               {sortedDestinationCountries.map((c) => (
-                <option key={c} value={c}>{destinationCountries[c].flag} {c}</option>
+                <option key={c} value={c}>{destinationCountries[c].flag} {getCountryLabel(c, locale)}</option>
               ))}
             </select>
           </div>
@@ -234,7 +237,7 @@ export default function EditListingPage() {
             <select className="input" required value={toCity} onChange={(e) => setToCity(e.target.value)} disabled={!toCountry}>
               <option value="">{t('chooseCity')}</option>
               {toCities.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{getCityLabel(c, locale)}</option>
               ))}
             </select>
           </div>
@@ -245,8 +248,8 @@ export default function EditListingPage() {
             <label className="label">{t('tourismType')}</label>
             <select className="input" required value={tourismType} onChange={(e) => setTourismType(e.target.value)}>
               <option value="">{t('chooseTourism')}</option>
-              {Object.entries(tourismTypes).map(([key, label]) => (
-                <option key={key} value={key}>{label}</option>
+              {tourismTypeKeys.map((key) => (
+                <option key={key} value={key}>{tourismEmojis[key]} {tTypes(`tourism.${key}`)}</option>
               ))}
             </select>
           </div>
