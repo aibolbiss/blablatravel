@@ -12,7 +12,7 @@ export const companionEmojis: Record<CompanionType, string> = {
 
 export const companionTypeKeys = Object.keys(companionEmojis) as CompanionType[];
 
-export type TourismType = 'exotic' | 'resort' | 'historical' | 'extreme' | 'business' | 'romantic' | 'shopping' | 'pilgrimage';
+export type TourismType = 'exotic' | 'resort' | 'historical' | 'extreme' | 'business' | 'romantic' | 'shopping' | 'pilgrimage' | 'alcohol' | 'camping' | 'hiking' | 'concert' | 'sport';
 
 // Эмодзи для типов туризма (без текста)
 export const tourismEmojis: Record<TourismType, string> = {
@@ -24,6 +24,11 @@ export const tourismEmojis: Record<TourismType, string> = {
   'romantic': '💕',
   'shopping': '🛍️',
   'pilgrimage': '🕋',
+  'alcohol': '🍻',
+  'camping': '🏕️',
+  'hiking': '🏔',
+  'concert': '🎶',
+  'sport': '🚴🏼‍♂️',
 };
 
 export const tourismTypeKeys = Object.keys(tourismEmojis) as TourismType[];

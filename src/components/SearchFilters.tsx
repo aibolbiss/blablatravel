@@ -103,7 +103,7 @@ export default function SearchFilters() {
             </select>
             <select className="input" value={tourism} onChange={(e) => setTourism(e.target.value)}>
               <option value="">{t('anyTourism')}</option>
-              {tourismTypeKeys.map((key) => (
+              {[...tourismTypeKeys].sort((a, b) => tTypes(`tourism.${a}`).localeCompare(tTypes(`tourism.${b}`), locale)).map((key) => (
                 <option key={key} value={tourismEmojis[key]}>{tourismEmojis[key]} {tTypes(`tourism.${key}`)}</option>
               ))}
             </select>

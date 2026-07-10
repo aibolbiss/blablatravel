@@ -238,7 +238,7 @@ export default function EditListingPage() {
             <label className="label">{t('tourismType')}<RequiredMark /></label>
             <select className={`input ${errClass(tourismType)}`} required value={tourismType} onChange={(e) => setTourismType(e.target.value)}>
               <option value="">{t('chooseTourism')}</option>
-              {tourismTypeKeys.map((key) => (
+              {[...tourismTypeKeys].sort((a, b) => tTypes(`tourism.${a}`).localeCompare(tTypes(`tourism.${b}`), locale)).map((key) => (
                 <option key={key} value={key}>{tourismEmojis[key]} {tTypes(`tourism.${key}`)}</option>
               ))}
             </select>

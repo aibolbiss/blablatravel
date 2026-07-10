@@ -228,7 +228,12 @@
       "business": "De negocios",
       "romantic": "Romántico",
       "shopping": "Compras",
-      "pilgrimage": "Peregrinación"
+      "pilgrimage": "Peregrinación",
+      "alcohol": "De alcohol",
+      "camping": "Camping",
+      "hiking": "Senderismo",
+      "concert": "Concierto",
+      "sport": "Deportivo"
     }
   }
 }
