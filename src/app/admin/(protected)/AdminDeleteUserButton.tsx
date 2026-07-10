@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import ConfirmModal from '@/components/ConfirmModal';
 import { deleteUserAction } from './actions';
 
-export default function AdminDeleteUserButton({ id, name }: { id: string; name: string }) {
+export default function AdminDeleteUserButton({ id, name, redirectTo }: { id: string; name: string; redirectTo?: string }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +16,7 @@ export default function AdminDeleteUserButton({ id, name }: { id: string; name: 
     try {
       await deleteUserAction(id);
       setShowModal(false);
+      if (redirectTo) router.push(redirectTo);
       router.refresh();
     } catch (e: any) {
       setError(e?.message || 'Не удалось удалить пользователя');

@@ -99,17 +99,17 @@ export default function ChatSidebar({
                 c.id === activeId ? 'bg-white/15' : ''
               }`}
             >
-              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-route">
-                {c.other.avatar_url ? (
-                  <Image src={c.other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
-                ) : <div className="flex h-full items-center justify-center text-sm">🙂</div>}
+              <div className="relative h-9 w-9 shrink-0">
+                <div className="relative h-full w-full overflow-hidden rounded-full bg-route">
+                  {c.other.avatar_url ? (
+                    <Image src={c.other.avatar_url} alt="" fill sizes="36px" className="object-cover" />
+                  ) : <div className="flex h-full items-center justify-center text-sm">🙂</div>}
+                </div>
                 {c.hasUnread && (
                   <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-green-400 ring-2 ring-night" />
                 )}
                 {c.isMatch && (
-                  <span className="absolute -bottom-0.5 -left-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-night text-[10px] ring-2 ring-night">
-                    ❤️
-                  </span>
+                  <span className="absolute -bottom-1 -left-1 text-sm leading-none">❤️</span>
                 )}
               </div>
               <div className="min-w-0 flex-1">

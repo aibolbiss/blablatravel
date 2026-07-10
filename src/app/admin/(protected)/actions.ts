@@ -37,3 +37,18 @@ export async function deleteConversationAction(conversationId: string) {
   if (error) throw new Error(error.message);
   revalidatePath('/admin/messages');
 }
+
+// Удаляет обе стороны свайпа между двумя людьми — сбрасывает взаимный
+// матч, чтобы они снова появились друг у друга в колоде "Любовь" и могли
+// свайпнуть заново. RLS на swipes разрешает читать/удалять только свои
+// собственные строки, поэтому здесь нужен сервисный ключ (обходит RLS).
+export async function deleteMatchAction(userIdA: string, userIdB: string) {
+  await requireAdmin();
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from('swipes')
+    .delete()
+    .or(`and(from_user_id.eq.${userIdA},to_user_id.eq.${userIdB}),and(from_user_id.eq.${userIdB},to_user_id.eq.${userIdA})`);
+  if (error) throw new Error(error.message);
+  revalidatePath('/admin/matches');
+}

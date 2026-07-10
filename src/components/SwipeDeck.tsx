@@ -64,19 +64,6 @@ function SwipeCard({
         }}
       />
 
-      {direction && (
-        <div
-          className={`pointer-events-none absolute top-10 rounded-xl border-[5px] px-4 py-1.5 text-3xl font-black uppercase ${
-            direction === 'right'
-              ? 'right-6 rotate-[14deg] border-white text-white'
-              : 'left-6 rotate-[-14deg] border-white text-white'
-          }`}
-          style={{ opacity: magnitude }}
-        >
-          {direction === 'right' ? '❤️' : '✕'}
-        </div>
-      )}
-
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-5 pt-16 text-white">
         <div className="flex items-center gap-2 text-lg font-bold">
           {p.name}

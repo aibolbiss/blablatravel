@@ -10,6 +10,7 @@ export default function AdminProtectedLayout({ children }: { children: React.Rea
           <nav className="flex items-center gap-4 text-sm">
             <Link href="/admin" className="hover:text-route-light">Пользователи</Link>
             <Link href="/admin/listings" className="hover:text-route-light">Объявления</Link>
+            <Link href="/admin/matches" className="hover:text-route-light">Взаимности</Link>
             <Link href="/admin/messages" className="hover:text-route-light">Переписки</Link>
             <Link href="/admin/settings" className="hover:text-route-light">Настройки</Link>
           </nav>
