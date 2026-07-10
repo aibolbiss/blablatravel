@@ -48,6 +48,7 @@ export default async function ChatPage({ params }: { params: { id: string } }) {
   // Список диалогов для боковой панели запрашиваем ПОСЛЕ пометки
   // прочитанным — иначе текущий открытый диалог ещё покажется непрочитанным.
   const { previews: conversations } = await getConversations(userId, 0, 20);
+  const isMatch = conversations.find((c) => c.id === params.id)?.isMatch ?? false;
 
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4 py-6">
@@ -59,6 +60,7 @@ export default async function ChatPage({ params }: { params: { id: string } }) {
         myId={userId}
         other={other as Profile}
         initialMessages={(msgs ?? []) as Message[]}
+        isMatch={isMatch}
       />
     </div>
   );

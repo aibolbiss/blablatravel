@@ -5,6 +5,7 @@
   },
   "nav": {
     "map": "Map",
+    "love": "Love",
     "messages": "Messages",
     "favorites": "Favorites",
     "profile": "Profile",
@@ -73,6 +74,23 @@
     "viewListing": "View listing →",
     "here": "Here"
   },
+  "love": {
+    "heading": "Love",
+    "needLogin": "Please log in",
+    "login": "Log in",
+    "mobileOnly": "Available on mobile only",
+    "emptyTitle": "No one left to show",
+    "emptyText": "Check back later — someone new might post a listing",
+    "noOwnListingHint": "Create your own listing to get mutual matches",
+    "dislike": "Dislike",
+    "like": "Like",
+    "matchTitle": "It's a match! 🎉",
+    "matchSubtitle": "You and {name} liked each other",
+    "matchMessage": "Send a message",
+    "matchContinue": "Keep swiping",
+    "opening": "Opening chat…",
+    "createListing": "Create a listing"
+  },
   "chat": {
     "sidebarTitle": "Messages",
     "noConversations": "No conversations yet. Open a listing and hit “Send message”.",
@@ -82,7 +100,8 @@
     "chooseConversation": "Select a conversation",
     "chooseConversationHint": "or message someone from a listing page",
     "backToList": "Back to conversations",
-    "typing": "{name} is typing…"
+    "typing": "{name} is typing…",
+    "matched": "You matched"
   },
   "cabinet": {
     "profileSettings": "Profile settings",

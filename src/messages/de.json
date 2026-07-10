@@ -5,6 +5,7 @@
   },
   "nav": {
     "map": "Karte",
+    "love": "Liebe",
     "messages": "Nachrichten",
     "favorites": "Favoriten",
     "profile": "Profil",
@@ -73,6 +74,23 @@
     "viewListing": "Anzeige ansehen →",
     "here": "Hier"
   },
+  "love": {
+    "heading": "Liebe",
+    "needLogin": "Bitte melde dich an",
+    "login": "Anmelden",
+    "mobileOnly": "Nur in der mobilen Version verfügbar",
+    "emptyTitle": "Niemand mehr übrig",
+    "emptyText": "Schau später wieder vorbei — vielleicht postet jemand Neues ein Inserat",
+    "noOwnListingHint": "Erstelle dein eigenes Inserat, um gegenseitige Matches zu bekommen",
+    "dislike": "Nicht interessiert",
+    "like": "Gefällt mir",
+    "matchTitle": "Ein Match! 🎉",
+    "matchSubtitle": "Du und {name} habt euch gegenseitig gefallen",
+    "matchMessage": "Nachricht schreiben",
+    "matchContinue": "Weiter swipen",
+    "opening": "Chat wird geöffnet…",
+    "createListing": "Inserat erstellen"
+  },
   "chat": {
     "sidebarTitle": "Nachrichten",
     "noConversations": "Noch keine Unterhaltungen. Öffne eine Anzeige und klicke auf „Nachricht senden“.",
@@ -82,7 +100,8 @@
     "chooseConversation": "Unterhaltung auswählen",
     "chooseConversationHint": "oder schreibe jemandem über die Anzeigenseite",
     "backToList": "Zurück zu den Unterhaltungen",
-    "typing": "{name} schreibt…"
+    "typing": "{name} schreibt…",
+    "matched": "Ihr habt ein Match"
   },
   "cabinet": {
     "profileSettings": "Profileinstellungen",

@@ -5,6 +5,7 @@
   },
   "nav": {
     "map": "Carte",
+    "love": "Amour",
     "messages": "Messages",
     "favorites": "Favoris",
     "profile": "Profil",
@@ -73,6 +74,23 @@
     "viewListing": "Voir l'annonce →",
     "here": "Ici"
   },
+  "love": {
+    "heading": "Amour",
+    "needLogin": "Veuillez vous connecter",
+    "login": "Se connecter",
+    "mobileOnly": "Disponible uniquement sur mobile",
+    "emptyTitle": "Plus personne à montrer",
+    "emptyText": "Revenez plus tard — quelqu'un de nouveau publiera peut-être une annonce",
+    "noOwnListingHint": "Créez votre propre annonce pour obtenir des correspondances mutuelles",
+    "dislike": "Pas intéressé",
+    "like": "J'aime",
+    "matchTitle": "C'est un match ! 🎉",
+    "matchSubtitle": "Vous et {name} vous êtes plu mutuellement",
+    "matchMessage": "Envoyer un message",
+    "matchContinue": "Continuer",
+    "opening": "Ouverture du chat…",
+    "createListing": "Créer une annonce"
+  },
   "chat": {
     "sidebarTitle": "Messages",
     "noConversations": "Aucune conversation pour l'instant. Ouvrez une annonce et cliquez sur « Envoyer un message ».",
@@ -82,7 +100,8 @@
     "chooseConversation": "Sélectionnez une conversation",
     "chooseConversationHint": "ou écrivez à quelqu'un depuis la page d'une annonce",
     "backToList": "Retour aux discussions",
-    "typing": "{name} est en train d'écrire…"
+    "typing": "{name} est en train d'écrire…",
+    "matched": "Vous avez matché"
   },
   "cabinet": {
     "profileSettings": "Paramètres du profil",

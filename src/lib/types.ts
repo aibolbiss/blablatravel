@@ -61,6 +61,11 @@ export type ListingMapData = Pick<Listing, 'id' | 'title' | 'description' | 'cit
   profiles?: Pick<Profile, 'name' | 'avatar_url' | 'gender'>;
 };
 
+export type SwipeCandidate = Pick<Listing, 'id' | 'title' | 'description' | 'city' | 'to_city' | 'budget' | 'date_from' | 'date_to' | 'photo_url'> & {
+  user_id: string;
+  profiles: Pick<Profile, 'name' | 'avatar_url' | 'gender'>;
+};
+
 export const GENDER_LABEL: Record<string, string> = {
   male: 'Мужчина',
   female: 'Женщина',

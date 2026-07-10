@@ -5,6 +5,7 @@
   },
   "nav": {
     "map": "Mapa",
+    "love": "Amor",
     "messages": "Mensajes",
     "favorites": "Favoritos",
     "profile": "Perfil",
@@ -73,6 +74,23 @@
     "viewListing": "Ver anuncio →",
     "here": "Aquí"
   },
+  "love": {
+    "heading": "Amor",
+    "needLogin": "Por favor, inicia sesión",
+    "login": "Iniciar sesión",
+    "mobileOnly": "Disponible solo en la versión móvil",
+    "emptyTitle": "No queda nadie por mostrar",
+    "emptyText": "Vuelve más tarde — quizás alguien nuevo publique un anuncio",
+    "noOwnListingHint": "Crea tu propio anuncio para conseguir coincidencias mutuas",
+    "dislike": "No me gusta",
+    "like": "Me gusta",
+    "matchTitle": "¡Es un match! 🎉",
+    "matchSubtitle": "Tú y {name} se gustaron mutuamente",
+    "matchMessage": "Enviar mensaje",
+    "matchContinue": "Seguir viendo",
+    "opening": "Abriendo chat…",
+    "createListing": "Crear anuncio"
+  },
   "chat": {
     "sidebarTitle": "Mensajes",
     "noConversations": "Aún no hay conversaciones. Abre un anuncio y pulsa «Enviar mensaje».",
@@ -82,7 +100,8 @@
     "chooseConversation": "Selecciona una conversación",
     "chooseConversationHint": "o escribe a alguien desde la página de un anuncio",
     "backToList": "Volver a las conversaciones",
-    "typing": "{name} está escribiendo…"
+    "typing": "{name} está escribiendo…",
+    "matched": "Hicisteis match"
   },
   "cabinet": {
     "profileSettings": "Configuración del perfil",

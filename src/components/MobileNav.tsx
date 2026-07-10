@@ -19,6 +19,10 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
 
         {user ? (
           <>
+            <Link href="/love" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('love')}>
+              ❤️
+              <span className="text-xs text-mut">{t('love')}</span>
+            </Link>
             <Link href="/chat" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('messages')}>
               <span className="relative">
                 💬

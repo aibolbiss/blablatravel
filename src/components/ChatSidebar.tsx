@@ -106,6 +106,11 @@ export default function ChatSidebar({
                 {c.hasUnread && (
                   <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-green-400 ring-2 ring-night" />
                 )}
+                {c.isMatch && (
+                  <span className="absolute -bottom-0.5 -left-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-night text-[10px] ring-2 ring-night">
+                    ❤️
+                  </span>
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold">{c.other.name}</p>

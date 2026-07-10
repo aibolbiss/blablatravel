@@ -12,12 +12,13 @@ const TYPING_BROADCAST_THROTTLE_MS = 2000;
 const TYPING_INDICATOR_TIMEOUT_MS = 3000;
 
 export default function ChatWindow({
-  conversationId, myId, other, initialMessages,
+  conversationId, myId, other, initialMessages, isMatch,
 }: {
   conversationId: string;
   myId: string;
   other: Profile;
   initialMessages: Message[];
+  isMatch?: boolean;
 }) {
   const t = useTranslations('chat');
   const locale = useLocale();
@@ -154,7 +155,10 @@ export default function ChatWindow({
           ) : <div className="flex h-full items-center justify-center">🙂</div>}
         </div>
         <div>
-          <p className="text-sm font-semibold">{other.name}</p>
+          <p className="flex items-center gap-1.5 text-sm font-semibold">
+            {other.name}
+            {isMatch && <span className="text-xs font-medium text-route">❤️ {t('matched')}</span>}
+          </p>
           <p className="text-xs text-mut">{other.city ? `${other.city}, ${other.country}` : ''}</p>
         </div>
       </div>
