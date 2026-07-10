@@ -122,7 +122,7 @@ export default async function HomePage({
           </div>
         }>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {listings.map((l) => <ListingCard key={l.id} listing={l} />)}
+            {listings.map((l, i) => <ListingCard key={l.id} listing={l} priority={i === 0} />)}
           </div>
         </Suspense>
       )}

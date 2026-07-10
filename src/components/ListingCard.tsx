@@ -6,7 +6,7 @@ import { ListingCardData } from '@/lib/types';
 import { getCityLabel } from '@/lib/geo-labels';
 import ListingTitle from './ListingTitle';
 
-export default function ListingCard({ listing }: { listing: ListingCardData }) {
+export default function ListingCard({ listing, priority = false }: { listing: ListingCardData; priority?: boolean }) {
   const locale = useLocale();
   const t = useTranslations('listing');
   const tProfile = useTranslations('profile');
@@ -21,6 +21,7 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
         {listing.photo_url ? (
           <Image src={listing.photo_url} alt={listing.title} fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            priority={priority}
             className="object-cover transition group-hover:scale-[1.02]" />
         ) : (
           <div className="flex h-full items-center justify-center text-4xl">🧭</div>

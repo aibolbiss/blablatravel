@@ -82,12 +82,26 @@ export async function middleware(request: NextRequest) {
   const isRedirect = intlResponse.headers.has('location');
   if (isRedirect) return intlResponse;
 
+  const { locale, path } = splitLocale(pathname);
+
+  // auth.getUser() — это сетевой запрос к Supabase (проверка JWT на их
+  // сервере), а не просто чтение cookie. Он добавляет заметную задержку к
+  // TTFB КАЖДОЙ страницы, если вызывать его безусловно. Главная и карта
+  // полностью публичны и не читают x-user-id (см. lib/auth.ts) — шапка
+  // сама разруливает свою сессию на клиенте — поэтому для них можно
+  // полностью пропустить поход в Supabase и просто отдать ответ next-intl.
+  const AUTH_FREE_PATHS = ['/', '/map'];
+  if (AUTH_FREE_PATHS.includes(path)) {
+    const response = NextResponse.next();
+    intlResponse.cookies.getAll().forEach((c) => response.cookies.set(c));
+    return response;
+  }
+
   const requestHeaders = new Headers(request.headers);
   const { supabase, getResponse } = createSupabaseMiddlewareClient(request, requestHeaders);
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { locale, path } = splitLocale(pathname);
   const protectedPaths = ['/cabinet', '/favorites', '/chat'];
   if (!user && protectedPaths.some((p) => path.startsWith(p))) {
     const url = request.nextUrl.clone();
