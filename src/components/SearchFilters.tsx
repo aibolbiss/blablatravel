@@ -6,6 +6,7 @@ import { useRouter } from '@/i18n/navigation';
 import { companionTypeKeys, companionEmojis, tourismTypeKeys, tourismEmojis, sortedDestinationCountries, destinationCountries, destinationCities } from '@/lib/travel-data';
 import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
 import { startNavLoading } from '@/lib/navLoading';
+import DateRangePicker from './DateRangePicker';
 
 export default function SearchFilters() {
   const t = useTranslations('filters');
@@ -22,8 +23,6 @@ export default function SearchFilters() {
   const [tourism, setTourism] = useState(params.get('tourism') ?? '');
   const [dateFrom, setDateFrom] = useState(params.get('date_from') ?? '');
   const [dateTo, setDateTo] = useState(params.get('date_to') ?? '');
-  const [dateFromFocused, setDateFromFocused] = useState(false);
-  const [dateToFocused, setDateToFocused] = useState(false);
 
   const cities = country ? (destinationCities[country] ?? []) : [];
   const toCities = toCountry ? (destinationCities[toCountry] ?? []) : [];
@@ -152,73 +151,24 @@ export default function SearchFilters() {
 
         {/* Dates Tab */}
         {activeTab === 'dates' && (
-          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
-            {/* type="date" не поддерживает placeholder и показывает свой
-                формат (дд.мм.гггг), который на мобильных браузерах вообще не
-                отображается, пока поле пустое — из-за этого расхождения на
-                десктопе и мобильном. Показываем свою подпись везде одинаково:
-                прячем нативный текст (прозрачным цветом), пока поле пустое и
-                не в фокусе, и рисуем поверх переведённую подпись сами.
-                min-w-0 на ячейках сетки и полях — нативный виджет даты в
-                реальном iOS Safari шире, чем в эмуляции десктопа, и без
-                этого может распирать сетку и вылезать за край. */}
-            <div className="relative min-w-0 w-full">
-              <input
-                className={`input w-full min-w-0 ${!dateFrom && !dateFromFocused ? 'text-transparent' : ''}`}
-                type="date"
-                lang={locale}
-                value={dateFrom}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setDateFrom(value);
-                  // "До" стало раньше нового "От" — сбрасываем, чтобы не
-                  // оставался невалидный диапазон
-                  if (dateTo && value && dateTo < value) setDateTo('');
-                }}
-                onFocus={() => setDateFromFocused(true)}
-                onBlur={() => setDateFromFocused(false)}
-              />
-              {!dateFrom && !dateFromFocused && (
-                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut">
-                  {t('fromDate')}
-                </span>
-              )}
-            </div>
-            <div className="relative min-w-0 w-full">
-              <input
-                className={`input w-full min-w-0 ${!dateTo && !dateToFocused ? 'text-transparent' : ''}`}
-                type="date"
-                lang={locale}
-                value={dateTo}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  // Некоторые мобильные браузеры не всегда надёжно блокируют
-                  // выбор даты раньше min в самом пикере — подстраховываемся
-                  // и не даём сохранить невалидное значение.
-                  if (dateFrom && value && value < dateFrom) {
-                    setDateTo(dateFrom);
-                  } else {
-                    setDateTo(value);
-                  }
-                }}
-                onFocus={() => setDateToFocused(true)}
-                onBlur={() => setDateToFocused(false)}
-                min={dateFrom}
-              />
-              {!dateTo && !dateToFocused && (
-                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-mut">
-                  {t('toDate')}
-                </span>
-              )}
-            </div>
-          </div>
+          <DateRangePicker
+            locale={locale}
+            dateFrom={dateFrom}
+            dateTo={dateTo}
+            fromLabel={t('fromDate')}
+            toLabel={t('toDate')}
+            onChange={(from, to) => {
+              setDateFrom(from);
+              setDateTo(to);
+            }}
+          />
         )}
       </div>
 
       {/* Buttons */}
       <div className="flex gap-3 border-t border-line p-4">
         <button
-          className="flex-1 rounded-lg border border-line bg-surface px-4 py-2 font-medium text-ink transition hover:bg-route-light"
+          className="flex-1 rounded-lg border border-line bg-surface px-4 py-2 font-medium text-ink transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
           onClick={clearAll}
         >
           {t('clear')}

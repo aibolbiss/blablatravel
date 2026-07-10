@@ -5,6 +5,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import { uploadPhoto } from '@/lib/upload';
 import MapView from '@/components/MapViewDynamic';
+import DateRangePicker from '@/components/DateRangePicker';
+import RequiredMark from '@/components/RequiredMark';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { startNavLoading } from '@/lib/navLoading';
 import { useRouter } from '@/i18n/navigation';
@@ -118,7 +120,7 @@ export default function NewListingPage() {
         {/* Левая колонка - форма */}
         <div className="lg:col-span-2 space-y-5 rounded-2xl border border-line bg-surface p-6 shadow-card">
           <div>
-            <label className="label">{t('whoAmI')}</label>
+            <label className="label">{t('whoAmI')}<RequiredMark /></label>
             <select className="input" required value={myCompanionType} onChange={(e) => setMyCompanionType(e.target.value)}>
               <option value="">{t('chooseWho')}</option>
               {companionTypeKeys.map((key) => (
@@ -128,7 +130,7 @@ export default function NewListingPage() {
           </div>
 
           <div>
-            <label className="label">{t('whoSearch')}</label>
+            <label className="label">{t('whoSearch')}<RequiredMark /></label>
             <select className="input" required value={companionType} onChange={(e) => setCompanionType(e.target.value)}>
               <option value="">{t('chooseWhom')}</option>
               {companionTypeKeys.map((key) => (
@@ -139,7 +141,7 @@ export default function NewListingPage() {
 
           <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="label">{t('fromCountry')}</label>
+            <label className="label">{t('fromCountry')}<RequiredMark /></label>
             <select className="input" required value={country} onChange={(e) => {
               setCountry(e.target.value);
               setCity('');
@@ -151,7 +153,7 @@ export default function NewListingPage() {
             </select>
           </div>
           <div>
-            <label className="label">{t('fromCity')}</label>
+            <label className="label">{t('fromCity')}<RequiredMark /></label>
             <select className="input" required value={city} onChange={(e) => setCity(e.target.value)} disabled={!country}>
               <option value="">{t('chooseCity')}</option>
               {cities.map((c) => (
@@ -160,7 +162,7 @@ export default function NewListingPage() {
             </select>
           </div>
           <div>
-            <label className="label">{t('toCountry')}</label>
+            <label className="label">{t('toCountry')}<RequiredMark /></label>
             <select className="input" required value={toCountry} onChange={(e) => {
               setToCountry(e.target.value);
               setToCity('');
@@ -172,7 +174,7 @@ export default function NewListingPage() {
             </select>
           </div>
           <div>
-            <label className="label">{t('toCity')}</label>
+            <label className="label">{t('toCity')}<RequiredMark /></label>
             <select className="input" required value={toCity} onChange={(e) => setToCity(e.target.value)} disabled={!toCountry}>
               <option value="">{t('chooseCity')}</option>
               {toCities.map((c) => (
@@ -183,7 +185,7 @@ export default function NewListingPage() {
         </div>
 
         <div>
-          <label className="label">{t('tourismType')}</label>
+          <label className="label">{t('tourismType')}<RequiredMark /></label>
           <select className="input" required value={tourismType} onChange={(e) => setTourismType(e.target.value)}>
             <option value="">{t('chooseTourism')}</option>
             {tourismTypeKeys.map((key) => (
@@ -192,32 +194,27 @@ export default function NewListingPage() {
           </select>
         </div>
 
-        <div className="grid min-w-0 grid-cols-2 gap-4">
-          <div className="min-w-0">
-            <label className="label">{t('dateFrom')}</label>
-            <input className="input min-w-0 w-full" type="date" lang={locale} required value={dateFrom} onChange={(e) => {
-              const value = e.target.value;
-              setDateFrom(value);
-              if (dateTo && value && dateTo < value) setDateTo('');
-            }} />
-          </div>
-          <div className="min-w-0">
-            <label className="label">{t('dateTo')}</label>
-            <input className="input min-w-0 w-full" type="date" lang={locale} required min={dateFrom} value={dateTo} onChange={(e) => {
-              const value = e.target.value;
-              setDateTo(dateFrom && value && value < dateFrom ? dateFrom : value);
-            }} disabled={!dateFrom} />
-          </div>
-        </div>
+        <DateRangePicker
+          locale={locale}
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          fromLabel={t('dateFrom')}
+          toLabel={t('dateTo')}
+          showLabels
+          onChange={(from, to) => {
+            setDateFrom(from);
+            setDateTo(to);
+          }}
+        />
 
         <div>
-          <label className="label">{t('description')}</label>
+          <label className="label">{t('description')}<RequiredMark /></label>
           <textarea className="input min-h-36" required value={description} onChange={(e) => setDescription(e.target.value)}
             placeholder={t('descriptionPlaceholder')} />
         </div>
 
         <div>
-          <label className="label">{t('photo')}</label>
+          <label className="label">{t('photo')}<RequiredMark /></label>
           <div className="flex items-center gap-4">
             {photoUrl && (
               <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg">

@@ -6,6 +6,7 @@ import { useRouter, Link } from '@/i18n/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { startNavLoading } from '@/lib/navLoading';
+import RequiredMark from '@/components/RequiredMark';
 
 export default function RegisterPage() {
   const t = useTranslations('auth');
@@ -47,15 +48,15 @@ export default function RegisterPage() {
       <p className="mt-1 text-sm text-mut">{t('registerSubtitle')}</p>
       <div className="mt-6 space-y-4 rounded-2xl border border-line bg-surface p-6 shadow-card">
         <div>
-          <label className="label">{t('nameLabel')}</label>
+          <label className="label">{t('nameLabel')}<RequiredMark /></label>
           <input className="input" required value={name} onChange={(e) => setName(e.target.value)} placeholder={t('namePlaceholder')} />
         </div>
         <div>
-          <label className="label">{t('emailLabel')}</label>
+          <label className="label">{t('emailLabel')}<RequiredMark /></label>
           <input className="input" required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('emailPlaceholder')} />
         </div>
         <div>
-          <label className="label">{t('passwordLabel')}</label>
+          <label className="label">{t('passwordLabel')}<RequiredMark /></label>
           <div className="relative">
             <input
               className="input pr-10"
@@ -75,7 +76,7 @@ export default function RegisterPage() {
           </div>
         </div>
         <div>
-          <label className="label">{t('confirmPassword')}</label>
+          <label className="label">{t('confirmPassword')}<RequiredMark /></label>
           <div className="relative">
             <input
               className={`input pr-10 ${password && confirmPassword && !passwordsMatch ? 'border-red-500' : ''}`}

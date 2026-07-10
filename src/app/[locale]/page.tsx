@@ -6,6 +6,8 @@ import ListingCard from '@/components/ListingCard';
 import SkeletonCard from '@/components/SkeletonCard';
 import { ListingCardData } from '@/lib/types';
 import { Link } from '@/i18n/navigation';
+import { parseListingTitle } from '@/lib/parseListingTitle';
+import { companionEmojis, tourismEmojis } from '@/lib/travel-data';
 
 // Публичные данные (без сессии) — кэшируем на 20с вместо похода в Supabase
 // на каждый заход, см. lib/supabase/public.ts.
@@ -48,27 +50,47 @@ export default async function HomePage({
   const { data } = await query;
   let listings = (data ?? []) as unknown as ListingCardData[];
 
-  // Client-side filtering for companion and tourism types (to avoid matching in "кто я" vs "кого ищу")
+  // Фильтр "кого вы ищете" ищет объявления, автор которых сам является
+  // выбранным типом (myType) — чтобы найти собеседников этого типа, а не
+  // объявления, где кто-то другой ищет этот тип.
   if (searchParams.companion) {
     const companion = searchParams.companion;
-    listings = listings.filter(l => l.title.startsWith(companion));
+    listings = listings.filter(l => {
+      const { myType } = parseListingTitle(l.title);
+      return myType ? companionEmojis[myType] === companion : false;
+    });
   }
   if (searchParams.tourism) {
     const tourism = searchParams.tourism;
-    listings = listings.filter(l => l.title.includes(`→ ${tourism}`));
+    listings = listings.filter(l => {
+      const { tourismType } = parseListingTitle(l.title);
+      return tourismType ? tourismEmojis[tourismType] === tourism : false;
+    });
   }
 
-  // Date range filtering
+  // Если задано только одно поле (от ИЛИ до) — эта дата должна попадать
+  // внутрь диапазона объявления. Если заданы оба поля — работает обычное
+  // пересечение диапазонов (достаточно общего отрезка внутри обоих).
   if (searchParams.date_from || searchParams.date_to) {
+    const searchFrom = searchParams.date_from ? new Date(searchParams.date_from) : null;
+    const searchTo = searchParams.date_to ? new Date(searchParams.date_to) : null;
     listings = listings.filter(l => {
       const listingFrom = l.date_from ? new Date(l.date_from) : null;
       const listingTo = l.date_to ? new Date(l.date_to) : null;
-      const searchFrom = searchParams.date_from ? new Date(searchParams.date_from) : null;
-      const searchTo = searchParams.date_to ? new Date(searchParams.date_to) : null;
+      if (!listingFrom || !listingTo) return true;
 
-      // Check if date ranges overlap
-      if (searchFrom && listingTo && searchFrom > listingTo) return false;
-      if (searchTo && listingFrom && searchTo < listingFrom) return false;
+      if (searchFrom && searchTo) {
+        return searchFrom <= listingTo && searchTo >= listingFrom;
+      }
+      // Только "от" — граница "до" объявления не считается совпадением:
+      // в последний день поездки уже не остаётся времени ехать вместе.
+      if (searchFrom) {
+        return searchFrom >= listingFrom && searchFrom < listingTo;
+      }
+      // Только "до" — симметрично, граница "от" объявления не считается.
+      if (searchTo) {
+        return searchTo > listingFrom && searchTo <= listingTo;
+      }
       return true;
     });
   }
