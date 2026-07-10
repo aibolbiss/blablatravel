@@ -7,6 +7,7 @@ import AdminDeleteUserButton from '../../AdminDeleteUserButton';
 import AdminDeleteButton from '../../listings/AdminDeleteButton';
 import DeleteConversationButton from '../../messages/DeleteConversationButton';
 import DeleteMatchButton from '../../matches/DeleteMatchButton';
+import DeleteSwipeButton from '../../matches/DeleteSwipeButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +40,7 @@ export default async function AdminUserPage({ params }: { params: { id: string }
       .select('id, user_a, user_b, a:profiles!conversations_user_a_fkey(id, name, avatar_url), b:profiles!conversations_user_b_fkey(id, name, avatar_url)')
       .or(`user_a.eq.${userId},user_b.eq.${userId}`),
     // swipes — RLS показывает только свои строки, для чужих нужен сервисный ключ
-    admin.from('swipes').select('from_user_id, to_user_id, created_at').eq('liked', true).or(`from_user_id.eq.${userId},to_user_id.eq.${userId}`),
+    admin.from('swipes').select('from_user_id, to_user_id, liked, created_at').or(`from_user_id.eq.${userId},to_user_id.eq.${userId}`),
   ]);
 
   // ---- Переписки: подтягиваем статистику сообщений по каждому диалогу ----
@@ -70,6 +71,7 @@ export default async function AdminUserPage({ params }: { params: { id: string }
   const likedByMe = new Map<string, string>();
   const likedMe = new Map<string, string>();
   for (const s of likeRows ?? []) {
+    if (!s.liked) continue;
     if (s.from_user_id === userId) likedByMe.set(s.to_user_id, s.created_at);
     if (s.to_user_id === userId) likedMe.set(s.from_user_id, s.created_at);
   }
@@ -81,12 +83,37 @@ export default async function AdminUserPage({ params }: { params: { id: string }
       return [id, a > b ? a : b];
     })
   );
-  const { data: matchProfiles } = matchPartnerIds.length
-    ? await supabase.from('profiles').select('id, name, avatar_url').in('id', matchPartnerIds)
+  const matchPartnerSet = new Set(matchPartnerIds);
+
+  // ---- Не взаимности: все остальные свайпы этого человека в любую сторону ----
+  const nonMutualRows = (likeRows ?? [])
+    .filter((s) => {
+      const otherId = s.from_user_id === userId ? s.to_user_id : s.from_user_id;
+      return !matchPartnerSet.has(otherId);
+    })
+    .sort((x, y) => y.created_at.localeCompare(x.created_at));
+  const nonMutualPartnerIds = Array.from(new Set(nonMutualRows.map((s) => (s.from_user_id === userId ? s.to_user_id : s.from_user_id))));
+
+  const allPartnerIds = Array.from(new Set([...matchPartnerIds, ...nonMutualPartnerIds]));
+  const { data: partnerProfiles } = allPartnerIds.length
+    ? await supabase.from('profiles').select('id, name, avatar_url').in('id', allPartnerIds)
     : { data: [] as { id: string; name: string; avatar_url: string | null }[] };
-  const matches = (matchProfiles ?? [])
+  const partnerById = new Map((partnerProfiles ?? []).map((p) => [p.id, p]));
+
+  const matches = matchPartnerIds
+    .map((id) => partnerById.get(id))
+    .filter((p): p is { id: string; name: string; avatar_url: string | null } => !!p)
     .map((p) => ({ partner: p, matchedAt: matchedAtById.get(p.id)! }))
     .sort((x, y) => y.matchedAt.localeCompare(x.matchedAt));
+
+  const nonMutual = nonMutualRows
+    .map((s) => {
+      const other = partnerById.get(s.from_user_id === userId ? s.to_user_id : s.from_user_id);
+      if (!other) return null;
+      const mine = s.from_user_id === userId;
+      return { other, liked: s.liked, createdAt: s.created_at, mine };
+    })
+    .filter((r): r is { other: { id: string; name: string; avatar_url: string | null }; liked: boolean; createdAt: string; mine: boolean } => r !== null);
 
   const activeCount = (listings ?? []).filter((l) => l.is_active).length;
 

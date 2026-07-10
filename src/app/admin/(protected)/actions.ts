@@ -52,3 +52,18 @@ export async function deleteMatchAction(userIdA: string, userIdB: string) {
   if (error) throw new Error(error.message);
   revalidatePath('/admin/matches');
 }
+
+// Удаляет один односторонний свайп (лайк или дизлайк, ещё не взаимный) —
+// этот человек сможет снова увидеть/свайпнуть того, кого до этого уже
+// оценил. В отличие от deleteMatchAction трогает только одну строку.
+export async function deleteSwipeAction(fromUserId: string, toUserId: string) {
+  await requireAdmin();
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from('swipes')
+    .delete()
+    .eq('from_user_id', fromUserId)
+    .eq('to_user_id', toUserId);
+  if (error) throw new Error(error.message);
+  revalidatePath('/admin/matches');
+}

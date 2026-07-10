@@ -5,8 +5,6 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useRouter, Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { SwipeCandidate } from '@/lib/types';
-import { parseListingTitle } from '@/lib/parseListingTitle';
-import { tourismEmojis } from '@/lib/travel-data';
 import { getCityLabel } from '@/lib/geo-labels';
 import { startNavLoading } from '@/lib/navLoading';
 
@@ -28,7 +26,6 @@ function SwipeCard({
   onPointerMove: (e: React.PointerEvent) => void;
   onPointerUp: (e: React.PointerEvent) => void;
 }) {
-  const { tourismType } = parseListingTitle(candidate.title);
   const p = candidate.profiles;
   const translateX = exit === 'left' ? -EXIT_DISTANCE : exit === 'right' ? EXIT_DISTANCE : drag.x;
   const rotate = translateX / 20;
@@ -75,12 +72,9 @@ function SwipeCard({
           {p.gender && <span>{p.gender === 'male' ? '♂️' : p.gender === 'female' ? '♀️' : ''}</span>}
         </div>
         <p className="mt-1 text-sm text-white/90">
-          🛫 {getCityLabel(candidate.city, locale)}
-          {candidate.to_city ? ` → ${getCityLabel(candidate.to_city, locale)}` : ''}
+          {getCityLabel(candidate.city, locale)} 🛫
+          {candidate.to_city ? ` → ${getCityLabel(candidate.to_city, locale)} 🛬` : ''}
         </p>
-        {tourismType && (
-          <p className="mt-1 text-sm text-white/80">{tourismEmojis[tourismType]}</p>
-        )}
         {candidate.description && (
           <p className="mt-2 line-clamp-2 text-sm text-white/70">{candidate.description}</p>
         )}
@@ -221,7 +215,12 @@ export default function SwipeDeck({
       )}
 
       {match && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-black/80 p-6 text-center text-white">
+        <div
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden p-6 text-center text-white backdrop-blur-sm"
+          style={{
+            background: 'radial-gradient(circle at 50% 32%, rgba(244,63,94,0.55) 0%, rgba(190,24,93,0.75) 40%, rgba(60,6,30,0.92) 100%)',
+          }}
+        >
           {[...Array(8)].map((_, i) => (
             <span
               key={i}
