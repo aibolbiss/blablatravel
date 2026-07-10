@@ -32,6 +32,9 @@ function SwipeCard({
   const p = candidate.profiles;
   const translateX = exit === 'left' ? -EXIT_DISTANCE : exit === 'right' ? EXIT_DISTANCE : drag.x;
   const rotate = translateX / 20;
+  // rotateY даёт настоящий 3D-наклон в перспективе родителя (не просто
+  // плоский поворот) — карточка визуально уходит "вглубь" экрана при свайпе.
+  const rotateY = Math.max(-25, Math.min(25, translateX / 18));
 
   // Во время полёта карточки (exit) заливка держится на полной силе весь
   // путь — раньше цвет считался только от drag.x, из-за чего при быстром
@@ -47,9 +50,11 @@ function SwipeCard({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
-      className="absolute inset-0 touch-none select-none overflow-hidden rounded-3xl shadow-2xl"
+      className="absolute inset-0 z-10 touch-none select-none overflow-hidden rounded-3xl shadow-2xl"
       style={{
-        transform: `translateX(${translateX}px) rotate(${rotate}deg)`,
+        transform: `translateX(${translateX}px) rotate(${rotate}deg) rotateY(${rotateY}deg)`,
+        transformStyle: 'preserve-3d',
+        willChange: 'transform',
         transition: drag.active ? 'none' : `transform ${EXIT_DURATION_MS}ms ease`,
         backgroundImage: candidate.photo_url ? `url('${candidate.photo_url}')` : undefined,
         backgroundSize: 'cover',
@@ -160,7 +165,7 @@ export default function SwipeDeck({
         </p>
       )}
 
-      <div className="relative h-[68vh] w-full overflow-hidden">
+      <div className="relative z-10 h-[68vh] w-full" style={{ perspective: '1200px' }}>
         {!top && (
           <div className="flex h-full flex-col items-center justify-center rounded-3xl border border-dashed border-line bg-surface p-8 text-center">
             <p className="text-3xl">💔</p>
