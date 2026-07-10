@@ -49,11 +49,11 @@ export default function ListingCard({ listing }: { listing: ListingCardData }) {
           <ListingTitle title={listing.title} />
         </h3>
         <div className="mt-3 flex items-center gap-2 text-xs font-medium text-route">
-          <span className="truncate">🛫 {getCityLabel(listing.city, locale)}</span>
+          <span className="truncate">{getCityLabel(listing.city, locale)} <span className="text-sm">🛫</span></span>
           {listing.to_city && (
             <>
               <span>→</span>
-              <span className="truncate">{getCityLabel(listing.to_city, locale)} 🛬</span>
+              <span className="truncate">{getCityLabel(listing.to_city, locale)} <span className="text-sm">🛬</span></span>
             </>
           )}
         </div>

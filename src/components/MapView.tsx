@@ -1,32 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import Map, { Marker, type MapMouseEvent } from 'react-map-gl/mapbox';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { ListingMapData } from '@/lib/types';
-import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
+import { getCityLabel } from '@/lib/geo-labels';
 import ListingTitle from './ListingTitle';
 
-const icon = L.divIcon({
-  className: '',
-  html: `<div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-    background:#4D6EE3;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`,
-  iconSize: [26, 26],
-  iconAnchor: [13, 26],
-});
-
-const createPhotoIcon = (avatarUrl?: string | null) => {
-  if (!avatarUrl) return icon;
-  return L.divIcon({
-    className: 'map-photo-icon',
-    html: `<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);background-image:url('${avatarUrl}');background-size:cover;background-position:center"></div>`,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-};
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 export type MapMarker = {
   id: string;
@@ -40,11 +23,37 @@ export type MapMarker = {
   listing?: ListingMapData;
 };
 
-function ClickCatcher({ onPick }: { onPick?: (lat: number, lng: number) => void }) {
-  useMapEvents({
-    click(e) { onPick?.(e.latlng.lat, e.latlng.lng); },
-  });
-  return null;
+function PhotoPin({ avatarUrl }: { avatarUrl?: string | null }) {
+  if (!avatarUrl) {
+    return (
+      <div
+        style={{
+          width: 26,
+          height: 26,
+          borderRadius: '50% 50% 50% 0',
+          transform: 'rotate(-45deg)',
+          background: '#4D6EE3',
+          border: '2px solid #fff',
+          boxShadow: '0 2px 6px rgba(0,0,0,.3)',
+        }}
+      />
+    );
+  }
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: '50%',
+        overflow: 'hidden',
+        border: '3px solid #fff',
+        boxShadow: '0 2px 8px rgba(0,0,0,.3)',
+        backgroundImage: `url('${avatarUrl}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    />
+  );
 }
 
 export default function MapView({
@@ -63,34 +72,40 @@ export default function MapView({
   const p = selectedListing?.profiles;
   const genderLabel = p ? (p.gender === 'male' ? tProfile('male') : p.gender === 'female' ? tProfile('female') : tProfile('other')) : '';
 
+  const handleClick = (e: MapMouseEvent) => {
+    if (!e.lngLat) return;
+    onPick?.(e.lngLat.lat, e.lngLat.lng);
+  };
+
   return (
-    // isolate — Leaflet рисует свои внутренние слои (тайлы, маркеры, контролы)
-    // с z-index до 1000, из-за чего они могли перекрывать глобальный оверлей
-    // загрузки при переходе с этой страницы. Изоляция ограничивает эти
-    // z-index значения только внутри карты, не давая им конкурировать с
-    // элементами вне неё (см. LoadingSpinner.tsx).
+    // isolate — Mapbox GL рисует свои внутренние слои (тайлы, маркеры, контролы)
+    // поверх глобального оверлея загрузки при переходе с этой страницы. Изоляция
+    // ограничивает эти z-index значения только внутри карты (см. LoadingSpinner.tsx).
     <div className="relative isolate h-full w-full">
-      <MapContainer center={center} zoom={zoom} className="h-full w-full" scrollWheelZoom={true}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {onPick && <ClickCatcher onPick={onPick} />}
+      <Map
+        mapboxAccessToken={MAPBOX_TOKEN}
+        initialViewState={{ longitude: center[1], latitude: center[0], zoom }}
+        mapStyle="mapbox://styles/mapbox/streets-v12"
+        style={{ width: '100%', height: '100%' }}
+        onClick={onPick ? handleClick : undefined}
+      >
         {markers.map((m) => (
-          <Marker 
-            key={m.id} 
-            position={[m.lat, m.lng]} 
-            icon={createPhotoIcon(m.avatar_url)} 
-            eventHandlers={{
-              click: () => {
-                if (m.listing) {
-                  setSelectedListing(m.listing);
-                }
-              },
+          <Marker
+            key={m.id}
+            longitude={m.lng}
+            latitude={m.lat}
+            anchor="bottom"
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              if (m.listing) {
+                setSelectedListing(m.listing);
+              }
             }}
-          />
+          >
+            <PhotoPin avatarUrl={m.avatar_url} />
+          </Marker>
         ))}
-      </MapContainer>
+      </Map>
 
       {selectedListing && (
         <div className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setSelectedListing(null)}>
@@ -120,11 +135,10 @@ export default function MapView({
 
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex gap-2">
-                  <span>🛫 {getCityLabel(selectedListing.city, locale)}, {getCountryLabel(selectedListing.country, locale)} → {getCityLabel(selectedListing.to_city, locale)}, {getCountryLabel(selectedListing.to_country, locale)} 🛬</span>
+                  <span>{getCityLabel(selectedListing.city, locale)} <span className="text-lg">🛫</span> → {getCityLabel(selectedListing.to_city, locale)} <span className="text-lg">🛬</span></span>
                 </div>
                 {selectedListing.date_from && (
                   <div className="flex gap-2">
-                    <span className="font-medium">{t('dates')}</span>
                     <span>
                       📅 {new Date(selectedListing.date_from).toLocaleDateString(locale)}
                       {selectedListing.date_to ? ` — ${new Date(selectedListing.date_to).toLocaleDateString(locale)}` : ''}

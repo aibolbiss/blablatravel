@@ -67,7 +67,6 @@
   "map": {
     "heading": "Compagnons sur la carte",
     "subtitle": "Seuls ceux qui ont autorisé le partage de leur position sont affichés. Total : {count}",
-    "dates": "Dates :",
     "budget": "Budget :",
     "perPerson": "${amount}/personne",
     "description": "Description",

@@ -67,7 +67,6 @@
   "map": {
     "heading": "Compañeros en el mapa",
     "subtitle": "Solo se muestran quienes permitieron compartir su ubicación. Total: {count}",
-    "dates": "Fechas:",
     "budget": "Presupuesto:",
     "perPerson": "${amount}/persona",
     "description": "Descripción",

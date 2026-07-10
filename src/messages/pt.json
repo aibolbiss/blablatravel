@@ -67,7 +67,6 @@
   "map": {
     "heading": "Companheiros no mapa",
     "subtitle": "Só são exibidos os que permitiram mostrar sua localização. Total: {count}",
-    "dates": "Datas:",
     "budget": "Orçamento:",
     "perPerson": "${amount}/pessoa",
     "description": "Descrição",

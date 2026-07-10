@@ -5,7 +5,7 @@ import { getLocale, getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Listing } from '@/lib/types';
-import { getCountryLabel, getCityLabel } from '@/lib/geo-labels';
+import { getCityLabel } from '@/lib/geo-labels';
 import FavoriteButton from '@/components/FavoriteButton';
 import StartChatButton from '@/components/StartChatButton';
 import MapView from '@/components/MapViewDynamic';
@@ -52,12 +52,12 @@ export default async function ListingPage({ params }: { params: { locale: string
           <ImageModal src={listing.photo_url} alt={listing.title} />
         )}
         <h1 className="mt-6 font-display text-2xl font-bold leading-snug sm:text-3xl">
-          <ListingTitle title={listing.title} />
+          <ListingTitle title={listing.title} stackTourism />
         </h1>
 
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm font-medium text-route">
-          <span>🛫 {getCityLabel(listing.city, locale)}, {getCountryLabel(listing.country, locale)}</span>
-          {listing.to_city && (<><span>→</span><span>{getCityLabel(listing.to_city, locale)}{listing.to_country ? `, ${getCountryLabel(listing.to_country, locale)}` : ''} 🛬</span></>)}
+          <span>{getCityLabel(listing.city, locale)} <span className="text-lg">🛫</span></span>
+          {listing.to_city && (<><span>→</span><span>{getCityLabel(listing.to_city, locale)} <span className="text-lg">🛬</span></span></>)}
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">

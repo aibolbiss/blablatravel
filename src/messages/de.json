@@ -67,7 +67,6 @@
   "map": {
     "heading": "Begleiter auf der Karte",
     "subtitle": "Nur Nutzer, die ihren Standort geteilt haben, werden angezeigt. Insgesamt: {count}",
-    "dates": "Daten:",
     "budget": "Budget:",
     "perPerson": "${amount}/Person",
     "description": "Beschreibung",

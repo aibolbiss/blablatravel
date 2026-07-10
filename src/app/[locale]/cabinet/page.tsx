@@ -77,11 +77,11 @@ export default async function CabinetPage({
                 <div className="min-w-0 flex-1">
                   <Link href={`/listing/${l.id}`} className="font-semibold hover:text-route line-clamp-2"><ListingTitle title={l.title} /></Link>
                   <div className="mt-1.5 flex items-center gap-2 text-xs font-medium text-route">
-                    <span className="truncate">🛫 {getCityLabel(l.city, locale)}</span>
+                    <span className="truncate">{getCityLabel(l.city, locale)} <span className="text-sm">🛫</span></span>
                     {l.to_city && (
                       <>
                         <span>→</span>
-                        <span className="truncate">{getCityLabel(l.to_city, locale)} 🛬</span>
+                        <span className="truncate">{getCityLabel(l.to_city, locale)} <span className="text-sm">🛬</span></span>
                       </>
                     )}
                   </div>
