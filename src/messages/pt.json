@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "Poputchik — encontre um companheiro de viagem",
-    "description": "Serviço de busca de companheiros de viagem: anúncios, mapa, chat."
+    "title": "Encontre companhia para viajar — BlaBlaTravel",
+    "description": "Encontre parceiros de viagem no BlaBlaTravel. Escolha destino e datas, explore anúncios e converse com outros viajantes para planejar suas próximas férias.",
+    "mapTitle": "Mapa de parceiros de viagem — BlaBlaTravel",
+    "mapDescription": "Encontre parceiros de viagem no mapa do BlaBlaTravel. Explore destinos e anúncios de viajantes, conheça pessoas e planeje uma viagem em companhia.",
+    "listingTitle": "Parceiros de viagem: {route} — BlaBlaTravel"
   },
   "nav": {
     "map": "Mapa",
@@ -28,11 +31,35 @@
   },
   "home": {
     "kicker": "buscar companheiros de viagem",
-    "titleLine1": "Com quem você vai viajar",
-    "titleLine2": "desta vez? 🛩",
+    "titleLine1": "Encontre companhia",
+    "titleLine2": "para viajar",
     "emptyTitle": "Nada encontrado ainda",
     "emptyText": "Altere os filtros ou crie o primeiro anúncio.",
-    "createListing": "Criar anúncio"
+    "createListing": "Criar anúncio",
+    "seoIntro": "Encontre companhia para suas próximas férias ou uma viagem ao exterior. Escolha destino e datas para descobrir anúncios de outros viajantes.",
+    "seoHeading": "Como encontrar parceiros de viagem",
+    "seoText": "Escolha origem, destino, datas e o tipo de férias que procura. Explore anúncios e compare rotas e orçamentos. Converse sobre seus planos no chat ou publique um anúncio para encontrar companhia para sua próxima viagem.",
+    "seoMapLink": "Ver parceiros de viagem no mapa",
+    "faqHeading": "Perguntas sobre parceiros de viagem",
+    "languagesHeading": "Ver o site em outro idioma",
+    "faq": {
+      "planning": {
+        "question": "Como encontrar parceiros para viajar nas férias?",
+        "answer": "Comece pelo destino, pelas datas aproximadas e pelo tipo de viagem. Veja os anúncios do BlaBlaTravel e compare os planos de outros viajantes com os seus. Se não encontrar uma opção adequada, publique um anúncio com sua rota, datas e a companhia que procura."
+      },
+      "destination": {
+        "question": "Posso encontrar companhia para uma viagem ao exterior?",
+        "answer": "Sim. Você pode pesquisar por país e cidade de origem e de destino. Verifiquem se as datas coincidem e conversem sobre roteiro, hospedagem e estilo de viagem antes de fazer reservas."
+      },
+      "budget": {
+        "question": "O que combinar com um parceiro antes da viagem?",
+        "answer": "Conversem sobre orçamento, datas, transporte, hospedagem e ritmo da viagem. Combinem quais despesas cada pessoa pagará e quais pretendem dividir. Escolher o mesmo destino nem sempre significa ter as mesmas expectativas para as férias."
+      },
+      "contact": {
+        "question": "Como entrar em contato com um parceiro de viagem?",
+        "answer": "Abra um anúncio, entre na sua conta e use o botão de chat se o autor aceitar mensagens. Apresente-se e conte suas datas e planos. Uma chamada antes de viajar juntos pode ajudar vocês a se conhecerem melhor."
+      }
+    }
   },
   "filters": {
     "whoTab": "Quem você está procurando?",
@@ -101,7 +128,8 @@
     "chooseConversationHint": "ou escreva para alguém a partir da página de um anúncio",
     "backToList": "Voltar às conversas",
     "typing": "{name} está digitando…",
-    "matched": "Vocês deram match"
+    "matched": "Vocês deram match",
+    "sendError": "Não foi possível enviar a mensagem. O texto foi mantido; tente novamente."
   },
   "cabinet": {
     "profileSettings": "Configurações do perfil",

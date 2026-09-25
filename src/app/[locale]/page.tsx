@@ -8,6 +8,13 @@ import { ListingCardData } from '@/lib/types';
 import { Link } from '@/i18n/navigation';
 import { parseListingTitle } from '@/lib/parseListingTitle';
 import { companionEmojis, tourismEmojis } from '@/lib/travel-data';
+import { pageMetadata, SITE_URL } from '@/lib/seo';
+import { routing, localeLabels } from '@/i18n/routing';
+
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale: params.locale, namespace: 'meta' });
+  return pageMetadata(params.locale, '', t('title'), t('description'));
+}
 
 // Публичные данные (без сессии) — кэшируем на 20с вместо похода в Supabase
 // на каждый заход, см. lib/supabase/public.ts.
@@ -97,11 +104,21 @@ export default async function HomePage({
 
   return (
     <div className="py-4 md:py-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: 'BlaBlaTravel',
+        alternateName: 'БлаБлаТревел',
+        inLanguage: [...routing.locales],
+      }).replace(/</g, '\\u003c') }} />
       <section className="mb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-route">{t('kicker')}</p>
         <h1 className="mt-2 max-w-2xl font-display text-3xl font-bold leading-tight sm:text-4xl">
           {t('titleLine1')} <span className="text-route">{t('titleLine2')}</span>
         </h1>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mut">{t('seoIntro')}</p>
         {/* <div className="route-line mt-5 max-w-md" /> */}
       </section>
 
@@ -126,6 +143,30 @@ export default async function HomePage({
           </div>
         </Suspense>
       )}
+      <section className="mt-12 border-t border-line pt-8">
+        <h2 className="font-display text-xl font-semibold">{t('seoHeading')}</h2>
+        <p className="mt-3 max-w-3xl leading-relaxed text-mut">{t('seoText')}</p>
+        <Link href="/map" className="mt-4 inline-block font-semibold text-route">{t('seoMapLink')}</Link>
+      </section>
+      <section className="mt-10" aria-labelledby="travel-faq">
+        <h2 id="travel-faq" className="font-display text-xl font-semibold">{t('faqHeading')}</h2>
+        <div className="mt-4 divide-y divide-line">
+          {(['planning', 'destination', 'budget', 'contact'] as const).map((key) => (
+            <details key={key} className="py-4">
+              <summary className="cursor-pointer font-semibold">{t(`faq.${key}.question`)}</summary>
+              <p className="mt-3 max-w-3xl leading-relaxed text-mut">{t(`faq.${key}.answer`)}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <nav aria-label={t('languagesHeading')} className="mt-10 flex flex-wrap gap-x-5 gap-y-3 border-t border-line pt-6 text-sm">
+        {routing.locales.map((locale) => (
+          <Link key={locale} href="/" locale={locale} hrefLang={locale} lang={locale}
+            className="text-mut hover:text-route" aria-current={locale === params.locale ? 'page' : undefined}>
+            {localeLabels[locale].name}
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

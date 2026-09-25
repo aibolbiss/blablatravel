@@ -56,6 +56,7 @@ export default async function ChatPage({ params }: { params: { id: string } }) {
         <ChatSidebar conversations={conversations} activeId={params.id} userId={userId} />
       </div>
       <ChatWindow
+        key={params.id}
         conversationId={params.id}
         myId={userId}
         other={other as Profile}

@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Message, Profile } from '@/lib/types';
-import LoadingSpinner from './LoadingSpinner';
+import ChatMessages from './ChatMessages';
 
 const TYPING_BROADCAST_THROTTLE_MS = 2000;
 const TYPING_INDICATOR_TIMEOUT_MS = 3000;
@@ -27,6 +27,7 @@ export default function ChatWindow({
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [otherTyping, setOtherTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const typingChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
@@ -34,6 +35,7 @@ export default function ChatWindow({
   const typingHideTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
+    const readTimers = new Set<ReturnType<typeof setTimeout>>();
     const channel = supabase
       .channel(`conv-${conversationId}`)
       .on(
@@ -42,15 +44,15 @@ export default function ChatWindow({
         (payload) => {
           const m = payload.new as Message;
           setMessages((prev) => (prev.some((x) => x.id === m.id) ? prev : [...prev, m]));
-          // Обновляем превью последнего сообщения и порядок в списке диалогов
-          router.refresh();
+          // ChatSidebar updates its preview from the same realtime event.
 
           // Собеседник прислал сообщение, пока мы уже открыли этот диалог —
           // считаем его прочитанным вскоре после появления (зелёное → серое).
           if (m.sender_id !== myId) {
             setOtherTyping(false);
             clearTimeout(typingHideTimeoutRef.current);
-            setTimeout(async () => {
+            const timer = setTimeout(async () => {
+              readTimers.delete(timer);
               const { error } = await supabase
                 .from('messages')
                 .update({ read_at: new Date().toISOString() })
@@ -59,22 +61,11 @@ export default function ChatWindow({
                 setMessages((prev) => prev.map((x) => (x.id === m.id ? { ...x, read_at: new Date().toISOString() } : x)));
               }
             }, 1200);
+            readTimers.add(timer);
           }
         }
       )
       .subscribe();
-
-    // Отправляем сигнал что вошли в диалог (для обновления баджиков)
-    const statusChannel = supabase
-      .channel(`read-status:${myId}`)
-      .subscribe(() => {
-        // После подписки отправляем сигнал
-        statusChannel.send({
-          type: 'broadcast',
-          event: 'messages_read',
-          payload: { conversation_id: conversationId },
-        });
-      });
 
     // "Печатает…" — эфемерный статус, не хранится в базе, просто broadcast
     // на канал диалога. Оба участника слушают один и тот же канал.
@@ -91,9 +82,9 @@ export default function ChatWindow({
 
     return () => {
       supabase.removeChannel(channel);
-      supabase.removeChannel(statusChannel);
       supabase.removeChannel(typingChannel);
       clearTimeout(typingHideTimeoutRef.current);
+      readTimers.forEach(clearTimeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
@@ -119,6 +110,7 @@ export default function ChatWindow({
     const content = text.trim();
     if (!content || sending) return;
     setSending(true);
+    setSendError(false);
     setText('');
     const { data, error } = await supabase
       .from('messages')
@@ -127,8 +119,9 @@ export default function ChatWindow({
       .single();
     if (!error && data) {
       setMessages((prev) => (prev.some((x) => x.id === data.id) ? prev : [...prev, data as Message]));
-      // Обновляем превью последнего сообщения и порядок в списке диалогов
-      router.refresh();
+    } else {
+      setSendError(true);
+      setText((draft) => draft ? `${content}\n${draft}` : content);
     }
     setSending(false);
   }
@@ -164,43 +157,7 @@ export default function ChatWindow({
       </div>
 
       <div className="flex-1 space-y-1 overflow-y-auto p-5">
-        {messages.map((m, i) => {
-          const mine = m.sender_id === myId;
-          const prev = messages[i - 1];
-          const grouped = prev && prev.sender_id === m.sender_id;
-
-          const curr = new Date(m.created_at);
-          const prevDate = prev ? new Date(prev.created_at) : null;
-          const isDifferentDay = !prevDate || curr.toDateString() !== prevDate.toDateString();
-
-          return (
-            <div key={m.id}>
-              {isDifferentDay && (
-                <div className="flex items-center justify-center gap-2 my-4">
-                  <div className="flex-1 h-px bg-line" />
-                  <p className="text-xs text-mut">{curr.toLocaleDateString(locale)}</p>
-                  <div className="flex-1 h-px bg-line" />
-                </div>
-              )}
-              <div className={`flex ${mine ? 'justify-end' : 'justify-start'} ${grouped ? '' : 'mt-3'}`}>
-                <div className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed transition-colors duration-500 ${
-                  mine
-                    ? 'bg-route text-white'
-                    : m.read_at
-                      ? 'bg-bg text-ink'
-                      : 'border border-green-300 bg-green-100 text-green-900'
-                }`}>
-                  <p className="whitespace-pre-wrap break-words">{m.content}</p>
-                  <p className={`mt-0.5 text-[10px] ${mine ? 'text-right' : 'text-left'} ${
-                    mine ? 'text-white/60' : m.read_at ? 'text-mut' : 'text-green-700'
-                  }`}>
-                    {curr.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        <ChatMessages messages={messages} myId={myId} locale={locale} />
         <div ref={bottomRef} />
       </div>
 
@@ -215,6 +172,8 @@ export default function ChatWindow({
         </div>
       )}
 
+      {sendError && <p role="alert" className="px-5 py-2 text-sm text-red-600">{t('sendError')}</p>}
+
       <div className="flex gap-2 border-t border-line p-3">
         <input
           className="input"
@@ -227,7 +186,6 @@ export default function ChatWindow({
           {t('send')}
         </button>
       </div>
-      {sending && <LoadingSpinner />}
     </div>
   );
 }

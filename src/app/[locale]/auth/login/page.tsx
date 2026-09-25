@@ -6,6 +6,7 @@ import { useRouter, Link } from '@/i18n/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { startNavLoading } from '@/lib/navLoading';
+import { afterLoginPath } from '@/lib/auth-redirect';
 
 export default function LoginPage() {
   const t = useTranslations('auth');
@@ -23,7 +24,7 @@ export default function LoginPage() {
     setLoading(false);
     if (error) return setError(t('wrongCreds'));
     startNavLoading();
-    router.push('/cabinet');
+    router.push(afterLoginPath(new URLSearchParams(window.location.search).get('next')));
     router.refresh();
   }
 

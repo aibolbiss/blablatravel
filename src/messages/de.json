@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "Poputchik — finde einen Reisebegleiter",
-    "description": "Ein Service zur Vermittlung von Reisebegleitern: Anzeigen, Karte, Chat."
+    "title": "Reisepartner finden und gemeinsam reisen — BlaBlaTravel",
+    "description": "Finde Reisepartner und Reisebegleiter auf BlaBlaTravel. Wähle Reiseziel und Zeitraum, entdecke Reiseanzeigen und plane deinen Urlaub gemeinsam im Chat.",
+    "mapTitle": "Reisepartner auf der Karte finden — BlaBlaTravel",
+    "mapDescription": "Entdecke Reisepartner auf der BlaBlaTravel-Karte. Sieh dir Reiseziele und Anzeigen an, lerne andere Reisende kennen und plant euren Urlaub gemeinsam.",
+    "listingTitle": "Reisepartner: {route} — BlaBlaTravel"
   },
   "nav": {
     "map": "Karte",
@@ -28,11 +31,35 @@
   },
   "home": {
     "kicker": "Reisebegleiter finden",
-    "titleLine1": "Mit wem geht's",
-    "titleLine2": "diesmal los? 🛩",
+    "titleLine1": "Reisepartner finden",
+    "titleLine2": "und gemeinsam reisen",
     "emptyTitle": "Noch nichts gefunden",
     "emptyText": "Ändere die Filter oder erstelle die erste Anzeige.",
-    "createListing": "Anzeige erstellen"
+    "createListing": "Anzeige erstellen",
+    "seoIntro": "Finde Reisepartner für deinen nächsten Urlaub oder eine Reise ins Ausland. Wähle Reiseziel und Zeitraum, um passende Reiseanzeigen zu entdecken.",
+    "seoHeading": "So findest du Reisepartner",
+    "seoText": "Wähle Startort, Reiseziel, Zeitraum und deine bevorzugte Urlaubsart. Sieh dir Anzeigen an und vergleiche Routen und Budgets. Besprich deine Pläne im Chat oder erstelle eine eigene Anzeige, um Reisebegleiter zu finden.",
+    "seoMapLink": "Reisepartner auf der Karte entdecken",
+    "faqHeading": "Fragen zur Suche nach Reisepartnern",
+    "languagesHeading": "Website in einer anderen Sprache",
+    "faq": {
+      "planning": {
+        "question": "Wie finde ich Reisepartner für meinen Urlaub?",
+        "answer": "Beginne mit deinem Reiseziel, dem ungefähren Zeitraum und der gewünschten Urlaubsart. Sieh dir die Anzeigen auf BlaBlaTravel an und vergleiche die Reisepläne mit deinen Vorstellungen. Wenn nichts passt, erstelle eine Anzeige mit Route, Zeitraum und der gesuchten Reisebegleitung."
+      },
+      "destination": {
+        "question": "Kann ich Reisebegleiter für eine Auslandsreise finden?",
+        "answer": "Ja. Du kannst nach Land und Stadt für Abreise und Ziel suchen. Prüft, ob eure Reisedaten zusammenpassen, und besprecht Route, Unterkunft und Urlaubsart, bevor ihr bucht."
+      },
+      "budget": {
+        "question": "Was sollte ich vor einer Reise mit einem Reisepartner besprechen?",
+        "answer": "Besprecht Budget, Reisedaten, Verkehrsmittel, Unterkunft und Reisetempo. Klärt, welche Ausgaben jeder selbst bezahlt und welche ihr teilen möchtet. Das gleiche Reiseziel bedeutet nicht immer die gleichen Erwartungen an den Urlaub."
+      },
+      "contact": {
+        "question": "Wie kontaktiere ich einen Reisepartner?",
+        "answer": "Öffne eine Anzeige, melde dich an und nutze die Chat-Schaltfläche, sofern die Person Nachrichten erlaubt. Stelle dich vor und nenne deine Reisedaten und Pläne. Ein Telefonat vor der gemeinsamen Reise hilft euch, einander kennenzulernen."
+      }
+    }
   },
   "filters": {
     "whoTab": "Wen suchst du?",
@@ -101,7 +128,8 @@
     "chooseConversationHint": "oder schreibe jemandem über die Anzeigenseite",
     "backToList": "Zurück zu den Unterhaltungen",
     "typing": "{name} schreibt…",
-    "matched": "Ihr habt ein Match"
+    "matched": "Ihr habt ein Match",
+    "sendError": "Die Nachricht konnte nicht gesendet werden. Dein Text bleibt erhalten. Versuche es erneut."
   },
   "cabinet": {
     "profileSettings": "Profileinstellungen",

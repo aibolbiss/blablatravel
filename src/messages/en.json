@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "Poputchik — find a travel companion",
-    "description": "A travel companion matching service: listings, map, chat."
+    "title": "Find a Travel Buddy & Travel Companions — BlaBlaTravel",
+    "description": "Find travel buddies and companions for your next trip on BlaBlaTravel. Explore destinations, choose travel dates, browse listings and chat with fellow travelers.",
+    "mapTitle": "Travel Companion Map — BlaBlaTravel",
+    "mapDescription": "Find travel companions on the BlaBlaTravel map. Explore trip destinations and traveler listings, meet people and discuss your next adventure together.",
+    "listingTitle": "Travel companions: {route} — BlaBlaTravel"
   },
   "nav": {
     "map": "Map",
@@ -28,11 +31,35 @@
   },
   "home": {
     "kicker": "find a travel companion",
-    "titleLine1": "Who's your next",
-    "titleLine2": "trip with? 🛩",
+    "titleLine1": "Find a travel buddy",
+    "titleLine2": "for your next trip",
     "emptyTitle": "Nothing found yet",
     "emptyText": "Try changing the filters or create the first listing.",
-    "createListing": "Create a listing"
+    "createListing": "Create a listing",
+    "seoIntro": "Find a travel buddy for your next trip, vacation or adventure abroad. Choose your destination and dates to browse matching travel listings.",
+    "seoHeading": "How to find a travel companion",
+    "seoText": "Choose where you want to travel from and to, your dates and your preferred type of vacation. Browse listings and compare routes and budgets. Discuss plans in chat or post your own listing to find company for your next trip.",
+    "seoMapLink": "Explore travel companions on the map",
+    "faqHeading": "Questions about finding travel companions",
+    "languagesHeading": "Browse in another language",
+    "faq": {
+      "planning": {
+        "question": "How can I find a travel buddy for a vacation?",
+        "answer": "Start with your destination, approximate dates and preferred type of trip. Browse BlaBlaTravel listings and compare other travelers’ plans with yours. If you cannot find a match, post a listing with your route, dates and the kind of company you are looking for."
+      },
+      "destination": {
+        "question": "Can I find a travel companion for a trip abroad?",
+        "answer": "Yes. You can search by departure country and city as well as destination country and city. Check that your travel dates overlap, then discuss the itinerary, accommodation and style of vacation before booking."
+      },
+      "budget": {
+        "question": "What should I discuss with a travel partner before a trip?",
+        "answer": "Discuss your budget, dates, transport, accommodation and travel pace. Agree on which expenses you will pay separately and which you might share. Choosing the same destination does not always mean having the same expectations for a vacation."
+      },
+      "contact": {
+        "question": "How do I contact a travel companion?",
+        "answer": "Open a listing, sign in and use the chat button if the author accepts messages. Introduce yourself and share your dates and plans. A call before traveling together can help you get to know each other."
+      }
+    }
   },
   "filters": {
     "whoTab": "Who are you looking for?",
@@ -101,7 +128,8 @@
     "chooseConversationHint": "or message someone from a listing page",
     "backToList": "Back to conversations",
     "typing": "{name} is typing…",
-    "matched": "You matched"
+    "matched": "You matched",
+    "sendError": "Could not send your message. Your text is saved — please try again."
   },
   "cabinet": {
     "profileSettings": "Profile settings",

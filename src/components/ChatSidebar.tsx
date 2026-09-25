@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -22,6 +22,8 @@ export default function ChatSidebar({
   // Локальная копия — обновляем её сразу из realtime-события, не дожидаясь
   // повторного серверного рендера (он может отставать по времени).
   const [items, setItems] = useState(conversations);
+  const itemsRef = useRef(items);
+  useEffect(() => { itemsRef.current = items; }, [items]);
 
   useEffect(() => {
     setItems(conversations);
@@ -29,6 +31,11 @@ export default function ChatSidebar({
 
   useEffect(() => {
     const supabase = createClient();
+    let refreshTimer: ReturnType<typeof setTimeout>;
+    const scheduleRefresh = () => {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => router.refresh(), 300);
+    };
     const channel = supabase
       .channel(`chat-sidebar:${userId}:${instanceId}`)
       .on(
@@ -36,14 +43,13 @@ export default function ChatSidebar({
         { event: 'INSERT', schema: 'public', table: 'messages' },
         (payload) => {
           const m = payload.new as Message;
+          if (!itemsRef.current.some((c) => c.id === m.conversation_id)) {
+            scheduleRefresh();
+            return;
+          }
           setItems((prev) => {
             const idx = prev.findIndex((c) => c.id === m.conversation_id);
-            // Диалог не входит в уже загруженный список (например, только
-            // что создан) — просто перезапрашиваем список с сервера целиком.
-            if (idx === -1) {
-              router.refresh();
-              return prev;
-            }
+            if (idx === -1) return prev;
             const next = [...prev];
             next[idx] = {
               ...next[idx],
@@ -59,11 +65,12 @@ export default function ChatSidebar({
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'messages' },
-        () => router.refresh()
+        scheduleRefresh
       )
       .subscribe();
 
     return () => {
+      clearTimeout(refreshTimer);
       supabase.removeChannel(channel);
     };
   }, [userId, instanceId, router]);

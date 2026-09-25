@@ -9,6 +9,7 @@ import { routing } from '@/i18n/routing';
 import { themeInitScript } from '@/lib/theme';
 import Header from '@/components/Header';
 import RouteLoadingOverlay from '@/components/RouteLoadingOverlay';
+import { SITE_URL } from '@/lib/seo';
 import '../globals.css';
 
 const display = Unbounded({ subsets: ['cyrillic', 'latin'], weight: ['500', '700'], variable: '--font-display' });
@@ -24,8 +25,9 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const { locale } = params;
+  if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: 'meta' });
-  return { title: t('title'), description: t('description') };
+  return { metadataBase: new URL(SITE_URL), title: t('title'), description: t('description') };
 }
 
 export default async function RootLayout({

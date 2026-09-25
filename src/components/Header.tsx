@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import LogoutButton from './LogoutButton';
@@ -9,10 +9,25 @@ import MobileNav from './MobileNav';
 import LocaleSwitcher from './LocaleSwitcher';
 import UnreadChatBadge from './UnreadChatBadge';
 import ThemeToggle from './ThemeToggle';
+import { useUnreadMessages } from '@/lib/useUnreadMessages';
 
 export default function Header() {
   const t = useTranslations('nav');
+  const locale = useLocale();
   const [userId, setUserId] = useState<string | null>(null);
+  const hasUnread = useUnreadMessages(userId);
+
+  useEffect(() => {
+    if (!userId) return;
+    let cancelled = false;
+    const client = createClient();
+    void client.auth.getSession().then(({ data: { session } }) => {
+      if (!cancelled && session?.user.id === userId && session.user.user_metadata.locale !== locale) {
+        return client.auth.updateUser({ data: { locale } });
+      }
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [userId, locale]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -43,7 +58,7 @@ export default function Header() {
               <>
                 <Link href="/chat" className="relative text-lg hover:opacity-70" title={t('messages')}>
                   💬
-                  <UnreadChatBadge userId={user.id} />
+                  <UnreadChatBadge hasUnread={hasUnread} />
                 </Link>
                 <Link href="/favorites" className="text-lg hover:opacity-70" title={t('favorites')}>⭐</Link>
               </>
@@ -77,7 +92,7 @@ export default function Header() {
       </header>
 
       {/* Мобильная навигация внизу */}
-      <MobileNav user={user} />
+      <MobileNav user={user} hasUnread={hasUnread} />
     </>
   );
 }

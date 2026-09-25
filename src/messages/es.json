@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "Poputchik — encuentra un compañero de viaje",
-    "description": "Servicio para encontrar compañeros de viaje: anuncios, mapa, chat."
+    "title": "Encuentra compañeros de viaje — BlaBlaTravel",
+    "description": "Encuentra compañeros de viaje en BlaBlaTravel. Elige destino y fechas, explora anuncios y habla con otros viajeros para organizar tus próximas vacaciones.",
+    "mapTitle": "Mapa de compañeros de viaje — BlaBlaTravel",
+    "mapDescription": "Busca compañeros de viaje en el mapa de BlaBlaTravel. Explora destinos y anuncios de viajeros, conoce gente y organiza una aventura en compañía.",
+    "listingTitle": "Compañeros de viaje: {route} — BlaBlaTravel"
   },
   "nav": {
     "map": "Mapa",
@@ -28,11 +31,35 @@
   },
   "home": {
     "kicker": "buscar compañeros de viaje",
-    "titleLine1": "¿Con quién viajarás",
-    "titleLine2": "esta vez? 🛩",
+    "titleLine1": "Encuentra compañeros",
+    "titleLine2": "de viaje",
     "emptyTitle": "Todavía no hay resultados",
     "emptyText": "Cambia los filtros o crea el primer anuncio.",
-    "createListing": "Crear anuncio"
+    "createListing": "Crear anuncio",
+    "seoIntro": "Encuentra compañeros para tus próximas vacaciones o un viaje al extranjero. Elige destino y fechas para ver anuncios de otros viajeros.",
+    "seoHeading": "Cómo encontrar compañeros de viaje",
+    "seoText": "Indica tu lugar de salida, destino, fechas y tipo de vacaciones. Explora anuncios y compara rutas y presupuestos. Habla de tus planes en el chat o publica un anuncio para encontrar compañía para tu próximo viaje.",
+    "seoMapLink": "Ver compañeros de viaje en el mapa",
+    "faqHeading": "Preguntas sobre cómo encontrar compañeros de viaje",
+    "languagesHeading": "Consultar en otro idioma",
+    "faq": {
+      "planning": {
+        "question": "¿Cómo encontrar compañeros para las vacaciones?",
+        "answer": "Empieza por el destino, las fechas aproximadas y el tipo de viaje. Consulta los anuncios de BlaBlaTravel y compara los planes de otros viajeros con los tuyos. Si no encuentras una opción adecuada, publica un anuncio con tu ruta, fechas y la compañía que buscas."
+      },
+      "destination": {
+        "question": "¿Puedo encontrar compañeros para viajar al extranjero?",
+        "answer": "Sí. Puedes buscar por país y ciudad de salida y de destino. Comprueba que las fechas coincidan y hablad del itinerario, el alojamiento y el tipo de vacaciones antes de reservar."
+      },
+      "budget": {
+        "question": "¿Qué conviene hablar con un compañero antes de viajar?",
+        "answer": "Hablad del presupuesto, las fechas, el transporte, el alojamiento y el ritmo del viaje. Acordad qué gastos pagará cada persona y cuáles queréis compartir. Elegir el mismo destino no siempre significa tener las mismas expectativas."
+      },
+      "contact": {
+        "question": "¿Cómo contacto con un compañero de viaje?",
+        "answer": "Abre un anuncio, inicia sesión y utiliza el botón del chat si su autor acepta mensajes. Preséntate y comparte tus fechas y planes. Una llamada antes de viajar juntos puede ayudaros a conoceros mejor."
+      }
+    }
   },
   "filters": {
     "whoTab": "¿A quién buscas?",
@@ -101,7 +128,8 @@
     "chooseConversationHint": "o escribe a alguien desde la página de un anuncio",
     "backToList": "Volver a las conversaciones",
     "typing": "{name} está escribiendo…",
-    "matched": "Hicisteis match"
+    "matched": "Hicisteis match",
+    "sendError": "No se pudo enviar el mensaje. El texto se ha guardado; inténtalo de nuevo."
   },
   "cabinet": {
     "profileSettings": "Configuración del perfil",

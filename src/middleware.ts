@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import createIntlMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
+import { localeForCountry } from './i18n/country';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -78,9 +79,21 @@ export async function middleware(request: NextRequest) {
   // фактический роутинг "/ru/map" делает сама файловая система Next.js
   // через сегмент [locale], без rewrite. Поэтому для редиректа отдаём его
   // сразу, а для остальных случаев строим финальный ответ сами.
-  const intlResponse = intlMiddleware(request);
+  const hasLocalePrefix = routing.locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`));
+  const savedLocale = request.cookies.get('NEXT_LOCALE')?.value;
+  const hasSavedLocale = routing.locales.some((l) => l === savedLocale);
+  const countryLocale = localeForCountry(request.headers.get('x-vercel-ip-country'));
+  // Restrict country detection to unprefixed URLs and never override a saved choice.
+  // Disabling negotiation here makes the selected country take precedence over Accept-Language.
+  const intlResponse = !hasLocalePrefix && !hasSavedLocale && countryLocale
+    ? createIntlMiddleware({ ...routing, defaultLocale: countryLocale, localeDetection: false })(request)
+    : intlMiddleware(request);
   const isRedirect = intlResponse.headers.has('location');
-  if (isRedirect) return intlResponse;
+  if (isRedirect) {
+    intlResponse.headers.set('Cache-Control', 'private, no-store');
+    intlResponse.headers.append('Vary', 'Cookie, Accept-Language, X-Vercel-IP-Country');
+    return intlResponse;
+  }
 
   const { locale, path } = splitLocale(pathname);
 
@@ -106,6 +119,8 @@ export async function middleware(request: NextRequest) {
   if (!user && protectedPaths.some((p) => path.startsWith(p))) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/auth/login`;
+    url.search = '';
+    if (path.startsWith('/chat/')) url.searchParams.set('next', path);
     return NextResponse.redirect(url);
   }
 
@@ -122,5 +137,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp)$).*)'],
+  matcher: ['/((?!api(?:/|$)|_next(?:/|$)|_vercel(?:/|$)|.*\\..*).*)'],
 };

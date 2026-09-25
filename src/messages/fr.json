@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "Poputchik — trouvez un compagnon de voyage",
-    "description": "Un service pour trouver des compagnons de voyage : annonces, carte, chat."
+    "title": "Trouvez un compagnon de voyage — BlaBlaTravel",
+    "description": "Trouvez des compagnons de voyage sur BlaBlaTravel. Choisissez une destination et des dates, consultez les annonces et échangez pour préparer vos vacances.",
+    "mapTitle": "Carte des compagnons de voyage — BlaBlaTravel",
+    "mapDescription": "Trouvez des compagnons de voyage sur la carte BlaBlaTravel. Explorez les destinations et les annonces, faites connaissance et préparez un voyage ensemble.",
+    "listingTitle": "Compagnons de voyage : {route} — BlaBlaTravel"
   },
   "nav": {
     "map": "Carte",
@@ -28,11 +31,35 @@
   },
   "home": {
     "kicker": "trouver des compagnons de voyage",
-    "titleLine1": "Avec qui partiras-tu",
-    "titleLine2": "cette fois ? 🛩",
+    "titleLine1": "Trouvez un compagnon",
+    "titleLine2": "de voyage",
     "emptyTitle": "Rien trouvé pour l'instant",
     "emptyText": "Modifiez les filtres ou créez la première annonce.",
-    "createListing": "Créer une annonce"
+    "createListing": "Créer une annonce",
+    "seoIntro": "Trouvez un compagnon pour vos prochaines vacances ou un voyage à l’étranger. Choisissez votre destination et vos dates pour consulter les annonces.",
+    "seoHeading": "Comment trouver des compagnons de voyage",
+    "seoText": "Indiquez votre lieu de départ, votre destination, vos dates et votre type de vacances. Consultez les annonces et comparez les itinéraires et les budgets. Discutez de vos projets dans le chat ou publiez une annonce pour trouver des compagnons de voyage.",
+    "seoMapLink": "Voir les compagnons de voyage sur la carte",
+    "faqHeading": "Questions sur la recherche de compagnons de voyage",
+    "languagesHeading": "Consulter le site dans une autre langue",
+    "faq": {
+      "planning": {
+        "question": "Comment trouver un compagnon pour les vacances ?",
+        "answer": "Commencez par votre destination, vos dates approximatives et le type de séjour souhaité. Consultez les annonces BlaBlaTravel et comparez les projets des autres voyageurs aux vôtres. Si aucune annonce ne convient, publiez la vôtre avec votre itinéraire, vos dates et la compagnie recherchée."
+      },
+      "destination": {
+        "question": "Puis-je trouver un compagnon pour voyager à l’étranger ?",
+        "answer": "Oui. Vous pouvez rechercher par pays et ville de départ et de destination. Vérifiez que vos dates concordent, puis discutez de l’itinéraire, de l’hébergement et du type de vacances avant de réserver."
+      },
+      "budget": {
+        "question": "De quoi parler avec un compagnon avant de partir ?",
+        "answer": "Discutez du budget, des dates, des transports, de l’hébergement et du rythme du voyage. Précisez les dépenses que chacun paiera et celles que vous souhaitez partager. Choisir la même destination ne signifie pas toujours avoir les mêmes attentes."
+      },
+      "contact": {
+        "question": "Comment contacter un compagnon de voyage ?",
+        "answer": "Ouvrez une annonce, connectez-vous et utilisez le bouton de discussion si son auteur accepte les messages. Présentez-vous et partagez vos dates et vos projets. Un appel avant de partir ensemble permet de mieux faire connaissance."
+      }
+    }
   },
   "filters": {
     "whoTab": "Qui recherchez-vous ?",
@@ -101,7 +128,8 @@
     "chooseConversationHint": "ou écrivez à quelqu'un depuis la page d'une annonce",
     "backToList": "Retour aux discussions",
     "typing": "{name} est en train d'écrire…",
-    "matched": "Vous avez matché"
+    "matched": "Vous avez matché",
+    "sendError": "Impossible d’envoyer le message. Le texte est conservé ; réessayez."
   },
   "cabinet": {
     "profileSettings": "Paramètres du profil",

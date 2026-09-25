@@ -11,6 +11,31 @@ import StartChatButton from '@/components/StartChatButton';
 import MapView from '@/components/MapViewDynamic';
 import ImageModal from '@/components/ImageModal';
 import ListingTitle from '@/components/ListingTitle';
+import { cache } from 'react';
+import { pageMetadata } from '@/lib/seo';
+
+const getListing = cache(async (id: string) => {
+  const { data, error } = await createPublicClient(30)
+    .from('listings')
+    .select('*, profiles!listings_user_id_fkey(*)')
+    .eq('id', id)
+    .single();
+  if (error || !data) notFound();
+  return data as Listing;
+});
+
+export async function generateMetadata({ params }: { params: { locale: string; id: string } }) {
+  const listing = await getListing(params.id);
+  const t = await getTranslations({ locale: params.locale, namespace: 'meta' });
+  const route = [listing.city || listing.country, listing.to_city || listing.to_country]
+    .filter(Boolean).map((place) => getCityLabel(place, params.locale)).join(' → ');
+  const title = t('listingTitle', { route: route || listing.title });
+  const description = listing.description?.replace(/\s+/g, ' ').trim().slice(0, 160) || t('description');
+  return {
+    ...pageMetadata(params.locale, `/listing/${params.id}`, title, description),
+    ...(!listing.is_active ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 
 // Само объявление — публичные данные, кэшируем на 30с (lib/supabase/public.ts).
 // Проверка избранного остаётся на авторизованном клиенте и не кэшируется,
@@ -24,17 +49,7 @@ export default async function ListingPage({ params }: { params: { locale: string
   const locale = await getLocale();
   const userId = getUserId();
 
-  const { data, error } = await createPublicClient(30)
-    .from('listings')
-    .select('*, profiles!listings_user_id_fkey(*)')
-    .eq('id', params.id)
-    .single();
-
-  if (error || !data) {
-    notFound();
-  }
-
-  const listing = data as Listing;
+  const listing = await getListing(params.id);
   const p = listing.profiles!;
   const genderLabel = p.gender === 'male' ? tProfile('male') : p.gender === 'female' ? tProfile('female') : p.gender ? tProfile('other') : '';
 

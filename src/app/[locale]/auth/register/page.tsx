@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, Link } from '@/i18n/navigation';
 import { Eye, EyeOff } from 'lucide-react';
@@ -10,6 +10,7 @@ import RequiredMark from '@/components/RequiredMark';
 
 export default function RegisterPage() {
   const t = useTranslations('auth');
+  const locale = useLocale();
   const supabase = createClient();
   const router = useRouter();
   const [name, setName] = useState('');
@@ -33,7 +34,7 @@ export default function RegisterPage() {
     setError('');
     const { error } = await supabase.auth.signUp({
       email, password,
-      options: { data: { name }, emailRedirectTo: `${location.origin}/auth/callback` },
+      options: { data: { name, locale }, emailRedirectTo: `${location.origin}/auth/callback` },
     });
     setLoading(false);
     if (error) return setError(error.message);

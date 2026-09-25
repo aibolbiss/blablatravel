@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import UnreadChatBadge from './UnreadChatBadge';
 
-export default function MobileNav({ user }: { user?: { id: string } | null }) {
+export default function MobileNav({ user, hasUnread = false }: { user?: { id: string } | null; hasUnread?: boolean }) {
   const t = useTranslations('nav');
   const [showAuthMenu, setShowAuthMenu] = useState(false);
 
@@ -26,7 +26,7 @@ export default function MobileNav({ user }: { user?: { id: string } | null }) {
             <Link href="/chat" className="flex flex-1 flex-col items-center gap-1 py-1 text-xl hover:opacity-70" title={t('messages')}>
               <span className="relative">
                 💬
-                <UnreadChatBadge userId={user.id} />
+                <UnreadChatBadge hasUnread={hasUnread} />
               </span>
               <span className="text-xs text-mut">{t('chats')}</span>
             </Link>

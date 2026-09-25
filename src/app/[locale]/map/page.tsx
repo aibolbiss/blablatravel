@@ -2,6 +2,12 @@ import { createPublicClient } from '@/lib/supabase/public';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import MapView from '@/components/MapViewDynamic';
 import { ListingMapData } from '@/lib/types';
+import { pageMetadata } from '@/lib/seo';
+
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale: params.locale, namespace: 'meta' });
+  return pageMetadata(params.locale, '/map', t('mapTitle'), t('mapDescription'));
+}
 
 // Публичные данные, не завязанные на пользователя — кэшируем на 60с вместо
 // полного force-dynamic, чтобы не бить в Supabase на каждый заход.
@@ -10,7 +16,7 @@ export const revalidate = 60;
 export default async function MapPage({ params }: { params: { locale: string } }) {
   setRequestLocale(params.locale);
   const t = await getTranslations('map');
-  const supabase = createPublicClient();
+  const supabase = createPublicClient(60);
   const { data } = await supabase
     .from('listings')
     .select('id, title, description, city, country, to_city, to_country, budget, date_from, date_to, photo_url, lat, lng, profiles!listings_user_id_fkey(name, avatar_url, gender)')

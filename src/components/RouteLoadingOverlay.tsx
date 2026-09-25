@@ -1,23 +1,29 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import LoadingSpinner from './LoadingSpinner';
+import { useTranslations } from 'next-intl';
 
 export default function RouteLoadingOverlay() {
+  const t = useTranslations('common');
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const currentKey = `${pathname}?${searchParams.toString()}`;
   const prevKey = useRef(currentKey);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const delayRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     const showLoading = () => {
-      setLoading(true);
+      clearTimeout(delayRef.current);
+      delayRef.current = setTimeout(() => setLoading(true), 180);
       clearTimeout(timeoutRef.current);
       // Страховка на случай, если навигация не привела к смене URL
       // (например, повторный клик по текущей странице).
-      timeoutRef.current = setTimeout(() => setLoading(false), 8000);
+      timeoutRef.current = setTimeout(() => {
+        clearTimeout(delayRef.current);
+        setLoading(false);
+      }, 8000);
     };
 
     // Ловим клики по обычным ссылкам/<Link> напрямую через DOM — это
@@ -47,6 +53,8 @@ export default function RouteLoadingOverlay() {
     return () => {
       document.removeEventListener('click', onClick, true);
       window.removeEventListener('nav-start', onNavStart);
+      clearTimeout(delayRef.current);
+      clearTimeout(timeoutRef.current);
     };
   }, []);
 
@@ -54,9 +62,14 @@ export default function RouteLoadingOverlay() {
     if (prevKey.current !== currentKey) {
       prevKey.current = currentKey;
       setLoading(false);
+      clearTimeout(delayRef.current);
       clearTimeout(timeoutRef.current);
     }
   }, [currentKey]);
 
-  return loading ? <LoadingSpinner /> : null;
+  return loading ? (
+    <div role="status" aria-label={t('loading')} className="pointer-events-none fixed inset-x-0 top-0 z-[10001] h-1 bg-route-light">
+      <div className="h-full w-1/3 animate-pulse bg-route motion-reduce:animate-none" />
+    </div>
+  ) : null;
 }

@@ -3,13 +3,13 @@ import { createClient } from '@supabase/supabase-js';
 
 // Клиент с сервисным ключом — обходит RLS и умеет удалять сами аккаунты
 // (auth.users), а не только строки в public-таблицах. Использовать ТОЛЬКО
-// в серверном коде (Server Actions/Route Handlers) после проверки, что
-// текущий пользователь — админ. Никогда не импортировать в клиентские файлы.
+// в серверном коде после проверки прав администратора или секрета фонового
+// обработчика. Никогда не импортировать в клиентские файлы.
 export function createAdminClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!serviceRoleKey) {
     throw new Error(
-      'SUPABASE_SERVICE_ROLE_KEY не задан в .env.local — без него нельзя удалять пользователей. См. .env.local.example.'
+      'SUPABASE_SERVICE_ROLE_KEY не задан. См. .env.local.example.'
     );
   }
   return createClient(
